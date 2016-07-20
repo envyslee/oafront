@@ -1,0 +1,387 @@
+---
+name: home
+url: /home/:tab/:error
+controller: homeController
+dependencies: controllers/homeController,services/commonService,FileSaver
+---
+<div class="ui-container" ng-init="employeeInit()">
+ <div class="grid-block" style="height: 2rem">
+
+ </div>
+  <div class="grid-block" >
+    <div class="grid-block medium-2 vertical" style="border-right:grey solid 1px;height: 200px">
+      <div class="grid-block align-center" style="height: 4rem;line-height: 4rem">
+        <a ng-click="chooseTab(0)">花名册</a>
+      </div>
+      <div class="grid-block align-center" style="height: 4rem;line-height: 4rem">
+        <a ng-click="chooseTab(1)">考勤导入</a>
+      </div>
+      <div class="grid-block align-center" style="height: 4rem;line-height: 4rem">
+        <a ng-click="chooseTab(2)">考勤查询</a>
+      </div>
+      <div class="grid-block align-center" style="height: 4rem;line-height: 4rem">
+        <a ng-click="chooseTab(3)">异常处理</a>
+      </div>
+    </div>
+    <!--花名册tab-->
+    <div ng-show="currentTag==0" class="grid-block medium-10 vertical"  style="height: 100%;">
+      <div class="grid-block">
+        <div class="grid-block medium-9 medium-offset-1 align-center">
+          <h3>当前名册</h3>
+        </div>
+        <div class="grid-block medium-1 align-center">
+          <a class="button" zf-open="userModal" style="height: 2.4rem;margin-top: 3px">导入</a>
+        </div>
+        <div class="grid-block medium-1 align-center">
+          <a class="button" zf-open="singleUserModal" style="height: 2.4rem;margin-top: 3px">添加</a>
+        </div>
+      </div>
+      <table style="margin-left: 1rem;width: 96%;" role="grid">
+        <thead>
+        <tr ng-if="employeeData.length>0">
+          <th>工号</th>
+          <th>身份证号</th>
+          <th>姓名</th>
+          <th>考勤职场</th>
+          <th>部门</th>
+          <th>职位</th>
+          <th>在职状态</th>
+          <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="e in employeeData">
+            <td>{{e.employeeId}}</td>
+            <td>{{e.nationalId}}</td>
+            <td>{{e.employeeName}}</td>
+            <td>{{e.workPlace}}</td>
+            <td>{{e.department}}</td>
+            <td>{{e.position}}</td>
+            <td>{{e.status}}</td>
+            <td><button class="button" style="padding: .5rem;margin: 0" ng-class="{true:'',false:'disabled'}[e.status=='在职员工']" ng-click="openTagModel(e)">标记为离职</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!--考勤数据导入tab-->
+    <div ng-show="currentTag==1" class="grid-block medium-10 align-center vertical" style=" height: 100px;margin-top: 4rem;">
+      <div class="grid-block align-center">
+        <form id="wForm" method="post" enctype="multipart/form-data" action="http://localhost:8080/wxoa/uploadWorkSrc">
+          <input name="userId" ng-model="currentUser.userId" style="display: none">
+          <input name="workPlaceId" ng-model="currentUser.workPlace" style="display: none">
+          <input name="callbackUrl" ng-model="currentUser.callbackUrl" style="display: none">
+          <input name="workFile" type="file" value="导入" input-on-change="workChange">
+        </form>
+        <a  ng-href="./assets/excel/{{xlsUrl}}">标准模板下载</a>
+      </div>
+      <div class="grid-block align-center" style="margin-top: 2rem">
+        <a class="button expand" style="width: 12%" ng-class="{true:'',false:'disabled'}[btn.work]" ng-click="uploadWorkSrc()" >确定</a>
+      </div>
+    </div>
+    <!--考勤查询tab-->
+    <div ng-show="currentTag==2" class="grid-block medium-10 vertical">
+
+      <div class="grid-block">
+        <div class="grid-block medium-1 align-right" style="margin-top: 10px">
+          <span>查询年份：</span>
+        </div>
+        <div class="grid-block medium-2">
+          <select  ng-model="queryInfo.year">
+            <option value="0">请选择</option>
+            <option value="2016">2016</option>
+            <option value="2017">2017</option>
+            <option value="2018">2018</option>
+          </select>
+        </div>
+        <div class="grid-block medium-1 align-right" style="margin-top: 10px">
+          <span>查询月份：</span>
+        </div>
+        <div class="grid-block medium-2">
+          <select ng-model="queryInfo.month">
+            <option value="0">请选择</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12">12</option>
+          </select>
+        </div>
+        <div class="grid-block medium-1 align-right" style="margin-top: 10px">
+            <span>在职状态：</span>
+        </div>
+        <div class="grid-block medium-2">
+          <select ng-model="queryInfo.jobStatus">
+            <option value="0">全部</option>
+            <option value="1">在职</option>
+            <option value="-1">离职</option>
+          </select>
+        </div>
+        <div class="grid-block medium-1 align-right" style="margin-top: 10px">
+          <span>标记为节假日：</span>
+        </div>
+        <div class="grid-block medium-2">
+          <input type="date" ng-model="queryInfo.tagHoliday" ng-change="tagHolidayChange()">
+        </div>
+      </div>
+      <div class="align-center grid-block">
+        <div class="small-4 grid-block small-offset-2">
+          <a class="button"  style="height: 2.4rem; width: 14rem;" ng-click="query()">查询</a>
+        </div>
+        <div class="small-4 grid-block ">
+          <a class="button" ng-class="{true:'',false:'disabled'}[queryResult.length>0]" style="height: 2.4rem; width: 14rem;" ng-click="output()">导出</a>
+        </div>
+      </div>
+      <div style="height:680px;overflow:auto;" id="exportable">
+        <!--考勤符号 出勤:/  旷工:○  迟到:﹟  早退:×  忘打卡：忘   事假:⊙   病假:⊕  产假:◎  年休假：年  婚假:Δ   孕检假：★    护理假：※   丧假：▲   工伤假：☆   探亲假:回   公出:公   出差：差  新进离职不足月：－   -->
+           <table ng-show="queryResult.length>0" style="margin-left: 1rem;" role="grid">
+             <thead>
+             <tr>
+               <th >部门</th>
+               <th >姓名</th>
+               <th >身份证号</th>
+               <th ng-class="{true:'weekend'}[days.d1==0]">1A</th>
+               <th ng-class="{true:'weekend'}[days.d1==0]">1P</th>
+               <th ng-class="{true:'weekend'}[days.d2==0]">2A</th>
+               <th ng-class="{true:'weekend'}[days.d2==0]">2P</th>
+               <th ng-class="{true:'weekend'}[days.d3==0]">3A</th>
+               <th ng-class="{true:'weekend'}[days.d3==0]">3P</th>
+               <th ng-class="{true:'weekend'}[days.d4==0]">4A</th>
+               <th ng-class="{true:'weekend'}[days.d4==0]">4P</th>
+               <th ng-class="{true:'weekend'}[days.d5==0]">5A</th>
+               <th ng-class="{true:'weekend'}[days.d5==0]">5P</th>
+               <th ng-class="{true:'weekend'}[days.d6==0]">6A</th>
+               <th ng-class="{true:'weekend'}[days.d6==0]">6P</th>
+               <th ng-class="{true:'weekend'}[days.d7==0]">7A</th>
+               <th ng-class="{true:'weekend'}[days.d7==0]">7P</th>
+               <th ng-class="{true:'weekend'}[days.d8==0]">8A</th>
+               <th ng-class="{true:'weekend'}[days.d8==0]">8P</th>
+               <th ng-class="{true:'weekend'}[days.d9==0]">9A</th>
+               <th ng-class="{true:'weekend'}[days.d9==0]">9P</th>
+               <th ng-class="{true:'weekend'}[days.d10==0]">10A</th>
+               <th ng-class="{true:'weekend'}[days.d10==0]">10P</th>
+               <th ng-class="{true:'weekend'}[days.d11==0]">11A</th>
+               <th ng-class="{true:'weekend'}[days.d11==0]">11P</th>
+               <th ng-class="{true:'weekend'}[days.d12==0]">12A</th>
+               <th ng-class="{true:'weekend'}[days.d12==0]">12P</th>
+               <th ng-class="{true:'weekend'}[days.d13==0]">13A</th>
+               <th ng-class="{true:'weekend'}[days.d13==0]">13P</th>
+               <th ng-class="{true:'weekend'}[days.d14==0]">14A</th>
+               <th ng-class="{true:'weekend'}[days.d14==0]">14P</th>
+               <th ng-class="{true:'weekend'}[days.d15==0]">15A</th>
+               <th ng-class="{true:'weekend'}[days.d15==0]">15P</th>
+               <th ng-class="{true:'weekend'}[days.d16==0]">16A</th>
+               <th ng-class="{true:'weekend'}[days.d16==0]">16P</th>
+               <th ng-class="{true:'weekend'}[days.d17==0]">17A</th>
+               <th ng-class="{true:'weekend'}[days.d17==0]">17P</th>
+               <th ng-class="{true:'weekend'}[days.d18==0]">18A</th>
+               <th ng-class="{true:'weekend'}[days.d18==0]">18P</th>
+               <th ng-class="{true:'weekend'}[days.d19==0]">19A</th>
+               <th ng-class="{true:'weekend'}[days.d19==0]">19P</th>
+               <th ng-class="{true:'weekend'}[days.d20==0]">20A</th>
+               <th ng-class="{true:'weekend'}[days.d20==0]">20P</th>
+               <th ng-class="{true:'weekend'}[days.d21==0]">21A</th>
+               <th ng-class="{true:'weekend'}[days.d21==0]">21P</th>
+               <th ng-class="{true:'weekend'}[days.d22==0]">22A</th>
+               <th ng-class="{true:'weekend'}[days.d22==0]">22P</th>
+               <th ng-class="{true:'weekend'}[days.d23==0]">23A</th>
+               <th ng-class="{true:'weekend'}[days.d23==0]">23P</th>
+               <th ng-class="{true:'weekend'}[days.d24==0]">24A</th>
+               <th ng-class="{true:'weekend'}[days.d24==0]">24P</th>
+               <th ng-class="{true:'weekend'}[days.d25==0]">25A</th>
+               <th ng-class="{true:'weekend'}[days.d25==0]">25P</th>
+               <th ng-class="{true:'weekend'}[days.d26==0]">26A</th>
+               <th ng-class="{true:'weekend'}[days.d26==0]">26P</th>
+               <th ng-class="{true:'weekend'}[days.d27==0]">27A</th>
+               <th ng-class="{true:'weekend'}[days.d27==0]">27P</th>
+               <th ng-class="{true:'weekend'}[days.d28==0]">28A</th>
+               <th ng-class="{true:'weekend'}[days.d28==0]">28P</th>
+               <th ng-class="{true:'weekend'}[days.d29==0]">29A</th>
+               <th ng-class="{true:'weekend'}[days.d29==0]">29P</th>
+               <th ng-class="{true:'weekend'}[days.d30==0]">30A</th>
+               <th ng-class="{true:'weekend'}[days.d30==0]">30P</th>
+               <th ng-class="{true:'weekend'}[days.d31==0]" ng-hide="queryInfo.month==2||queryInfo.month==4||queryInfo.month==6||queryInfo.month==9||queryInfo.month==11">31A</th>
+               <th ng-class="{true:'weekend'}[days.d31==0]" ng-hide="queryInfo.month==2||queryInfo.month==4||queryInfo.month==6||queryInfo.month==9||queryInfo.month==11">31P</th>
+               <th >待处理</th>
+               <th >迟到</th>
+               <th >早退</th>
+               <th >忘打</th>
+               <th >年假</th>
+               <th >事假</th>
+               <th >病假</th>
+               <th >婚假</th>
+               <th >产假</th>
+               <th >孕检假</th>
+               <th >护理假</th>
+               <th >丧假</th>
+               <th >探亲假</th>
+               <th >旷工</th>
+               <th >出差</th>
+               <th >不足月</th>
+               <th >出勤</th>
+             </tr>
+             </thead>
+             <tbody>
+             <tr ng-repeat="r in queryResult">
+               <td>{{r.department}}</td>
+               <td>{{r.employeeName}}</td>
+               <td>{{r.nationalId}}</td>
+               <td>{{r.day1a}}</td>
+               <td>{{r.day1p}}</td>
+               <td>{{r.day2a}}</td>
+               <td>{{r.day2p}}</td>
+               <td>{{r.day3a}}</td>
+               <td>{{r.day3p}}</td>
+               <td>{{r.day4a}}</td>
+               <td>{{r.day4p}}</td>
+               <td>{{r.day5a}}</td>
+               <td>{{r.day5p}}</td>
+               <td>{{r.day6a}}</td>
+               <td>{{r.day6p}}</td>
+               <td>{{r.day7a}}</td>
+               <td>{{r.day7p}}</td>
+               <td>{{r.day8a}}</td>
+               <td>{{r.day8p}}</td>
+               <td>{{r.day9a}}</td>
+               <td>{{r.day9p}}</td>
+               <td>{{r.day10a}}</td>
+               <td>{{r.day10p}}</td>
+               <td>{{r.day11a}}</td>
+               <td>{{r.day11p}}</td>
+               <td>{{r.day12a}}</td>
+               <td>{{r.day12p}}</td>
+               <td>{{r.day13a}}</td>
+               <td>{{r.day13p}}</td>
+               <td>{{r.day14a}}</td>
+               <td>{{r.day14p}}</td>
+               <td>{{r.day15a}}</td>
+               <td>{{r.day15p}}</td>
+               <td>{{r.day16a}}</td>
+               <td>{{r.day16p}}</td>
+               <td>{{r.day17a}}</td>
+               <td>{{r.day17p}}</td>
+               <td>{{r.day18a}}</td>
+               <td>{{r.day18p}}</td>
+               <td>{{r.day19a}}</td>
+               <td>{{r.day19p}}</td>
+               <td>{{r.day20a}}</td>
+               <td>{{r.day20p}}</td>
+               <td>{{r.day21a}}</td>
+               <td>{{r.day21p}}</td>
+               <td>{{r.day22a}}</td>
+               <td>{{r.day22p}}</td>
+               <td>{{r.day23a}}</td>
+               <td>{{r.day23p}}</td>
+               <td>{{r.day24a}}</td>
+               <td>{{r.day24p}}</td>
+               <td>{{r.day25a}}</td>
+               <td>{{r.day25p}}</td>
+               <td>{{r.day26a}}</td>
+               <td>{{r.day26p}}</td>
+               <td>{{r.day27a}}</td>
+               <td>{{r.day27p}}</td>
+               <td>{{r.day28a}}</td>
+               <td>{{r.day28p}}</td>
+               <td>{{r.day29a}}</td>
+               <td>{{r.day29p}}</td>
+               <td>{{r.day30a}}</td>
+               <td>{{r.day30p}}</td>
+               <td ng-hide="queryInfo.month==2||queryInfo.month==4||queryInfo.month==6||queryInfo.month==9||queryInfo.month==11">{{r.day31a}}</td>
+               <td ng-hide="queryInfo.month==2||queryInfo.month==4||queryInfo.month==6||queryInfo.month==9||queryInfo.month==11">{{r.day31p}}</td>
+
+               <td>{{r.exception}}</td>
+               <td>{{r.late}}</td>
+               <td>{{r.earlyLeave}}</td>
+               <td>{{r.forget}}</td>
+               <td>{{r.yearVacation}}</td>
+               <td>{{r.affair}}</td>
+               <td>{{r.disease}}</td>
+               <td>{{r.marry}}</td>
+               <td>{{r.maternity}}</td>
+               <td>{{r.pregnant}}</td>
+               <td>{{r.nursing}}</td>
+               <td>{{r.funeral}}</td>
+               <td>{{r.homeLeave}}</td>
+               <td>{{r.absenteeism}}</td>
+               <td>{{r.business}}</td>
+               <td>{{r.notMonth}}</td>
+               <td>{{r.attendance}}</td>
+             </tr>
+
+             </tbody>
+           </table>
+      </div>
+    </div>
+    <!--异常处理-->
+    <div ng-show="currentTag==3" class="grid-block medium-10 vertical" style="height: 100%;">
+      <div class="grid-block" style="width: 86%;height: 3rem" ng-if="exceptionEmployee.length>0">
+        <div class="grid-block medium-2 align-center">工号</div>
+        <div class="grid-block medium-2 align-center">身份证号</div>
+        <div class="grid-block medium-2 align-center">姓名</div>
+        <div class="grid-block medium-2 align-center">部门</div>
+        <div class="grid-block medium-2 align-center">职位</div>
+      </div>
+      <div class="grid-block" style="width: 86%;height: 2rem" ng-repeat="ee in exceptionEmployee">
+        <div class="grid-block medium-2 align-center">{{ee.employeeId}}</div>
+        <div class="grid-block medium-2 align-center">{{ee.nationalId}}</div>
+        <a class="grid-block medium-2 align-center" ui-sref="exceptiondetail({employeeId:ee.employeeId,employeeName:ee.employeeName})">{{ee.employeeName}}</a>
+        <div class="grid-block medium-2 align-center">{{ee.department}}</div>
+        <div class="grid-block medium-2 align-center">{{ee.position}}</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div zf-modal="" id="userModal">
+  <a zf-close="" class="close-button">×</a>
+  <form id="eForm" method="post" enctype="multipart/form-data" action="http://localhost:8080/wxoa/uploadEmployeeSrc">
+    <input name="userId" ng-model="currentUser.userId" style="display: none">
+    <input name="workPlaceId" ng-model="currentUser.workPlace" style="display: none">
+    <input name="callbackUrl" ng-model="currentUser.callbackUrl" style="display: none">
+    <input name="file" type="file" value="导入" input-on-change="employeeChange">
+  </form>
+  <div style="margin-top: 1rem">
+  <a href="./assets/excel/employee.xls">标准模板下载</a>
+  </div>
+  <div class="grid-block align-center" style="margin-top: 2rem">
+    <a class="button expand" style="width: 30%" ng-class="{true:'',false:'disabled'}[btn.employee]"  ng-click="uploadEmployee()">确定</a>
+  </div>
+</div>
+
+<div zf-modal="" id="singleUserModal">
+  <a zf-close="" class="close-button">×</a>
+  <div class="grid-block vertical" style="margin-top: 2rem;">
+    <form id="addUserForm" name="addUserForm">
+      <input type="text"  placeholder="工号" ng-model="addUser.employeeId" required>
+      <input type="text"  placeholder="身份证号" ng-model="addUser.nationalId" required>
+      <input type="text"  placeholder="考勤编号" ng-model="addUser.machineId" required>
+      <input type="text"  placeholder="姓名" ng-model="addUser.employeeName" required>
+      <input type="text"  placeholder="部门" ng-model="addUser.department" required>
+      <input type="text"  placeholder="职位" ng-model="addUser.position" required>
+      <input id="joinTimePicker" type="text"  placeholder="入职时间" ng-model="addUser.joinTime" ng-focus="joinTimeFocus()" ng-blur="joinTimeBlur()" required>
+    </form>
+  </div>
+  <div class="grid-block align-center" style="margin-top: 2rem">
+    <a class="button expand"  ng-class="{true:'disabled',false:''}[addUserForm.$invalid]"  ng-click="addEmployee()">确定</a>
+  </div>
+</div>
+
+<div zf-modal="" id="errorModel">
+  <img src="./assets/img/vc-warm-red.png" width="6%" style="display:block;float:left;">
+  <p style="font-size: 18px;margin: 4px 0 0 4px;padding-left: 36px">{{errorMsg}}</p>
+</div>
+
+<div zf-modal="" id="tagModel">
+  <p>请选择离职日期：</p>
+  <p></p>
+  <input type="date" ng-model="tag.leaveDate">
+  <input type="hidden" ng-model="tag.employeeId">
+  <a class="button " style="width: 20%" ng-class="{true:'disabled',false:''}[tag.leaveDate==null||tag.leaveDate=='']"  ng-click="tagOff()">确定</a>
+</div>

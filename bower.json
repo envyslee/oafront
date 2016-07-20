@@ -1,0 +1,30 @@
+{
+  "name": "oafront",
+  "version": "1.1.0",
+  "authors": [
+    "Isaac"
+  ],
+  "description": "oafront",
+  "main": "gulpfile.js",
+  "keywords": [
+    "framework",
+    "angular",
+    "web",
+    "apps"
+  ],
+  "license": "",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "foundation-apps": "~1.1.0",
+    "angular-resource": "latest",
+    "requirejs": "latest"
+  }
+}

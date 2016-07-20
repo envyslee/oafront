@@ -1,0 +1,15 @@
+---
+name: login
+url: /login
+controller: loginController
+dependencies: controllers/loginController,services/commonService
+---
+<div class="ui-container" style="text-align:center;margin:20rem auto;width: 40%">
+  <form>
+
+    <input type="text" placeholder="请输入用户名" ng-model="userInfo.account">
+    <input type="password" placeholder="请输入登录密码" ng-model="userInfo.password">
+    <a class="expand button" ng-click="login()">登录</a>
+
+  </form>
+</div>
