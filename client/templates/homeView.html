@@ -2,14 +2,18 @@
 name: home
 url: /home/:tab/:error
 controller: homeController
-dependencies: controllers/homeController,services/commonService,FileSaver
+dependencies: controllers/homeController,services/commonService,services/defaultService,FileSaver
 ---
 <div class="ui-container" ng-init="employeeInit()">
- <div class="grid-block" style="height: 2rem">
-
+ <div class="grid-block">
+   <img src="../assets/img/u10.png"style="width: 200%">
  </div>
-  <div class="grid-block" >
-    <div class="grid-block medium-2 vertical" style="border-right:grey solid 1px;height: 200px">
+  <div style="text-align: right;margin-top: 1rem;margin-right: 1rem;">
+    <span>个人帐号：</span>
+    <span>lidanhong@vcredit.com</span>
+  </div>
+  <div class="grid-block">
+    <div class="grid-block medium-2 vertical" style="height: 200px">
       <div class="grid-block align-center" style="height: 4rem;line-height: 4rem">
         <a ng-click="chooseTab(0)">花名册</a>
       </div>
@@ -22,12 +26,15 @@ dependencies: controllers/homeController,services/commonService,FileSaver
       <div class="grid-block align-center" style="height: 4rem;line-height: 4rem">
         <a ng-click="chooseTab(3)">异常处理</a>
       </div>
+      <div class="grid-block align-center" style="height: 4rem;line-height: 4rem">
+        <a ng-click="chooseTab(4)">个人配置</a>
+      </div>
     </div>
     <!--花名册tab-->
-    <div ng-show="currentTag==0" class="grid-block medium-10 vertical"  style="height: 100%;">
-      <div class="grid-block">
+    <div ng-show="currentTag==0" class="grid-block medium-10 vertical" style="border-left: 1px solid #CCCCCC">
+      <div class="grid-block" style="margin-top: 10px;" >
         <div class="grid-block medium-9 medium-offset-1 align-center">
-          <h3>当前名册</h3>
+          <h3>考勤花名册</h3>
         </div>
         <div class="grid-block medium-1 align-center">
           <a class="button" zf-open="userModal" style="height: 2.4rem;margin-top: 3px">导入</a>
@@ -64,8 +71,11 @@ dependencies: controllers/homeController,services/commonService,FileSaver
       </table>
     </div>
     <!--考勤数据导入tab-->
-    <div ng-show="currentTag==1" class="grid-block medium-10 align-center vertical" style=" height: 100px;margin-top: 4rem;">
-      <div class="grid-block align-center">
+    <div ng-show="currentTag==1" class="grid-block medium-10 align-center vertical" style=" height: auto;margin-top: 4rem;border-left: 1px solid #CCCCCC;">
+      <div style="text-align: center;">
+        <h3>数据导入</h3>
+      </div>
+      <div class="grid-block align-center" style="margin-top: 1rem;">
         <form id="wForm" method="post" enctype="multipart/form-data" action="http://localhost:8080/wxoa/uploadWorkSrc">
           <input name="userId" ng-model="currentUser.userId" style="display: none">
           <input name="workPlaceId" ng-model="currentUser.workPlace" style="display: none">
@@ -74,12 +84,17 @@ dependencies: controllers/homeController,services/commonService,FileSaver
         </form>
         <a  ng-href="./assets/excel/{{xlsUrl}}">标准模板下载</a>
       </div>
-      <div class="grid-block align-center" style="margin-top: 2rem">
-        <a class="button expand" style="width: 12%" ng-class="{true:'',false:'disabled'}[btn.work]" ng-click="uploadWorkSrc()" >确定</a>
+      <div class="grid-block align-center" style="margin-top: 2rem;">
+        <a class="button expand" style="width: 12%;height: 32px;" ng-class="{true:'',false:'disabled'}[btn.work]" ng-click="uploadWorkSrc()" >确定</a>
+      </div>
+      <div class="grid-block align-center" style="text-align: center;margin-top: 1rem;height: 15px;">
+        <span style="color: red">注：</span>
+        <span>导入数据必须按照标准模板文件格式导入</span>
+        <a  ng-href="./assets/excel/{{xlsUrl}}">标准模板下载</a>
       </div>
     </div>
     <!--考勤查询tab-->
-    <div ng-show="currentTag==2" class="grid-block medium-10 vertical">
+    <div ng-show="currentTag==2" class="grid-block medium-10 vertical" style="margin-top: 10px;border-left: 1px solid #CCCCCC">
 
       <div class="grid-block">
         <div class="grid-block medium-1 align-right" style="margin-top: 10px">
@@ -320,19 +335,85 @@ dependencies: controllers/homeController,services/commonService,FileSaver
     </div>
     <!--异常处理-->
     <div ng-show="currentTag==3" class="grid-block medium-10 vertical" style="height: 100%;">
-      <div class="grid-block" style="width: 86%;height: 3rem" ng-if="exceptionEmployee.length>0">
-        <div class="grid-block medium-2 align-center">工号</div>
-        <div class="grid-block medium-2 align-center">身份证号</div>
-        <div class="grid-block medium-2 align-center">姓名</div>
-        <div class="grid-block medium-2 align-center">部门</div>
-        <div class="grid-block medium-2 align-center">职位</div>
+    <div class="grid-block" style="width: 86%;height: 3rem" ng-if="exceptionEmployee.length>0">
+      <div class="grid-block medium-2 align-center">工号</div>
+      <div class="grid-block medium-2 align-center">身份证号</div>
+      <div class="grid-block medium-2 align-center">姓名</div>
+      <div class="grid-block medium-2 align-center">部门</div>
+      <div class="grid-block medium-2 align-center">职位</div>
+    </div>
+    <div class="grid-block" style="width: 86%;height: 2rem" ng-repeat="ee in exceptionEmployee">
+      <div class="grid-block medium-2 align-center">{{ee.employeeId}}</div>
+      <div class="grid-block medium-2 align-center">{{ee.nationalId}}</div>
+      <a class="grid-block medium-2 align-center" ui-sref="exceptiondetail({employeeId:ee.employeeId,employeeName:ee.employeeName})">{{ee.employeeName}}</a>
+      <div class="grid-block medium-2 align-center">{{ee.department}}</div>
+      <div class="grid-block medium-2 align-center">{{ee.position}}</div>
+    </div>
+  </div>
+    <!--个人配置-->
+    <div ng-show="currentTag==4" class="grid-block medium-10 vertical" style="border-left: 1px solid #CCCCCC">
+      <div style="text-align: center;">
+        <h3>个人配置</h3>
       </div>
-      <div class="grid-block" style="width: 86%;height: 2rem" ng-repeat="ee in exceptionEmployee">
-        <div class="grid-block medium-2 align-center">{{ee.employeeId}}</div>
-        <div class="grid-block medium-2 align-center">{{ee.nationalId}}</div>
-        <a class="grid-block medium-2 align-center" ui-sref="exceptiondetail({employeeId:ee.employeeId,employeeName:ee.employeeName})">{{ee.employeeName}}</a>
-        <div class="grid-block medium-2 align-center">{{ee.department}}</div>
-        <div class="grid-block medium-2 align-center">{{ee.position}}</div>
+      <div>
+        <div>
+          <p style="margin-left: 15px;">职场以及职场规则</p>
+        </div>
+        <div style="margin-top: 20px;">
+          <p style="float: left;margin-left: 10%;">上海</p>
+          <p style="margin-left: 30%">8:45 之前</p>
+        </div>
+        <div style="margin-top: 20px;">
+          <p style="float: left;margin-left: 10%;">苏州凤凰</p>
+          <p style="margin-left: 30%">8:45 之前</p>
+        </div>
+        <div style="margin-top: 20px;">
+          <p style="float: left;margin-left: 10%;">苏州恒宇</p>
+          <p style="margin-left: 30%">8:45 - 8:55 之前</p>
+        </div>
+      </div>
+      <div>
+        <div style="margin-top: 30px;margin-left: 15px;">
+          <p>异常规则</p>
+        </div>
+        <div>
+          <div style="margin-top: 15px;">
+            <p style="margin-left: 10%;float: left;">出勤 :/</p>
+            <p style="margin-left: 30%;">旷工 :○</p>
+          </div>
+          <div style="margin-top: 15px;">
+            <p style="margin-left: 10%;float: left;">迟到 :﹟</p>
+            <p style="margin-left: 30%;">早退 :×</p>
+          </div>
+          <div style="margin-top: 15px;">
+            <p style="margin-left: 10%;float: left;">忘打卡 :忘</p>
+            <p style="margin-left: 30%;">事假 :⊙</p>
+          </div>
+          <div style="margin-top: 15px;">
+            <p style="margin-left: 10%;float: left;">病假 :⊕</p>
+            <p style="margin-left: 30%;">产假 :◎</p>
+          </div>
+          <div style="margin-top: 15px;">
+            <p style="margin-left: 10%;float: left;">年休假 :年</p>
+            <p style="margin-left: 30%;">婚假 :Δ</p>
+          </div>
+          <div style="margin-top: 15px;">
+            <p style="margin-left: 10%;float: left;">孕检假 :★</p>
+            <p style="margin-left: 30%;">护理假 :※</p>
+          </div>
+          <div style="margin-top: 15px;">
+            <p style="margin-left: 10%;float: left;">丧假 :▲</p>
+            <p style="margin-left: 30%;">工伤假 :☆</p>
+          </div>
+          <div style="margin-top: 15px;">
+            <p style="margin-left: 10%;float: left;">探亲假 :回</p>
+            <p style="margin-left: 30%;">公出 :公</p>
+          </div>
+          <div style="margin-top: 15px;">
+            <p style="margin-left: 10%;float: left;">出差 :差</p>
+            <p style="margin-left: 30%;">新进离职不足月 :－</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
