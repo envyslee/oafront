@@ -82,7 +82,6 @@ dependencies: controllers/homeController,services/commonService,services/default
           <input name="callbackUrl" ng-model="currentUser.callbackUrl" style="display: none">
           <input name="workFile" type="file" value="导入" input-on-change="workChange">
         </form>
-        <a  ng-href="./assets/excel/{{xlsUrl}}">标准模板下载</a>
       </div>
       <div class="grid-block align-center" style="margin-top: 2rem;">
         <a class="button expand" style="width: 12%;height: 32px;" ng-class="{true:'',false:'disabled'}[btn.work]" ng-click="uploadWorkSrc()" >确定</a>
@@ -101,7 +100,7 @@ dependencies: controllers/homeController,services/commonService,services/default
           <span>查询年份：</span>
         </div>
         <div class="grid-block medium-2">
-          <select  ng-model="queryInfo.year">
+          <select  ng-model="queryInfo.year" style="width: 80%;">
             <option value="0">请选择</option>
             <option value="2016">2016</option>
             <option value="2017">2017</option>
@@ -112,7 +111,7 @@ dependencies: controllers/homeController,services/commonService,services/default
           <span>查询月份：</span>
         </div>
         <div class="grid-block medium-2">
-          <select ng-model="queryInfo.month">
+          <select ng-model="queryInfo.month" style="width: 80%;">
             <option value="0">请选择</option>
             <option value="1">1</option>
             <option value="2">2</option>
@@ -132,16 +131,16 @@ dependencies: controllers/homeController,services/commonService,services/default
             <span>在职状态：</span>
         </div>
         <div class="grid-block medium-2">
-          <select ng-model="queryInfo.jobStatus">
+          <select ng-model="queryInfo.jobStatus" style="width: 80%;">
             <option value="0">全部</option>
             <option value="1">在职</option>
             <option value="-1">离职</option>
           </select>
         </div>
-        <div class="grid-block medium-1 align-right" style="margin-top: 10px">
+        <div class="grid-block medium-2 align-right" style="margin-top: 10px;margin-left: -100px">
           <span>标记为节假日：</span>
         </div>
-        <div class="grid-block medium-2">
+        <div class="grid-block medium-1.5">
           <input type="date" ng-model="queryInfo.tagHoliday" ng-change="tagHolidayChange()">
         </div>
       </div>
@@ -334,22 +333,28 @@ dependencies: controllers/homeController,services/commonService,services/default
       </div>
     </div>
     <!--异常处理-->
-    <div ng-show="currentTag==3" class="grid-block medium-10 vertical" style="height: 100%;">
-    <div class="grid-block" style="width: 86%;height: 3rem" ng-if="exceptionEmployee.length>0">
-      <div class="grid-block medium-2 align-center">工号</div>
-      <div class="grid-block medium-2 align-center">身份证号</div>
-      <div class="grid-block medium-2 align-center">姓名</div>
-      <div class="grid-block medium-2 align-center">部门</div>
-      <div class="grid-block medium-2 align-center">职位</div>
+    <div ng-show="currentTag==3" class="grid-block medium-10 vertical" style="height: 100%;border-left: 1px solid #CCCCCC;margin-top: 30px;">
+      <table style="width: 86%;height: 3rem;margin-left: 15px;" role="grid" ng-if="exceptionEmployee.length>0">
+        <thead>
+        <tr>
+          <th style="width: 200px;">工号</th>
+          <th style="width: 200px;">身份证号</th>
+          <th style="width: 200px;">姓名</th>
+          <th style="width: 200px;">部门</th>
+          <th style="width: 200px;">职位</th>
+        </tr>
+        </thead>
+        <tbody style="width: 86%;height: 2rem" ng-repeat="ee in exceptionEmployee">
+        <tr>
+          <td>{{ee.employeeId}}</td>
+          <td>{{ee.nationalId}}</td>
+          <td><a class="grid-block medium-2 align-center" ui-sref="exceptiondetail({employeeId:ee.employeeId,employeeName:ee.employeeName})">{{ee.employeeName}}</a></td>
+          <td>{{ee.department}}</td>
+          <td>{{ee.position}}</td>
+        </tr>
+        </tbody>
+      </table>
     </div>
-    <div class="grid-block" style="width: 86%;height: 2rem" ng-repeat="ee in exceptionEmployee">
-      <div class="grid-block medium-2 align-center">{{ee.employeeId}}</div>
-      <div class="grid-block medium-2 align-center">{{ee.nationalId}}</div>
-      <a class="grid-block medium-2 align-center" ui-sref="exceptiondetail({employeeId:ee.employeeId,employeeName:ee.employeeName})">{{ee.employeeName}}</a>
-      <div class="grid-block medium-2 align-center">{{ee.department}}</div>
-      <div class="grid-block medium-2 align-center">{{ee.position}}</div>
-    </div>
-  </div>
     <!--个人配置-->
     <div ng-show="currentTag==4" class="grid-block medium-10 vertical" style="border-left: 1px solid #CCCCCC">
       <div style="text-align: center;">
@@ -359,60 +364,78 @@ dependencies: controllers/homeController,services/commonService,services/default
         <div>
           <p style="margin-left: 15px;">职场以及职场规则</p>
         </div>
-        <div style="margin-top: 20px;">
-          <p style="float: left;margin-left: 10%;">上海</p>
-          <p style="margin-left: 30%">8:45 之前</p>
-        </div>
-        <div style="margin-top: 20px;">
-          <p style="float: left;margin-left: 10%;">苏州凤凰</p>
-          <p style="margin-left: 30%">8:45 之前</p>
-        </div>
-        <div style="margin-top: 20px;">
-          <p style="float: left;margin-left: 10%;">苏州恒宇</p>
-          <p style="margin-left: 30%">8:45 - 8:55 之前</p>
-        </div>
+        <table style="margin-left: 10%;" role="grid">
+          <thead>
+            <tr>
+              <th style="width: 200px;text-align: center;">职场</th>
+              <th style="width: 200px;text-align: center;">工作时间</th>
+              <th style="width: 200px;text-align: center;">迟到时间</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="text-align: center">上海</td>
+              <td style="text-align: center">8:45 - 17:45</td>
+              <td style="text-align: center">8:45 - 9:15</td>
+            </tr>
+            <tr>
+              <td style="text-align: center">苏州凤凰</td>
+              <td style="text-align: center">8:45 - 17:45</td>
+              <td style="text-align: center">8:45 - 9:15</td>
+            </tr>
+            <tr>
+              <td style="text-align: center">苏州恒宇</td>
+              <td style="text-align: center">8:45 - 17:45</td>
+              <td style="text-align: center">8:45 - 8:55</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
       <div>
         <div style="margin-top: 30px;margin-left: 15px;">
-          <p>异常规则</p>
+          <p>异常规则及其符号</p>
         </div>
         <div>
-          <div style="margin-top: 15px;">
-            <p style="margin-left: 10%;float: left;">出勤 :/</p>
-            <p style="margin-left: 30%;">旷工 :○</p>
-          </div>
-          <div style="margin-top: 15px;">
-            <p style="margin-left: 10%;float: left;">迟到 :﹟</p>
-            <p style="margin-left: 30%;">早退 :×</p>
-          </div>
-          <div style="margin-top: 15px;">
-            <p style="margin-left: 10%;float: left;">忘打卡 :忘</p>
-            <p style="margin-left: 30%;">事假 :⊙</p>
-          </div>
-          <div style="margin-top: 15px;">
-            <p style="margin-left: 10%;float: left;">病假 :⊕</p>
-            <p style="margin-left: 30%;">产假 :◎</p>
-          </div>
-          <div style="margin-top: 15px;">
-            <p style="margin-left: 10%;float: left;">年休假 :年</p>
-            <p style="margin-left: 30%;">婚假 :Δ</p>
-          </div>
-          <div style="margin-top: 15px;">
-            <p style="margin-left: 10%;float: left;">孕检假 :★</p>
-            <p style="margin-left: 30%;">护理假 :※</p>
-          </div>
-          <div style="margin-top: 15px;">
-            <p style="margin-left: 10%;float: left;">丧假 :▲</p>
-            <p style="margin-left: 30%;">工伤假 :☆</p>
-          </div>
-          <div style="margin-top: 15px;">
-            <p style="margin-left: 10%;float: left;">探亲假 :回</p>
-            <p style="margin-left: 30%;">公出 :公</p>
-          </div>
-          <div style="margin-top: 15px;">
-            <p style="margin-left: 10%;float: left;">出差 :差</p>
-            <p style="margin-left: 30%;">新进离职不足月 :－</p>
-          </div>
+          <table style="margin-left: 10%;" role="grid">
+            <tbody>
+              <tr>
+                <td style="text-align: center;width: 200px;">出勤 :/</td>
+                <td style="text-align: center;width: 200px;">旷工 :○</td>
+              </tr>
+              <tr>
+                <td style="text-align: center;width: 200px;">迟到 :﹟</td>
+                <td style="text-align: center;width: 200px;">早退 :×</td>
+              </tr>
+              <tr>
+                <td style="text-align: center;width: 200px;">忘打卡 :忘</td>
+                <td style="text-align: center;width: 200px;">事假 :⊙</td>
+              </tr>
+              <tr>
+                <td style="text-align: center;width: 200px;">病假 :⊕</td>
+                <td style="text-align: center;width: 200px;">产假 :◎</td>
+              </tr>
+              <tr>
+                <td style="text-align: center;width: 200px;">年休假 :年</td>
+                <td style="text-align: center;width: 200px;">婚假 :Δ</td>
+              </tr>
+              <tr>
+                <td style="text-align: center;width: 200px;">>孕检假 :★</td>
+                <td style="text-align: center;width: 200px;">护理假 :※</td>
+              </tr>
+              <tr>
+                <td style="text-align: center;width: 200px;">丧假 :▲</td>
+                <td style="text-align: center;width: 200px;">工伤假 :☆</td>
+              </tr>
+              <tr>
+                <td style="text-align: center;width: 200px;">探亲假 :回</td>
+                <td style="text-align: center;width: 200px;">公出 :公</td>
+              </tr>
+              <tr>
+                <td style="text-align: center;width: 200px;">出差 :差</td>
+                <td style="text-align: center;width: 200px;">新进离职不足月 :－</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

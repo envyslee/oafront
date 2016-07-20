@@ -5,71 +5,83 @@ controller: exceptionController
 dependencies: controllers/exceptionController,services/commonService
 ---
 <div class="ui-container" ng-init="exDetailInit()">
-
-  <div class="grid-block" style="height: 3rem;margin-top: 3rem" ng-if="details.length>0">
-    <div class="grid-block medium-1 align-center">
-      <input type="checkbox" ng-click="allChoose()" ng-model="all.choose">
-    </div>
-    <div class="grid-block medium-1 align-center">姓名</div>
-    <div class="grid-block medium-1 align-center">日期</div>
-    <div class="grid-block medium-2 align-center">上班时间</div>
-    <div class="grid-block medium-1 align-center">上班处理</div>
-    <div class="grid-block medium-2 align-center">下班时间</div>
-    <div class="grid-block medium-1 align-center">下班处理</div>
+  <div class="grid-block">
+    <img src="../assets/img/u10.png"style="width: 200%">
   </div>
-  <div class="grid-block" style="height: 3rem;" ng-repeat="d in details">
-    <div class="grid-block medium-1 align-center">
-      <input type="checkbox" ng-model="d.choose" ng-click="singleChoose()">
-    </div>
-    <div class="grid-block medium-1 align-center">{{::d.name}}</div>
-    <div class="grid-block medium-1 align-center">{{::d.date}}</div>
-    <div class="grid-block medium-2 align-center">{{d.arriveTime}}</div>
-    <div class="grid-block medium-1 align-center">
-      <select ng-model="d.amReason" style="overflow-y: hidden;font-size: 12px;height: 28px" ng-show="d.am==0">
-      <option value="1">出勤</option>
-      <option value="17">旷工</option>
-      <option value="18">迟到</option>
-      <option value="2">早退</option>
-      <option value="3">忘打卡</option>
-      <option value="4">事假</option>
-      <option value="5">病假</option>
-      <option value="6">产假</option>
-      <option value="7">年休假</option>
-      <option value="8">婚假</option>
-      <option value="9">孕检假</option>
-      <option value="10">护理假</option>
-      <option value="11">丧假</option>
-      <option value="12">工伤假</option>
-      <option value="13">探亲假</option>
-      <option value="14">公出</option>
-      <option value="15">出差</option>
-      <option value="16">新进离职不足月</option>
-      </select>
-    </div>
-    <div class="grid-block medium-2 align-center">{{d.leaveTime}}</div>
-    <div class="grid-block medium-1 align-center">
-      <select ng-model="d.pmReason" style="overflow-y: hidden;font-size: 12px;height: 28px" ng-show="d.pm==0">
-        <option value="1">出勤</option>
-        <option value="17">旷工</option>
-        <option value="18">迟到</option>
-        <option value="2">早退</option>
-        <option value="3">忘打卡</option>
-        <option value="4">事假</option>
-        <option value="5">病假</option>
-        <option value="6">产假</option>
-        <option value="7">年休假</option>
-        <option value="8">婚假</option>
-        <option value="9">孕检假</option>
-        <option value="10">护理假</option>
-        <option value="11">丧假</option>
-        <option value="12">工伤假</option>
-        <option value="13">探亲假</option>
-        <option value="14">公出</option>
-        <option value="15">出差</option>
-        <option value="16">新进离职不足月</option>
-      </select>
-    </div>
+  <div style="text-align: right;margin-top: 1rem;margin-right: 1rem;">
+    <span>个人帐号：</span>
+    <span>lidanhong@vcredit.com</span>
   </div>
+  <table style="margin-left: 1rem;margin-top: 30px;width: 96%;" role="grid" ng-if="details.length>0">
+    <thead>
+      <tr>
+        <th>
+          <input type="checkbox" ng-click="allChoose()" ng-model="all.choose">
+        </th>
+        <th>姓名</th>
+        <th>日期</th>
+        <th>上班时间</th>
+        <th>上班处理</th>
+        <th>下班时间</th>
+        <th>下班处理</th>
+      </tr>
+    </thead>
+    <tbody style="height: 3rem;" ng-repeat="d in details">
+      <tr>
+        <td style="">
+          <input type="checkbox" ng-model="d.choose" ng-click="singleChoose()">
+        </td>
+        <td>{{::d.name}}</td>
+        <td>{{::d.date}}</td>
+        <td>{{d.arriveTime}}</td>
+        <td>
+          <select ng-model="d.amReason" style="overflow-y: hidden;font-size: 12px;height: 28px" ng-show="d.am==0">
+              <option value="1">出勤</option>
+              <option value="17">旷工</option>
+              <option value="18">迟到</option>
+              <option value="2">早退</option>
+              <option value="3">忘打卡</option>
+              <option value="4">事假</option>
+              <option value="5">病假</option>
+              <option value="6">产假</option>
+              <option value="7">年休假</option>
+              <option value="8">婚假</option>
+              <option value="9">孕检假</option>
+              <option value="10">护理假</option>
+              <option value="11">丧假</option>
+              <option value="12">工伤假</option>
+              <option value="13">探亲假</option>
+              <option value="14">公出</option>
+              <option value="15">出差</option>
+              <option value="16">新进离职不足月</option>
+            </select>
+        </td>
+        <td>{{d.leaveTime}}</td>
+        <td>
+          <select ng-model="d.pmReason" style="overflow-y: hidden;font-size: 12px;height: 28px" ng-show="d.pm==0">
+              <option value="1">出勤</option>
+              <option value="17">旷工</option>
+              <option value="18">迟到</option>
+              <option value="2">早退</option>
+              <option value="3">忘打卡</option>
+              <option value="4">事假</option>
+              <option value="5">病假</option>
+              <option value="6">产假</option>
+              <option value="7">年休假</option>
+              <option value="8">婚假</option>
+              <option value="9">孕检假</option>
+              <option value="10">护理假</option>
+              <option value="11">丧假</option>
+              <option value="12">工伤假</option>
+              <option value="13">探亲假</option>
+              <option value="14">公出</option>
+              <option value="15">出差</option>
+              <option value="16">新进离职不足月</option>
+            </select>
+        </td>
+      </tr>
+    </tbody>
+  </table>
   <div class="grid-block "  style="margin-top: 3rem;"  ng-show="details.length>0">
     <div class="grid-block align-left medium-1 medium-offset-1">
       <select ng-model="all.reason" style="overflow-y: hidden;font-size: 12px;height: 34px;">
