@@ -36,6 +36,7 @@ define([], function () {
 
     //提交异常处理
     $scope.exceptionSubmit=function () {
+      //FoundationApi.publish('backModel','open');
       submitResult();
     }
 
@@ -134,8 +135,6 @@ define([], function () {
       $scope.all.choose=true;
     }
 
-    $scope.over=function () {
-    }
 
     $scope.goBack=function () {
       $state.go('home',{tab:3,error:''});

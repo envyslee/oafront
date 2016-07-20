@@ -107,7 +107,7 @@ dependencies: controllers/exceptionController,services/commonService
   <p style="font-size: 18px;margin: 4px 0 0 4px;padding-left: 36px">{{exErrorMsg}}</p>
 </div>
 
-<div zf-modal="" id="backModel" ng-click="over()">
+<div zf-modal="" id="backModel" overlay-close="false">
   <p style="font-size: 18px;margin: 4px 0 0 0px;">已全部处理完成，点击“确定”返回上一页</p>
   <p></p>
   <a class="button" style="width: 30%" ng-click="goBack()">确定</a>
