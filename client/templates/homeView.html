@@ -43,6 +43,28 @@ dependencies: controllers/homeController,services/commonService,services/default
           <a class="button" zf-open="singleUserModal" style="height: 2.4rem;margin-top: 3px">添加</a>
         </div>
       </div>
+      <div class="grid-block">
+        <div class="grid-block medium-1 align-right">工号</div>
+        <div class="grid-block medium-1">
+          <input type="text" ng-model="employeeQueryInfo.employeeId">
+        </div>
+        <div class="grid-block medium-1 align-right">身份证号</div>
+        <div class="grid-block medium-1">
+          <input type="text" ng-model="employeeQueryInfo.nationalId">
+        </div>
+        <div class="grid-block medium-1 align-right">姓名</div>
+        <div class="grid-block medium-1">
+          <input type="text" ng-model="employeeQueryInfo.employeeName">
+        </div>
+        <div class="grid-block medium-1 align-right">部门</div>
+        <div class="grid-block medium-1">
+          <input type="text" ng-model="employeeQueryInfo.department">
+        </div>
+        <div class="grid-block medium-1 align-right">
+          <a class="button" ng-click="employeeQuery()">查询</a>
+        </div>
+      </div>
+
       <table style="margin-left: 1rem;width: 96%;" role="grid">
         <thead>
         <tr ng-if="employeeData.length>0">
@@ -52,6 +74,8 @@ dependencies: controllers/homeController,services/commonService,services/default
           <th>考勤职场</th>
           <th>部门</th>
           <th>职位</th>
+          <th>入职时间</th>
+          <th>离职时间</th>
           <th>在职状态</th>
           <th>操作</th>
         </tr>
@@ -64,6 +88,8 @@ dependencies: controllers/homeController,services/commonService,services/default
             <td>{{e.workPlace}}</td>
             <td>{{e.department}}</td>
             <td>{{e.position}}</td>
+            <td>{{e.joinTime}}</td>
+            <td>{{e.leaveTime}}</td>
             <td>{{e.status}}</td>
             <td><button class="button" style="padding: .5rem;margin: 0" ng-class="{true:'',false:'disabled'}[e.status=='在职员工']" ng-click="openTagModel(e)">标记为离职</button></td>
           </tr>
@@ -334,6 +360,27 @@ dependencies: controllers/homeController,services/commonService,services/default
     </div>
     <!--异常处理-->
     <div ng-show="currentTag==3" class="grid-block medium-10 vertical" style="height: 100%;border-left: 1px solid #CCCCCC;margin-top: 30px;">
+      <div class="grid-block">
+        <div class="grid-block medium-1 align-right">工号</div>
+        <div class="grid-block medium-1">
+          <input type="text" ng-model="exceptionQueryInfo.employeeId">
+        </div>
+        <div class="grid-block medium-1 align-right">身份证号</div>
+        <div class="grid-block medium-1">
+          <input type="text" ng-model="exceptionQueryInfo.nationalId">
+        </div>
+        <div class="grid-block medium-1 align-right">姓名</div>
+        <div class="grid-block medium-1">
+          <input type="text" ng-model="exceptionQueryInfo.employeeName">
+        </div>
+        <div class="grid-block medium-1 align-right">部门</div>
+        <div class="grid-block medium-1">
+          <input type="text" ng-model="exceptionQueryInfo.department">
+        </div>
+        <div class="grid-block medium-1 align-right">
+          <a class="button" ng-click="exceptionQuery()">查询</a>
+        </div>
+      </div>
       <table style="width: 98%;height: 3rem;margin-left: 1rem;" role="grid" ng-if="exceptionEmployee.length>0">
         <thead>
         <tr>
@@ -434,6 +481,8 @@ dependencies: controllers/homeController,services/commonService,services/default
       </div>
     </div>
   </div>
+
+
 </div>
 
 <div zf-modal="" id="userModal">
@@ -482,3 +531,4 @@ dependencies: controllers/homeController,services/commonService,services/default
   <input type="hidden" ng-model="tag.employeeId">
   <a class="button " style="width: 20%" ng-class="{true:'disabled',false:''}[tag.leaveDate==null||tag.leaveDate=='']"  ng-click="tagOff()">确定</a>
 </div>
+

@@ -10,6 +10,7 @@ define([], function () {
       $state.go('login');
     }
 
+
     var url=app.service.baseapi;
     //当前选中tag
     $scope.currentTag=$stateParams['tab'];
@@ -86,6 +87,20 @@ define([], function () {
       workPlace:workPlaceId,
       jobStatus:0,
       tagHoliday:'',
+    }
+
+    $scope.employeeQueryInfo={
+      employeeId:'',
+      employeeName:'',
+      nationalId:'',
+      department:''
+    }
+
+    $scope.exceptionQueryInfo={
+      employeeId:'',
+      employeeName:'',
+      nationalId:'',
+      department:''
     }
 
     $scope.days={}
@@ -253,8 +268,13 @@ define([], function () {
     }
 
     var getEmployee=function () {
+      commonService.Loading();
       var param={
         workPlaceId:workPlaceId,
+        employeeId:$scope.employeeQueryInfo.employeeId,
+        employeeName:$scope.employeeQueryInfo.employeeName,
+        nationalId:$scope.employeeQueryInfo.nationalId,
+        department:$scope.employeeQueryInfo.department
       }
       commonService.PostRequest(url+"getEmployee",param).then(function (data) {
         for(var i=0;i<data.length;i++){
@@ -280,9 +300,13 @@ define([], function () {
               data[i].status='无效员工';
               break;
           }
+          data[i].joinTime=data[i].joinTime==null?'':new Date(data[i].joinTime).toLocaleDateString();
+          data[i].leaveTime=data[i].leaveTime==null?'':new Date(data[i].leaveTime).toLocaleDateString();
         }
         $scope.employeeData=data;
+        commonService.LoadingEnd();
       },function (e) {
+        commonService.LoadingEnd();
         if(e.message==undefined||e.message==null){
           $scope.errorMsg='网络异常，请稍后再试';
         }else{
@@ -416,15 +440,22 @@ define([], function () {
     }
 
     var getException=function () {
+      commonService.Loading();
       var param={
-        workPlaceId:workPlaceId
+        workPlaceId:workPlaceId,
+        employeeId:$scope.exceptionQueryInfo.employeeId,
+        employeeName:$scope.exceptionQueryInfo.employeeName,
+        nationalId:$scope.exceptionQueryInfo.nationalId,
+        department:$scope.exceptionQueryInfo.department
       }
       commonService.PostRequest(url+"getExceptionEmployee",param).then(function (data) {
           if(data.length>0)
           {
             $scope.exceptionEmployee=data;
           }
+        commonService.LoadingEnd();
       },function (e) {
+        commonService.LoadingEnd();
         $scope.errorMsg=e.message;
         FoundationApi.publish('errorModel','open');
       })
@@ -644,6 +675,16 @@ define([], function () {
     $scope.joinTimeBlur=function () {
       var picker=document.getElementById('joinTimePicker');
       picker.type='text';
+    }
+
+    //按查询条件查询员工
+    $scope.employeeQuery=function () {
+      getEmployee();
+    }
+
+    //按条件查询异常
+    $scope.exceptionQuery=function () {
+      getException();
     }
   }
   homeController.$inject = ['$scope', '$state', '$sessionStorage','$stateParams','commonService','FoundationApi'];
