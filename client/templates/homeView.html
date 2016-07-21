@@ -44,6 +44,8 @@ dependencies: controllers/homeController,services/commonService,services/default
           <h3>花名册</h3>
         </div>
       </div>
+      <div class="grid-block" style="margin-left: 1rem">本职场总共在职人数：{{employeeCount.total}}&nbsp;&nbsp;本月入职人数：{{employeeCount.arrive}}&nbsp;&nbsp;本月离职人数：{{employeeCount.leave}}</div>
+      <p></p>
       <div class="grid-block">
         <div class="grid-block medium-1 align-right" style="margin-top: 10px">
           <span>工号：</span>
@@ -82,31 +84,33 @@ dependencies: controllers/homeController,services/commonService,services/default
       <table style="margin-left: 1rem;width: 96%;" role="grid">
         <thead style="background: #0066cc; ">
         <tr ng-if="employeeData.length>0">
-          <th style="text-align: center;color: #fff">工号</th>
-          <th style="text-align: center;color: #fff">姓名</th>
-          <th style="text-align: center;color: #fff">身份证号</th>
-          <th style="text-align: center;color: #fff">部门</th>
-          <th style="text-align: center;color: #fff">职位</th>
-          <th style="text-align: center;color: #fff">考勤职场</th>
-          <th style="text-align: center;color: #fff">入职时间</th>
-          <th style="text-align: center;color: #fff">离职时间</th>
-          <th style="text-align: center;color: #fff">在职状态</th>
-          <th style="text-align: center;color: #fff">操作</th>
+          <th>序号</th>
+          <th>工号</th>
+          <th>身份证号</th>
+          <th>姓名</th>
+          <th>考勤职场</th>
+          <th>部门</th>
+          <th>职位</th>
+          <th>入职时间</th>
+          <th>离职时间</th>
+          <th>在职状态</th>
+          <th>操作</th>
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="e in employeeData">
-          <td style="text-align: center;">{{e.employeeId}}</td>
-          <td style="text-align: center;">{{e.employeeName}}</td>
-          <td style="text-align: center;">{{e.nationalId}}</td>
-          <td style="text-align: center;">{{e.department}}</td>
-          <td style="text-align: center;">{{e.position}}</td>
-          <td style="text-align: center;">{{e.workPlace}}</td>
-          <td style="text-align: center;">{{e.joinTime}}</td>
-          <td style="text-align: center;">{{e.leaveTime}}</td>
-          <td style="text-align: center;">{{e.status}}</td>
-          <td style="text-align: center;"><button class="button" style="padding: .5rem;margin: 0" ng-class="{true:'',false:'disabled'}[e.status=='在职员工']" ng-click="openTagModel(e)">标记为离职</button></td>
-        </tr>
+          <tr ng-repeat="e in employeeData">
+            <td>{{$index+1}}</td>
+            <td>{{e.employeeId}}</td>
+            <td>{{e.nationalId}}</td>
+            <td>{{e.employeeName}}</td>
+            <td>{{e.workPlace}}</td>
+            <td>{{e.department}}</td>
+            <td>{{e.position}}</td>
+            <td>{{e.joinTime}}</td>
+            <td>{{e.leaveTime}}</td>
+            <td>{{e.status}}</td>
+            <td><button class="button" style="padding: .5rem;margin: 0" ng-class="{true:'',false:'disabled'}[e.status=='在职员工']" ng-click="openTagModel(e)">标记为离职</button></td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -408,6 +412,7 @@ dependencies: controllers/homeController,services/commonService,services/default
       <table style="width: 86%;height: 3rem;margin-left: 15px;" role="grid" ng-if="exceptionEmployee.length>0">
         <thead>
         <tr>
+          <th>序号</th>
           <th>工号</th>
           <th>身份证号</th>
           <th>姓名</th>
@@ -418,6 +423,7 @@ dependencies: controllers/homeController,services/commonService,services/default
         </thead>
         <tbody style="width: 86%;height: 2rem" ng-repeat="ee in exceptionEmployee">
         <tr>
+          <td>{{$index+1}}</td>
           <td>{{ee.employeeId}}</td>
           <td>{{ee.nationalId}}</td>
           <td>{{ee.employeeName}}</td>
