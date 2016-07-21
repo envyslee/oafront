@@ -334,7 +334,7 @@ dependencies: controllers/homeController,services/commonService,services/default
     </div>
     <!--异常处理-->
     <div ng-show="currentTag==3" class="grid-block medium-10 vertical" style="height: 100%;border-left: 1px solid #CCCCCC;margin-top: 30px;">
-      <table style="width: 86%;height: 3rem;margin-left: 15px;" role="grid" ng-if="exceptionEmployee.length>0">
+      <table style="width: 98%;height: 3rem;margin-left: 1rem;" role="grid" ng-if="exceptionEmployee.length>0">
         <thead>
         <tr>
           <th>工号</th>
@@ -344,11 +344,11 @@ dependencies: controllers/homeController,services/commonService,services/default
           <th>职位</th>
         </tr>
         </thead>
-        <tbody style="width: 86%;height: 2rem" ng-repeat="ee in exceptionEmployee">
+        <tbody style="width: 98%;height: 2rem" ng-repeat="ee in exceptionEmployee">
         <tr>
           <td>{{ee.employeeId}}</td>
           <td>{{ee.nationalId}}</td>
-          <td><a class="grid-block medium-2 align-center" ui-sref="exceptiondetail({employeeId:ee.employeeId,employeeName:ee.employeeName})">{{ee.employeeName}}</a></td>
+          <td ><a  style="text-align:center" ui-sref="exceptiondetail({employeeId:ee.employeeId,employeeName:ee.employeeName})">{{ee.employeeName}}</a></td>
           <td>{{ee.department}}</td>
           <td>{{ee.position}}</td>
         </tr>

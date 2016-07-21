@@ -210,7 +210,6 @@ define([], function () {
 
     //添加单个员工
     $scope.addEmployee=function () {
-      //$scope.addUser.joinTime=$scope.addUser.joinTime.toLocaleDateString();
       commonService.PostRequest(url+"addEmployee",$scope.addUser).then(function () {
         FoundationApi.publish('singleUserModal', 'close');
         getEmployee();
