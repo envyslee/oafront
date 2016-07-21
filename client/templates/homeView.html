@@ -9,24 +9,24 @@ dependencies: controllers/homeController,services/commonService,services/default
     <img src="../assets/img/u10.png"style="width: 200%">
   </div>
   <div style="text-align: right;margin-top: 1rem;margin-right: 1rem;">
-    <span>用户名：</span>
+    <span>当前用户：</span>
     <span>{{::currentUser.name}}</span>
   </div>
   <div class="grid-block">
-    <div class="grid-block medium-2 vertical" style="height: 300px">
-      <div class="grid-block align-center" style="height: 4rem;line-height: 4rem">
+    <div class="grid-block medium-2 vertical" style="height: 800px;border-right: 1px solid #CCCCCC">
+      <div style="text-align: center;height: 3rem;line-height: 3rem">
         <a ng-click="chooseTab(0)">花名册</a>
       </div>
-      <div class="grid-block align-center" style="height: 4rem;line-height: 4rem">
+      <div style="text-align: center;height: 3rem;line-height: 3rem">
         <a ng-click="chooseTab(1)">考勤导入</a>
       </div>
-      <div class="grid-block align-center" style="height: 4rem;line-height: 4rem">
+      <div style="text-align: center;height: 3rem;line-height: 3rem">
         <a ng-click="chooseTab(2)">考勤查询</a>
       </div>
-      <div class="grid-block align-center" style="height: 4rem;line-height: 4rem">
+      <div style="text-align: center;height: 3rem;line-height: 3rem">
         <a ng-click="chooseTab(3)">异常处理</a>
       </div>
-      <div class="grid-block align-center" style="height: 4rem;line-height: 4rem">
+      <div style="text-align: center;height: 3rem;line-height: 3rem">
         <a ng-click="chooseTab(4)">个人配置</a>
       </div>
       <div class="grid-block align-center" style="height: 4rem;line-height: 4rem">
@@ -34,77 +34,92 @@ dependencies: controllers/homeController,services/commonService,services/default
       </div>
     </div>
     <!--花名册tab-->
-    <div ng-show="currentTag==0" class="grid-block medium-10 vertical" style="border-left: 1px solid #CCCCCC">
+    <div ng-show="currentTag==0" class="grid-block medium-10 vertical">
+      <div style="margin-top: 10px;margin-left: 20px;">
+        <span style="color: #0c4d78;">首页 — </span>
+        <span style="color: #0c4d78;">花名册</span>
+      </div>
       <div class="grid-block" style="margin-top: 10px;" >
         <div class="grid-block medium-9 medium-offset-1 align-center">
-          <h3>考勤花名册</h3>
-        </div>
-        <div class="grid-block medium-1 align-center">
-          <a class="button" zf-open="userModal" style="height: 2.4rem;margin-top: 3px">导入</a>
-        </div>
-        <div class="grid-block medium-1 align-center">
-          <a class="button" zf-open="singleUserModal" style="height: 2.4rem;margin-top: 3px">添加</a>
+          <h3>花名册</h3>
         </div>
       </div>
       <div class="grid-block">
-        <div class="grid-block medium-1 align-right">工号</div>
+        <div class="grid-block medium-1 align-right" style="margin-top: 10px">
+          <span>工号：</span>
+        </div>
         <div class="grid-block medium-1">
           <input type="text" ng-model="employeeQueryInfo.employeeId">
         </div>
-        <div class="grid-block medium-1 align-right">身份证号</div>
+        <div class="grid-block medium-1 align-right" style="margin-top: 10px">
+          <span>身份证号：</span>
+        </div>
         <div class="grid-block medium-1">
           <input type="text" ng-model="employeeQueryInfo.nationalId">
         </div>
-        <div class="grid-block medium-1 align-right">姓名</div>
+        <div class="grid-block medium-1 align-right" style="margin-top: 10px">
+          <span>姓名：</span>
+        </div>
         <div class="grid-block medium-1">
           <input type="text" ng-model="employeeQueryInfo.employeeName">
         </div>
-        <div class="grid-block medium-1 align-right">部门</div>
+        <div class="grid-block medium-1 align-right" style="margin-top: 10px">
+          <span>部门：</span>
+        </div>
         <div class="grid-block medium-1">
           <input type="text" ng-model="employeeQueryInfo.department">
         </div>
         <div class="grid-block medium-1 align-right">
-          <a class="button" ng-click="employeeQuery()">查询</a>
+          <a class="button" ng-click="employeeQuery()" style="height: 2.4rem;">查询</a>
+        </div>
+        <div class="grid-block medium-1 align-center">
+          <a class="button" zf-open="userModal" style="height: 2.4rem;margin-left: 20px;">导入花名册</a>
+        </div>
+        <div class="grid-block medium-1 align-center">
+          <a class="button" zf-open="singleUserModal" style="height: 2.4rem;">添加新员工</a>
         </div>
       </div>
-
       <table style="margin-left: 1rem;width: 96%;" role="grid">
-        <thead>
+        <thead style="background: #0066cc; ">
         <tr ng-if="employeeData.length>0">
-          <th>工号</th>
-          <th>身份证号</th>
-          <th>姓名</th>
-          <th>考勤职场</th>
-          <th>部门</th>
-          <th>职位</th>
-          <th>入职时间</th>
-          <th>离职时间</th>
-          <th>在职状态</th>
-          <th>操作</th>
+          <th style="text-align: center;color: #fff">工号</th>
+          <th style="text-align: center;color: #fff">姓名</th>
+          <th style="text-align: center;color: #fff">身份证号</th>
+          <th style="text-align: center;color: #fff">部门</th>
+          <th style="text-align: center;color: #fff">职位</th>
+          <th style="text-align: center;color: #fff">考勤职场</th>
+          <th style="text-align: center;color: #fff">入职时间</th>
+          <th style="text-align: center;color: #fff">离职时间</th>
+          <th style="text-align: center;color: #fff">在职状态</th>
+          <th style="text-align: center;color: #fff">操作</th>
         </tr>
         </thead>
         <tbody>
         <tr ng-repeat="e in employeeData">
-          <td>{{e.employeeId}}</td>
-          <td>{{e.nationalId}}</td>
-          <td>{{e.employeeName}}</td>
-          <td>{{e.workPlace}}</td>
-          <td>{{e.department}}</td>
-          <td>{{e.position}}</td>
-          <td>{{e.joinTime}}</td>
-          <td>{{e.leaveTime}}</td>
-          <td>{{e.status}}</td>
-          <td><button class="button" style="padding: .5rem;margin: 0" ng-class="{true:'',false:'disabled'}[e.status=='在职员工']" ng-click="openTagModel(e)">标记为离职</button></td>
+          <td style="text-align: center;">{{e.employeeId}}</td>
+          <td style="text-align: center;">{{e.employeeName}}</td>
+          <td style="text-align: center;">{{e.nationalId}}</td>
+          <td style="text-align: center;">{{e.department}}</td>
+          <td style="text-align: center;">{{e.position}}</td>
+          <td style="text-align: center;">{{e.workPlace}}</td>
+          <td style="text-align: center;">{{e.joinTime}}</td>
+          <td style="text-align: center;">{{e.leaveTime}}</td>
+          <td style="text-align: center;">{{e.status}}</td>
+          <td style="text-align: center;"><button class="button" style="padding: .5rem;margin: 0" ng-class="{true:'',false:'disabled'}[e.status=='在职员工']" ng-click="openTagModel(e)">标记为离职</button></td>
         </tr>
         </tbody>
       </table>
     </div>
     <!--考勤数据导入tab-->
-    <div ng-show="currentTag==1" class="grid-block medium-10 align-center vertical" style=" height: auto;margin-top: 4rem;border-left: 1px solid #CCCCCC;">
-      <div style="text-align: center;">
-        <h3>数据导入</h3>
+    <div ng-show="currentTag==1" class=" medium-10 align-center vertical" style=" height: auto;">
+      <div style="margin-top: 10px;margin-left: 20px;">
+        <span style="color: #0c4d78;">首页 — </span>
+        <span style="color: #0c4d78;">考勤导入</span>
       </div>
-      <div class="grid-block align-center" style="margin-top: 1rem;">
+      <div style="text-align: center;">
+        <h3>考勤导入</h3>
+      </div>
+      <div class="grid-block align-center" style="margin-top: 3rem;">
         <form id="wForm" method="post" enctype="multipart/form-data" action="http://localhost:8080/wxoa/uploadWorkSrc">
           <input name="userId" ng-model="currentUser.userId" style="display: none">
           <input name="workPlaceId" ng-model="currentUser.workPlace" style="display: none">
@@ -112,24 +127,30 @@ dependencies: controllers/homeController,services/commonService,services/default
           <input name="workFile" type="file" value="导入" input-on-change="workChange">
         </form>
       </div>
-      <div class="grid-block align-center" style="margin-top: 2rem;">
+      <div class="grid-block align-center" style="margin-top: 4rem;">
         <a class="button expand" style="width: 12%;height: 32px;" ng-class="{true:'',false:'disabled'}[btn.work]" ng-click="uploadWorkSrc()" >确定</a>
       </div>
-      <div class="grid-block align-center" style="text-align: center;margin-top: 1rem;height: 15px;">
+      <div class="grid-block align-center" style="text-align: center;margin-top: 4rem;height: 15px;">
         <span style="color: red">注：</span>
-        <span>导入数据必须按照标准模板文件格式导入</span>
-        <a  ng-href="./assets/excel/{{xlsUrl}}">标准模板下载</a>
+        <span>导入数据必须按照标准模板文件格式导入    </span>
+        <a  style="margin-left: 50px;" ng-href="./assets/excel/{{xlsUrl}}">标准模板下载</a>
       </div>
     </div>
     <!--考勤查询tab-->
-    <div ng-show="currentTag==2" class="grid-block medium-10 vertical" style="margin-top: 10px;border-left: 1px solid #CCCCCC">
-
-      <div class="grid-block">
+    <div ng-show="currentTag==2" class="grid-block medium-10 vertical">
+      <div style="margin-top: 10px;margin-left: 20px;">
+        <span style="color: #0c4d78;">首页 — </span>
+        <span style="color: #0c4d78;">考勤查询</span>
+      </div>
+      <div style="text-align: center;">
+        <h3>考勤查询</h3>
+      </div>
+      <div class="grid-block" style="margin-top: 10px;">
         <div class="grid-block medium-1 align-right" style="margin-top: 10px">
-          <span>查询年份：</span>
+          <span>年份：</span>
         </div>
-        <div class="grid-block medium-2">
-          <select  ng-model="queryInfo.year" style="width: 80%;">
+        <div class="grid-block medium-1">
+          <select  ng-model="queryInfo.year" style="width: 100%;">
             <option value="0">请选择</option>
             <option value="2016">2016</option>
             <option value="2017">2017</option>
@@ -137,10 +158,10 @@ dependencies: controllers/homeController,services/commonService,services/default
           </select>
         </div>
         <div class="grid-block medium-1 align-right" style="margin-top: 10px">
-          <span>查询月份：</span>
+          <span>月份：</span>
         </div>
-        <div class="grid-block medium-2">
-          <select ng-model="queryInfo.month" style="width: 80%;">
+        <div class="grid-block medium-1">
+          <select ng-model="queryInfo.month" style="width: 100%;">
             <option value="0">请选择</option>
             <option value="1">1</option>
             <option value="2">2</option>
@@ -159,23 +180,21 @@ dependencies: controllers/homeController,services/commonService,services/default
         <div class="grid-block medium-1 align-right" style="margin-top: 10px">
           <span>在职状态：</span>
         </div>
-        <div class="grid-block medium-2">
-          <select ng-model="queryInfo.jobStatus" style="width: 80%;">
+        <div class="grid-block medium-1">
+          <select ng-model="queryInfo.jobStatus" style="width: 100%;">
             <option value="0">全部</option>
             <option value="1">在职</option>
             <option value="-1">离职</option>
           </select>
         </div>
-      </div>
-      <div class="align-center grid-block">
-        <div class="small-4 grid-block small-offset-2">
+        <div class="small-4 grid-block small-offset-2 medium-1" style="margin-left: 60px;">
           <a class="button"  style="height: 2.4rem; width: 14rem;" ng-click="query()">查询</a>
         </div>
-        <div class="small-4 grid-block ">
+        <div class="small-4 grid-block medium-1" style="margin-left: 40px;">
           <a class="button" ng-class="{true:'',false:'disabled'}[queryResult.length>0]" style="height: 2.4rem; width: 14rem;" ng-click="output()">导出</a>
         </div>
       </div>
-      <div style="height:680px;overflow:auto;" id="exportable">
+      <div style="height:680px;overflow:auto;margin-top: 10px;" id="exportable">
         <!--考勤符号 出勤:/  旷工:○  迟到:﹟  早退:×  忘打卡：忘   事假:⊙   病假:⊕  产假:◎  年休假：年  婚假:Δ   孕检假：★    护理假：※   丧假：▲   工伤假：☆   探亲假:回   公出:公   出差：差  新进离职不足月：－   -->
         <table ng-show="queryResult.length>0" style="margin-left: 1rem;" role="grid">
           <thead>
@@ -356,8 +375,15 @@ dependencies: controllers/homeController,services/commonService,services/default
       </div>
     </div>
     <!--异常处理1-->
-    <div ng-show="currentTag==3" class="grid-block medium-10 vertical" style="height: 100%;border-left: 1px solid #CCCCCC;margin-top: 30px;">
+    <div ng-show="currentTag==3" class="grid-block medium-10 vertical" style="height: 100%;">
       <p ng-if="exceptionEmployee==undefined||exceptionEmployee.length==0" style="margin-left: 6rem">当前无异常需要处理</p>
+      <div style="margin-top: 10px;margin-left: 20px;">
+        <span style="color: #0c4d78;">首页 — </span>
+        <span style="color: #0c4d78;">异常处理</span>
+      </div>
+      <div style="text-align: center;">
+        <h3>异常处理</h3>
+      </div>
       <div class="grid-block"  ng-if="exceptionEmployee.length>0">
         <div class="grid-block medium-1 align-right">工号</div>
         <div class="grid-block medium-1">
@@ -379,7 +405,7 @@ dependencies: controllers/homeController,services/commonService,services/default
           <a class="button" ng-click="exceptionQuery()">查询</a>
         </div>
       </div>
-      <table style="width: 98%;height: 3rem;margin-left: 1rem;" role="grid" ng-if="exceptionEmployee.length>0">
+      <table style="width: 86%;height: 3rem;margin-left: 15px;" role="grid" ng-if="exceptionEmployee.length>0">
         <thead>
         <tr>
           <th>工号</th>
@@ -387,14 +413,14 @@ dependencies: controllers/homeController,services/commonService,services/default
           <th>姓名</th>
           <th>部门</th>
           <th>职位</th>
-          <th>处理</th>
+          <th>操作</th>
         </tr>
         </thead>
-        <tbody style="width: 98%;height: 2rem" ng-repeat="ee in exceptionEmployee">
+        <tbody style="width: 86%;height: 2rem" ng-repeat="ee in exceptionEmployee">
         <tr>
           <td>{{ee.employeeId}}</td>
           <td>{{ee.nationalId}}</td>
-          <td >{{ee.employeeName}}</td>
+          <td>{{ee.employeeName}}</td>
           <td>{{ee.department}}</td>
           <td>{{ee.position}}</td>
           <td>  <a class="button" ng-click="exceptionDetail(ee)">处理</a></td>
@@ -509,7 +535,11 @@ dependencies: controllers/homeController,services/commonService,services/default
     </div>
 
     <!--个人配置-->
-    <div ng-show="currentTag==4" class="grid-block medium-10 vertical" style="border-left: 1px solid #CCCCCC">
+    <div ng-show="currentTag==4" class="grid-block medium-10 vertical">
+      <div style="margin-top: 10px;margin-left: 20px;">
+        <span style="color: #0c4d78;">首页 — </span>
+        <span style="color: #0c4d78;">个人配置</span>
+      </div>
       <div style="text-align: center;">
         <h3>个人配置</h3>
       </div>
@@ -603,21 +633,23 @@ dependencies: controllers/homeController,services/commonService,services/default
       </div>
     </div>
   </div>
-
 </div>
 
 <div zf-modal="" id="userModal">
   <a zf-close="" class="close-button">×</a>
-  <form id="eForm" method="post" enctype="multipart/form-data" action="http://localhost:8080/wxoa/uploadEmployeeSrc">
+  <div class="grid-block medium-9 medium-offset-1 align-center">
+    <h3 style="text-align: center">花名册</h3>
+  </div>
+  <form style="height: 2rem;" id="eForm" method="post" enctype="multipart/form-data" action="http://localhost:8080/wxoa/uploadEmployeeSrc">
     <input name="userId" ng-model="currentUser.userId" style="display: none">
     <input name="workPlaceId" ng-model="currentUser.workPlace" style="display: none">
     <input name="callbackUrl" ng-model="currentUser.callbackUrl" style="display: none">
     <input name="file" type="file" value="导入" input-on-change="employeeChange">
   </form>
-  <div style="margin-top: 1rem">
+  <div style="margin-top: 2rem">
     <a href="./assets/excel/employee.xls">标准模板下载</a>
   </div>
-  <div class="grid-block align-center" style="margin-top: 2rem">
+  <div class="grid-block align-center" style="margin-top:3rem">
     <a class="button expand" style="width: 30%" ng-class="{true:'',false:'disabled'}[btn.employee]"  ng-click="uploadEmployee()">确定</a>
   </div>
 </div>
