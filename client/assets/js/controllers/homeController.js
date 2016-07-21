@@ -163,9 +163,7 @@ define([], function () {
       var path=window.location.hash.split('/');
       window.location.hash=path[0]+'/'+path[1]+'/'+tab+'/'+path[3];
       if(tab==3){
-        if($scope.exceptionEmployee==null||$scope.exceptionEmployee==undefined){
           getException();
-        }
       }else if(tab==0){
         if($scope.employeeData==null||$scope.employeeData==undefined){
           getEmployee();
@@ -473,6 +471,8 @@ define([], function () {
           if(data.length>0)
           {
             $scope.exceptionEmployee=data;
+          }else {
+            $scope.exceptionEmployee=[];
           }
         commonService.LoadingEnd();
       },function (e) {
@@ -721,8 +721,12 @@ define([], function () {
         json:j,
         user:$sessionStorage['userId']
       }
+      var employee={
+        employeeId:$scope.details[0].id,
+        employeeName:$scope.details[0].name
+      }
       commonService.PostRequest(url+"modifyException",param).then(function (data) {
-        getEmployeeException();
+        getEmployeeException(employee);
       },function (e) {
         $scope.exErrorMsg=e.content;
         FoundationApi.publish('exErrorModel','open');
@@ -797,9 +801,9 @@ define([], function () {
             array[i]=new map(data[i].id,employee.employeeName,new Date(data[i].today).toLocaleDateString(),a,l,data[i].amStatus,data[i].pmStatus);
           }
           $scope.details=array;
-        }else{
+        }
+        else{
           $scope.details=[];
-          FoundationApi.publish('backModel','open');
         }
       },function (e) {
         $scope.errorMsg=e.message;

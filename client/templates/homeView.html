@@ -360,7 +360,8 @@ dependencies: controllers/homeController,services/commonService,services/default
     </div>
     <!--异常处理1-->
     <div ng-show="currentTag==3" class="grid-block medium-10 vertical" style="height: 100%;border-left: 1px solid #CCCCCC;margin-top: 30px;">
-      <div class="grid-block">
+      <p ng-if="exceptionEmployee==undefined||exceptionEmployee.length==0" style="margin-left: 6rem">当前无异常需要处理</p>
+      <div class="grid-block"  ng-if="exceptionEmployee.length>0">
         <div class="grid-block medium-1 align-right">工号</div>
         <div class="grid-block medium-1">
           <input type="text" ng-model="exceptionQueryInfo.employeeId">
@@ -643,7 +644,7 @@ dependencies: controllers/homeController,services/commonService,services/default
 
 
 
-<div zf-modal="" id="backModel" overlay-close="false">
-  <p style="font-size: 18px;margin: 4px 0 0 0px;">已全部处理完成</p>
-</div>
+<!--<div zf-modal="" id="backModel" overlay-close="false">-->
+  <!--<p style="font-size: 18px;margin: 4px 0 0 0px;">已全部处理完成</p>-->
+<!--</div>-->
 
