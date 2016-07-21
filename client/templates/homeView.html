@@ -44,6 +44,10 @@ dependencies: controllers/homeController,services/commonService,services/default
         </div>
       </div>
       <div class="grid-block">
+        <p style="margin-left: 1rem">fawefa</p>
+      </div>
+
+      <div class="grid-block">
         <div class="grid-block medium-1 align-right">工号</div>
         <div class="grid-block medium-1">
           <input type="text" ng-model="employeeQueryInfo.employeeId">
@@ -68,6 +72,7 @@ dependencies: controllers/homeController,services/commonService,services/default
       <table style="margin-left: 1rem;width: 96%;" role="grid">
         <thead>
         <tr ng-if="employeeData.length>0">
+          <th>序号</th>
           <th>工号</th>
           <th>身份证号</th>
           <th>姓名</th>
@@ -82,6 +87,7 @@ dependencies: controllers/homeController,services/commonService,services/default
         </thead>
         <tbody>
           <tr ng-repeat="e in employeeData">
+            <td>{{$index+1}}</td>
             <td>{{e.employeeId}}</td>
             <td>{{e.nationalId}}</td>
             <td>{{e.employeeName}}</td>
@@ -183,6 +189,7 @@ dependencies: controllers/homeController,services/commonService,services/default
            <table ng-show="queryResult.length>0" style="margin-left: 1rem;" role="grid">
              <thead>
              <tr>
+               <th>序号</th>
                <th >部门</th>
                <th >姓名</th>
                <th >身份证号</th>
@@ -269,6 +276,7 @@ dependencies: controllers/homeController,services/commonService,services/default
              </thead>
              <tbody>
              <tr ng-repeat="r in queryResult">
+               <td>{{$index+1}}</td>
                <td>{{r.department}}</td>
                <td>{{r.employeeName}}</td>
                <td>{{r.nationalId}}</td>
@@ -334,7 +342,6 @@ dependencies: controllers/homeController,services/commonService,services/default
                <td>{{r.day30p}}</td>
                <td ng-hide="queryInfo.month==2||queryInfo.month==4||queryInfo.month==6||queryInfo.month==9||queryInfo.month==11">{{r.day31a}}</td>
                <td ng-hide="queryInfo.month==2||queryInfo.month==4||queryInfo.month==6||queryInfo.month==9||queryInfo.month==11">{{r.day31p}}</td>
-
                <td>{{r.exception}}</td>
                <td>{{r.late}}</td>
                <td>{{r.earlyLeave}}</td>
@@ -385,6 +392,7 @@ dependencies: controllers/homeController,services/commonService,services/default
       <table style="width: 98%;height: 3rem;margin-left: 1rem;" role="grid" ng-if="exceptionEmployee.length>0">
         <thead>
         <tr>
+          <th>序号</th>
           <th>工号</th>
           <th>身份证号</th>
           <th>姓名</th>
@@ -395,6 +403,7 @@ dependencies: controllers/homeController,services/commonService,services/default
         </thead>
         <tbody style="width: 98%;height: 2rem" ng-repeat="ee in exceptionEmployee">
         <tr>
+          <td>{{$index+1}}</td>
           <td>{{ee.employeeId}}</td>
           <td>{{ee.nationalId}}</td>
           <td >{{ee.employeeName}}</td>
@@ -411,6 +420,7 @@ dependencies: controllers/homeController,services/commonService,services/default
       <table style="margin-left: 1rem;margin-top: 30px;width: 96%;" role="grid" ng-if="details.length>0">
         <thead>
         <tr>
+          <th>序号</th>
           <th>
             <input type="checkbox" ng-click="allChoose()" ng-model="all.choose">
           </th>
@@ -424,6 +434,7 @@ dependencies: controllers/homeController,services/commonService,services/default
         </thead>
         <tbody style="height: 3rem;" ng-repeat="d in details">
         <tr>
+          <td>{{$index+1}}</td>
           <td style="">
             <input type="checkbox" ng-model="d.choose" ng-click="singleChoose()">
           </td>
