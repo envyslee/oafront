@@ -124,6 +124,12 @@ define([], function () {
       department:''
     }
 
+    $scope.employeeCount={
+      total:0,
+      arrive:0,
+      leave:0
+    }
+
     $scope.days={}
 
     $scope.addUser={
@@ -286,6 +292,7 @@ define([], function () {
       FoundationApi.publish('tagModel','open');
     }
 
+
     var getEmployee=function () {
       commonService.Loading();
       var param={
@@ -295,8 +302,22 @@ define([], function () {
         nationalId:$scope.employeeQueryInfo.nationalId,
         department:$scope.employeeQueryInfo.department
       }
+
       commonService.PostRequest(url+"getEmployee",param).then(function (data) {
+        $scope.employeeCount.total=data.length;
+        var date=new Date();
+        var nowYear=date.getFullYear();
+        var nowMonth=date.getMonth();
+        var getMonthStartDate = new Date(nowYear, nowMonth, 1);
+        var getMonthEndDate = new Date(nowYear, nowMonth + 1, 0);
+
         for(var i=0;i<data.length;i++){
+          if(data[i].joinTime< getMonthEndDate.getTime()&&data[i].joinTime>getMonthStartDate.getTime()){
+            $scope.employeeCount.arrive++;
+          }
+          if(data[i].leaveTime<getMonthEndDate.getTime()&&data[i].leaveTime>getMonthStartDate.getTime()){
+            $scope.employeeCount.leave++;
+          }
           switch (data[i].workPlace){
             case 10:
               data[i].workPlace='苏州凤凰';
