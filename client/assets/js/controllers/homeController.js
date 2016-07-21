@@ -695,13 +695,13 @@ define([], function () {
             workPlaceId:workPlaceId,
           }
         commonService.PostRequest(url+"tagHoliday",param).then(function (data) {
-            if ($scope.queryInfo.year==0){
-              return;
-            }
-            if ($scope.queryInfo.month==0){
-              return;
-            }
-            queryRecord();
+            // if ($scope.queryInfo.year==0){
+            //   return;
+            // }
+            // if ($scope.queryInfo.month==0){
+            //   return;
+            // }
+            // queryRecord();
         },function (e) {
           $scope.errorMsg=e.message;
           FoundationApi.publish('errorModel','open');
