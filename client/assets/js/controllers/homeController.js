@@ -127,7 +127,9 @@ define([], function () {
       var path=window.location.hash.split('/');
       window.location.hash=path[0]+'/'+path[1]+'/'+tab+'/'+path[3];
       if(tab==3){
-        getException();
+        if($scope.exceptionEmployee==null||$scope.exceptionEmployee==undefined){
+          getException();
+        }
       }else if(tab==0){
         if($scope.employeeData==null||$scope.employeeData==undefined){
           getEmployee();
