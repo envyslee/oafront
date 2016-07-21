@@ -5,15 +5,15 @@ controller: homeController
 dependencies: controllers/homeController,services/commonService,services/defaultService,FileSaver
 ---
 <div class="ui-container" ng-init="employeeInit()">
- <div class="grid-block">
-   <img src="../assets/img/u10.png"style="width: 200%">
- </div>
+  <div class="grid-block">
+    <img src="../assets/img/u10.png"style="width: 200%">
+  </div>
   <div style="text-align: right;margin-top: 1rem;margin-right: 1rem;">
     <span>用户名：</span>
     <span>{{::currentUser.name}}</span>
   </div>
   <div class="grid-block">
-    <div class="grid-block medium-2 vertical" style="height: 200px">
+    <div class="grid-block medium-2 vertical" style="height: 300px">
       <div class="grid-block align-center" style="height: 4rem;line-height: 4rem">
         <a ng-click="chooseTab(0)">花名册</a>
       </div>
@@ -29,6 +29,9 @@ dependencies: controllers/homeController,services/commonService,services/default
       <div class="grid-block align-center" style="height: 4rem;line-height: 4rem">
         <a ng-click="chooseTab(4)">个人配置</a>
       </div>
+      <div class="grid-block align-center" style="height: 4rem;line-height: 4rem">
+        <a ng-click="chooseTab(6)">节假日设置</a>
+      </div>
     </div>
     <!--花名册tab-->
     <div ng-show="currentTag==0" class="grid-block medium-10 vertical" style="border-left: 1px solid #CCCCCC">
@@ -43,10 +46,6 @@ dependencies: controllers/homeController,services/commonService,services/default
           <a class="button" zf-open="singleUserModal" style="height: 2.4rem;margin-top: 3px">添加</a>
         </div>
       </div>
-      <div class="grid-block">
-        <p style="margin-left: 1rem">fawefa</p>
-      </div>
-
       <div class="grid-block">
         <div class="grid-block medium-1 align-right">工号</div>
         <div class="grid-block medium-1">
@@ -160,7 +159,7 @@ dependencies: controllers/homeController,services/commonService,services/default
           </select>
         </div>
         <div class="grid-block medium-1 align-right" style="margin-top: 10px">
-            <span>在职状态：</span>
+          <span>在职状态：</span>
         </div>
         <div class="grid-block medium-2">
           <select ng-model="queryInfo.jobStatus" style="width: 80%;">
@@ -168,12 +167,6 @@ dependencies: controllers/homeController,services/commonService,services/default
             <option value="1">在职</option>
             <option value="-1">离职</option>
           </select>
-        </div>
-        <div class="grid-block medium-2 align-right" style="margin-top: 10px;margin-left: -100px">
-          <span>标记为节假日：</span>
-        </div>
-        <div class="grid-block medium-1.5">
-          <input type="date" ng-model="queryInfo.tagHoliday" ng-change="tagHolidayChange()">
         </div>
       </div>
       <div class="align-center grid-block">
@@ -361,8 +354,8 @@ dependencies: controllers/homeController,services/commonService,services/default
                <td>{{r.attendance}}</td>
              </tr>
 
-             </tbody>
-           </table>
+          </tbody>
+        </table>
       </div>
     </div>
     <!--异常处理1-->
@@ -600,8 +593,22 @@ dependencies: controllers/homeController,services/commonService,services/default
         </div>
       </div>
     </div>
-
-
+    <!--节假日设置-->
+    <div ng-show="currentTag==6" class="grid-block medium-10 vertical" style="border-left: 1px solid #CCCCCC">
+      <div style="margin-top: 10px;margin-left: 20px;">
+        <span style="color: #0c4d78;">首页 — </span>
+        <span style="color: #0c4d78;">节假日设置</span>
+      </div>
+      <div style="text-align: center;">
+        <h3>节假日设置</h3>
+      </div>
+      <div style="margin-top: 10px;margin-left: -100px">
+        <span>标记为节假日：</span>
+      </div>
+      <div class="grid-block medium-2" style="width: 200px;margin-left: 10%;">
+        <input type="date" ng-model="queryInfo.tagHoliday" ng-change="tagHolidayChange()">
+      </div>
+    </div>
   </div>
 
 </div>
@@ -615,7 +622,7 @@ dependencies: controllers/homeController,services/commonService,services/default
     <input name="file" type="file" value="导入" input-on-change="employeeChange">
   </form>
   <div style="margin-top: 1rem">
-  <a href="./assets/excel/employee.xls">标准模板下载</a>
+    <a href="./assets/excel/employee.xls">标准模板下载</a>
   </div>
   <div class="grid-block align-center" style="margin-top: 2rem">
     <a class="button expand" style="width: 30%" ng-class="{true:'',false:'disabled'}[btn.employee]"  ng-click="uploadEmployee()">确定</a>
