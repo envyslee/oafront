@@ -17,7 +17,7 @@ define([], function () {
       reason:0,//多选原因
     }
 
-
+    $scope.currentUser=$sessionStorage['userName'];
 
     var map=function (id,name,date,arrive,leave,am,pm) {
       this.id=id;

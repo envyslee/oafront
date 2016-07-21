@@ -10,6 +10,7 @@ define([], function () {
       $state.go('login');
     }
 
+
     var url=app.service.baseapi;
     //当前选中tag
     $scope.currentTag=$stateParams['tab'];
@@ -21,6 +22,7 @@ define([], function () {
 
     //错误提示
     $scope.errorMsg='网络异常';
+
 
     var error=$stateParams['error'];
     if(error!=undefined&&error!=null&&error!=""){
@@ -67,6 +69,26 @@ define([], function () {
       $scope.xlsUrl="sz.xls"
     }
 
+    //异常详情
+    $scope.details={
+    }
+
+    $scope.all={
+      choose:false,//是否全选
+      reason:0,//多选原因
+    }
+
+    var map=function (id,name,date,arrive,leave,am,pm) {
+      this.id=id;
+      this.name=name;
+      this.date=date;
+      this.arriveTime=arrive;
+      this.leaveTime=leave;
+      this.am=am;
+      this.pm=pm;
+    }
+
+
     $scope.currentUser={
       name:$sessionStorage['userName'],
       workPlace:workPlaceId,
@@ -86,6 +108,20 @@ define([], function () {
       workPlace:workPlaceId,
       jobStatus:0,
       tagHoliday:'',
+    }
+
+    $scope.employeeQueryInfo={
+      employeeId:'',
+      employeeName:'',
+      nationalId:'',
+      department:''
+    }
+
+    $scope.exceptionQueryInfo={
+      employeeId:'',
+      employeeName:'',
+      nationalId:'',
+      department:''
     }
 
     $scope.days={}
@@ -127,9 +163,7 @@ define([], function () {
       var path=window.location.hash.split('/');
       window.location.hash=path[0]+'/'+path[1]+'/'+tab+'/'+path[3];
       if(tab==3){
-        if($scope.exceptionEmployee==null||$scope.exceptionEmployee==undefined){
           getException();
-        }
       }else if(tab==0){
         if($scope.employeeData==null||$scope.employeeData==undefined){
           getEmployee();
@@ -210,7 +244,6 @@ define([], function () {
 
     //添加单个员工
     $scope.addEmployee=function () {
-      //$scope.addUser.joinTime=$scope.addUser.joinTime.toLocaleDateString();
       commonService.PostRequest(url+"addEmployee",$scope.addUser).then(function () {
         FoundationApi.publish('singleUserModal', 'close');
         getEmployee();
@@ -254,8 +287,13 @@ define([], function () {
     }
 
     var getEmployee=function () {
+      commonService.Loading();
       var param={
         workPlaceId:workPlaceId,
+        employeeId:$scope.employeeQueryInfo.employeeId,
+        employeeName:$scope.employeeQueryInfo.employeeName,
+        nationalId:$scope.employeeQueryInfo.nationalId,
+        department:$scope.employeeQueryInfo.department
       }
       commonService.PostRequest(url+"getEmployee",param).then(function (data) {
         for(var i=0;i<data.length;i++){
@@ -281,14 +319,18 @@ define([], function () {
               data[i].status='无效员工';
               break;
           }
+          data[i].joinTime=data[i].joinTime==null?'':new Date(data[i].joinTime).toLocaleDateString();
+          data[i].leaveTime=data[i].leaveTime==null?'':new Date(data[i].leaveTime).toLocaleDateString();
         }
         $scope.employeeData=data;
+        commonService.LoadingEnd();
       },function (e) {
         if(e.message==undefined||e.message==null){
           $scope.errorMsg='网络异常，请稍后再试';
         }else{
           $scope.errorMsg=e.message;
         }
+        commonService.LoadingEnd();
         FoundationApi.publish('errorModel','open');
       });
     }
@@ -417,15 +459,24 @@ define([], function () {
     }
 
     var getException=function () {
+      commonService.Loading();
       var param={
-        workPlaceId:workPlaceId
+        workPlaceId:workPlaceId,
+        employeeId:$scope.exceptionQueryInfo.employeeId,
+        employeeName:$scope.exceptionQueryInfo.employeeName,
+        nationalId:$scope.exceptionQueryInfo.nationalId,
+        department:$scope.exceptionQueryInfo.department
       }
       commonService.PostRequest(url+"getExceptionEmployee",param).then(function (data) {
           if(data.length>0)
           {
             $scope.exceptionEmployee=data;
+          }else {
+            $scope.exceptionEmployee=[];
           }
+        commonService.LoadingEnd();
       },function (e) {
+        commonService.LoadingEnd();
         $scope.errorMsg=e.message;
         FoundationApi.publish('errorModel','open');
       })
@@ -645,6 +696,130 @@ define([], function () {
     $scope.joinTimeBlur=function () {
       var picker=document.getElementById('joinTimePicker');
       picker.type='text';
+    }
+
+    //按查询条件查询员工
+    $scope.employeeQuery=function () {
+      getEmployee();
+    }
+
+    //按条件查询异常
+    $scope.exceptionQuery=function () {
+      getException();
+    }
+
+
+
+
+    var submitResult=function () {
+      var c=window.confirm('确定提交？');
+      if(!c){
+        return;
+      }
+      var j=JSON.stringify($scope.details);
+      var param={
+        json:j,
+        user:$sessionStorage['userId']
+      }
+      var employee={
+        employeeId:$scope.details[0].id,
+        employeeName:$scope.details[0].name
+      }
+      commonService.PostRequest(url+"modifyException",param).then(function (data) {
+        getEmployeeException(employee);
+      },function (e) {
+        $scope.exErrorMsg=e.content;
+        FoundationApi.publish('exErrorModel','open');
+      })
+    }
+
+
+    //单一原因异常结果提交
+    $scope.singleReasonSubmit=function () {
+      var hasChoosed=false;
+      for (var i=0;i<$scope.details.length;i++){
+        if($scope.details[i].choose){
+          hasChoosed=true;
+          break;
+        }
+      }
+      if (hasChoosed){
+        if($scope.all.reason==0){
+          $scope.errorMsg='未选择异常原因';
+          FoundationApi.publish('errorModel','open');
+        }else{
+          for (var j=0;j<$scope.details.length;j++){
+            if($scope.details[j].choose){
+              $scope.details[j].amReason=$scope.all.reason;
+              $scope.details[j].pmReason=$scope.all.reason;
+            }
+          }
+          submitResult();
+        }
+      }else{
+        $scope.errorMsg='未选中任何一项';
+        FoundationApi.publish('errorModel','open');
+      }
+    }
+
+
+    //全选
+    $scope.allChoose=function () {
+      if ($scope.all.choose){
+        for(var i=0;i<$scope.details.length;i++){
+          $scope.details[i].choose=true;
+        }
+      }else{
+        for(var i=0;i<$scope.details.length;i++){
+          $scope.details[i].choose=false;
+        }
+      }
+    }
+
+    //单个选中
+    $scope.singleChoose=function () {
+      for(var i=0;i<$scope.details.length;i++){
+        if(!$scope.details[i].choose){
+          $scope.all.choose=false;
+          return;
+        }
+      }
+      $scope.all.choose=true;
+    }
+
+
+    var getEmployeeException=function (employee) {
+      var param={
+        employeeId:employee.employeeId
+      };
+      commonService.PostRequest(url+"getExceptionDetail",param).then(function (data) {
+        if(data.length>0){
+          var array=[];
+          for(var i=0;i<data.length;i++){
+            var a=data[i].arriveTime==null?'未打卡':new Date(data[i].arriveTime).toLocaleTimeString();
+            var l=data[i].leaveTime==null?'未打卡':new Date(data[i].leaveTime).toLocaleTimeString();
+            array[i]=new map(data[i].id,employee.employeeName,new Date(data[i].today).toLocaleDateString(),a,l,data[i].amStatus,data[i].pmStatus);
+          }
+          $scope.details=array;
+        }
+        else{
+          $scope.details=[];
+        }
+      },function (e) {
+        $scope.errorMsg=e.message;
+        FoundationApi.publish('errorModel','open');
+      });
+    }
+
+    //进入异常详情
+    $scope.exceptionDetail=function (employee) {
+      $scope.currentTag='5';
+      getEmployeeException(employee);
+    }
+
+    //提交异常处理
+    $scope.exceptionSubmit=function () {
+      submitResult();
     }
   }
   homeController.$inject = ['$scope', '$state', '$sessionStorage','$stateParams','commonService','FoundationApi'];
