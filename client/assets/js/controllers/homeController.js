@@ -12,6 +12,9 @@ define([], function () {
 
 
     var url=app.service.baseapi;
+    //标记为节假日
+    var tagDay;
+
     //当前选中tag
     $scope.currentTag=$stateParams['tab'];
 
@@ -20,8 +23,12 @@ define([], function () {
       employeeId:'' //离职员工id
     }
 
+
     //错误提示
-    $scope.errorMsg='网络异常';
+    $scope.msg={
+      confirmMsg:'',
+      errorMsg:'网络异常，请稍后再试'
+    }
 
 
     var error=$stateParams['error'];
@@ -63,10 +70,15 @@ define([], function () {
      }
 
     var workPlaceId=$sessionStorage['workPlaceId'];
-    if(workPlaceId==1||workPlaceId==11){//上海、苏州恒宇
-      $scope.xlsUrl="sh.xls"
+    if(workPlaceId==1){//上海、苏州恒宇
+      $scope.currentPlace='上海';
+      $scope.xlsUrl="sh.xls";
     }else if(workPlaceId==10){//苏州凤凰
-      $scope.xlsUrl="sz.xls"
+      $scope.currentPlace='苏州凤凰';
+      $scope.xlsUrl="sz.xls";
+    }else if(workPlaceId==11){
+      $scope.currentPlace='苏州恒宇';
+      $scope.xlsUrl="sh.xls";
     }
 
     //异常详情
@@ -94,7 +106,7 @@ define([], function () {
       workPlace:workPlaceId,
       userId:userId,
       //callbackUrl:'http://122.192.49.98:8090'
-      callbackUrl:'http://localhost:8000'
+      callbackUrl:'http://localhost:8000',
     }
 
     $scope.btn={
@@ -118,7 +130,11 @@ define([], function () {
       employeeId:'',
       employeeName:'',
       nationalId:'',
-      department:''
+      department:'',
+      jobStatus:0,
+      queryTime:0,
+      fromDate:'',
+      endDate:''
     }
 
     $scope.exceptionQueryInfo={
@@ -190,7 +206,8 @@ define([], function () {
       commonService.PostRequest(url+"getLogInfo",param).then(function (data) {
         $scope.logInfo=data;
       },function (e) {
-        $scope.errorMsg=e.message;
+        $scope.msg.errorMsg=e.message;
+
         FoundationApi.publish('errorModel','open');
       });
     }
@@ -199,6 +216,7 @@ define([], function () {
       switch ($scope.currentTag){
         case '0':
           getEmployee();
+          getEmployeeCount();
           break;
         case '3':
           getException();
@@ -212,12 +230,12 @@ define([], function () {
     //查询
     $scope.query=function () {
         if ($scope.queryInfo.year==0){
-          $scope.errorMsg='请输入查询年份';
+          $scope.msg.errorMsg='请输入查询年份';
           FoundationApi.publish('errorModel','open');
           return;
         }
       if ($scope.queryInfo.month==0){
-        $scope.errorMsg='请输入查询月份';
+        $scope.msg.errorMsg='请输入查询月份';
         FoundationApi.publish('errorModel','open');
         return;
       }
@@ -248,7 +266,7 @@ define([], function () {
       var file = event.target.files[0];
       if (file.type.indexOf('vnd.ms-exce')<0) {
         $scope.btn.work=false;
-        $scope.errorMsg='上传文件格式有误，请选择.xls格式文件';
+        $scope.msg.errorMsg='上传文件格式有误，请选择.xls格式文件';
         FoundationApi.publish('errorModel','open');
       }else{
         $scope.btn.work=true;
@@ -260,7 +278,7 @@ define([], function () {
       var file = event.target.files[0];
       if (file.type.indexOf('vnd.ms-exce')<0) {
         $scope.btn.employee=false;
-        $scope.errorMsg='上传文件格式有误，请选择.xls格式文件';
+        $scope.msg.errorMsg='上传文件格式有误，请选择.xls格式文件';
         FoundationApi.publish('errorModel','open');
       }else{
         $scope.btn.employee=true;
@@ -276,9 +294,9 @@ define([], function () {
         getEmployee();
       },function (e) {
         if(e.content!=null){
-          $scope.errorMsg=e.content;
+          $scope.msg.errorMsg=e.content;
         }else {
-          $scope.errorMsg=e.message;
+          $scope.msg.errorMsg=e.message;
         }
         FoundationApi.publish('errorModel','open');
       });
@@ -301,7 +319,7 @@ define([], function () {
         FoundationApi.publish('tagModel','close');
       },function (e) {
         if(e.content!=null){
-          $scope.errorMsg=e.content;
+          $scope.msg.errorMsg=e.content;
           FoundationApi.publish('tagModel','close');
           FoundationApi.publish('errorModel','open');
         }
@@ -315,6 +333,8 @@ define([], function () {
 
 
     var getEmployee=function () {
+      FoundationApi.publish('tagHolidayModal','open');
+      return;
       commonService.Loading();
       var param={
         workPlaceId:workPlaceId,
@@ -322,6 +342,18 @@ define([], function () {
         employeeName:$scope.employeeQueryInfo.employeeName,
         nationalId:$scope.employeeQueryInfo.nationalId,
         department:$scope.employeeQueryInfo.department
+      }
+      if($scope.employeeQueryInfo.queryTime!=0){
+        if($scope.employeeQueryInfo.fromDate==''||$scope.employeeQueryInfo.endDate==''){
+          commonService.LoadingEnd();
+          $scope.msg.errorMsg='请选择起止时间';
+          FoundationApi.publish('errorModel','open');
+          return;
+        }else{
+          param.queryTime=$scope.employeeQueryInfo.queryTime;
+          param.fromDate=$scope.employeeQueryInfo.fromDate.toLocaleDateString();
+          param.endDate=$scope.employeeQueryInfo.endDate.toLocaleDateString();
+        }
       }
 
       commonService.PostRequest(url+"getEmployee",param).then(function (data) {
@@ -368,13 +400,29 @@ define([], function () {
         commonService.LoadingEnd();
       },function (e) {
         if(e.message==undefined||e.message==null){
-          $scope.errorMsg='网络异常，请稍后再试';
+          $scope.msg.errorMsg='网络异常，请稍后再试';
         }else{
-          $scope.errorMsg=e.message;
+          $scope.msg.errorMsg=e.message;
         }
         commonService.LoadingEnd();
         FoundationApi.publish('errorModel','open');
       });
+    }
+
+    var getEmployeeCount=function () {
+      var param={
+        workPlace:$scope.currentUser.workPlace
+      }
+      commonService.PostRequest(url+"getEmployeeCount",param).then(function (data) {
+        $scope.employeeCount.total=data.total;
+        $scope.employeeCount.leave=data.leave;
+        $scope.employeeCount.join=data.join;
+      },function (e) {
+        if(e.message!=null&&e.message!=undefined){
+          $scope.msg.errorMsg=e.message;
+        }
+        FoundationApi.publish('errorModel','open');
+      })
     }
 
     var queryRecord=function () {
@@ -490,12 +538,12 @@ define([], function () {
           $scope.queryResult=data;
         }else {
           $scope.queryResult=null;
-          $scope.errorMsg='找到0条记录';
+          $scope.msg.errorMsg='找到0条记录';
           FoundationApi.publish('errorModel','open');
         }
       },function (e) {
         $scope.queryResult=null;
-        $scope.errorMsg=e.message;
+        $scope.msg.errorMsg=e.message;
         FoundationApi.publish('errorModel','open');
       });
     }
@@ -519,7 +567,9 @@ define([], function () {
         commonService.LoadingEnd();
       },function (e) {
         commonService.LoadingEnd();
-        $scope.errorMsg=e.message;
+        if(e.message!=null&&e.message!=undefined){
+          $scope.msg.errorMsg=e.message;
+        }
         FoundationApi.publish('errorModel','open');
       })
     }
@@ -708,21 +758,31 @@ define([], function () {
 
     //标记某天为节假日
     $scope.tagHolidayChange=function () {
-      var tagDay=$scope.queryInfo.tagHoliday.toLocaleDateString();
-      var p=window.confirm('确定标记'+tagDay+'为节假日吗？标记后数据将不可恢复！');
-      if(p){
-          var param={
-            date:tagDay,
-            workPlaceId:workPlaceId,
-            userId:userId
-          }
-        commonService.PostRequest(url+"tagHoliday",param).then(function (data) {
-          $scope.logInfo=data;
-        },function (e) {
-          $scope.errorMsg=e.message;
-          FoundationApi.publish('errorModel','open');
-        });
+      tagDay=$scope.queryInfo.tagHoliday.toLocaleDateString();
+      $scope.tagHolidayMsg='确定标记'+tagDay+'为节假日吗？标记后数据将不可恢复！';
+
+    }
+
+    $scope.agree=function () {
+      var param={
+        date:tagDay,
+        workPlaceId:workPlaceId,
+        userId:userId
       }
+      commonService.PostRequest(url+"tagHoliday",param).then(function (data) {
+        $scope.logInfo=data;
+      },function (e) {
+        $scope.msg.errorMsg=e.message;
+        FoundationApi.publish('errorModel','open');
+      });
+    }
+    $scope.refuse=function (type) {
+      if(type==1){
+        FoundationApi.publish('tagHolidayModal','close');
+      }else if(type==2){
+        FoundationApi.publish('exceptionSubmitModal','close');
+      }
+
     }
 
     $scope.joinTimeFocus=function () {
@@ -746,13 +806,7 @@ define([], function () {
     }
 
 
-
-
-    var submitResult=function () {
-      var c=window.confirm('确定提交？');
-      if(!c){
-        return;
-      }
+    $scope.submitResultAgree=function () {
       var j=JSON.stringify($scope.details);
       var param={
         json:j,
@@ -782,7 +836,7 @@ define([], function () {
       }
       if (hasChoosed){
         if($scope.all.reason==0){
-          $scope.errorMsg='未选择异常原因';
+          $scope.msg.errorMsg='未选择异常原因';
           FoundationApi.publish('errorModel','open');
         }else{
           for (var j=0;j<$scope.details.length;j++){
@@ -791,10 +845,10 @@ define([], function () {
               $scope.details[j].pmReason=$scope.all.reason;
             }
           }
-          submitResult();
+          FoundationApi.publish('exceptionSubmitModal','open');
         }
       }else{
-        $scope.errorMsg='未选中任何一项';
+        $scope.msg.errorMsg='未选中任何一项';
         FoundationApi.publish('errorModel','open');
       }
     }
@@ -856,7 +910,7 @@ define([], function () {
 
     //提交异常处理
     $scope.exceptionSubmit=function () {
-      submitResult();
+      FoundationApi.publish('exceptionSubmitModal','open');
     }
   }
   homeController.$inject = ['$scope', '$state', '$sessionStorage','$stateParams','commonService','FoundationApi'];

@@ -10,7 +10,9 @@ dependencies: controllers/homeController,services/commonService,services/default
   </div>
   <div style="text-align: right;margin-top: 1rem;margin-right: 1rem;">
     <span>当前用户：</span>
-    <span>{{::currentUser.name}}</span>
+    <span>{{::currentUser.name}}</span>&nbsp;&nbsp;&nbsp;&nbsp;
+    <span>当前职场：</span>
+    <span>{{::currentPlace}}</span>
   </div>
   <div class="grid-block">
     <div class="grid-block medium-2 vertical" style="height: 800px;border-right: 1px solid #CCCCCC">
@@ -46,7 +48,7 @@ dependencies: controllers/homeController,services/commonService,services/default
       </div>
       <div class="grid-block" style="margin-left: 1rem;height: 20px;">本职场总共在职人数：{{employeeCount.total}}&nbsp;&nbsp;本月入职人数：{{employeeCount.arrive}}&nbsp;&nbsp;本月离职人数：{{employeeCount.leave}}</div>
       <p></p>
-      <div class="grid-block" style="margin-left: -5%;">
+      <div class="grid-block" style="margin-left:  -1%;">
         <div class="grid-block medium-1 align-right" style="margin-top: 10px">
           <span>工号：</span>
         </div>
@@ -71,6 +73,8 @@ dependencies: controllers/homeController,services/commonService,services/default
         <div class="grid-block medium-1">
           <input type="text" ng-model="employeeQueryInfo.department">
         </div>
+
+
         <div class="grid-block medium-1 align-right">
           <a class="button" ng-click="employeeQuery()" style="height: 2.4rem;width: 45%;">查      询</a>
         </div>
@@ -79,6 +83,32 @@ dependencies: controllers/homeController,services/commonService,services/default
         </div>
         <div class="grid-block medium-1 align-right">
           <a class="button" zf-open="singleUserModal" style="height: 2.4rem;">添加新员工</a>
+        </div>
+      </div>
+      <div class="grid-block" style="margin-left: -1%;">
+        <div class="grid-block medium-1 align-right" style="margin-top: 10px">
+          <span>状态：</span>
+        </div>
+        <div class="grid-block medium-1">
+          <select ng-model="employeeQueryInfo.jobStatus" >
+            <option value="0">全部</option>
+            <option value="1">在职</option>
+            <option value="-1">离职</option>
+          </select>
+        </div>
+        <div class="grid-block medium-1 align-right" style="margin-left: 1rem">
+          <select ng-model="employeeQueryInfo.queryTime" style="width: 65%;">
+            <option value="0">请选择</option>
+            <option value="1">入职时间</option>
+            <option value="2">离职时间</option>
+          </select>
+        </div>
+        <div class="grid-block medium-2" style="margin-left: .4rem">
+          <input type="date" ng-model="employeeQueryInfo.fromDate">
+        </div>
+        <span  style="margin-top: .5rem">至</span>
+        <div class="grid-block medium-2">
+          <input type="date" ng-model="employeeQueryInfo.endDate">
         </div>
       </div>
       <table style="margin-left: 1rem;width: 96%;" role="grid">
@@ -405,7 +435,6 @@ dependencies: controllers/homeController,services/commonService,services/default
     </div>
     <!--异常处理1-->
     <div ng-show="currentTag==3" class="grid-block medium-10 vertical" style="height: 100%;">
-      <p ng-if="exceptionEmployee==undefined||exceptionEmployee.length==0" style="margin-left: 6rem">当前无异常需要处理</p>
       <div style="margin-top: 10px;margin-left: 20px;">
         <span style="color: #0c4d78;">首页 — </span>
         <span style="color: #0c4d78;">异常处理</span>
@@ -417,10 +446,6 @@ dependencies: controllers/homeController,services/commonService,services/default
         <div class="grid-block medium-1 align-right" style="margin-top: 10px">工号：</div>
         <div class="grid-block medium-1">
           <input type="text" ng-model="exceptionQueryInfo.employeeId">
-        </div>
-        <div class="grid-block medium-1 align-right" style="margin-top: 10px">身份证号：</div>
-        <div style="width: 200px;">
-          <input type="text" ng-model="exceptionQueryInfo.nationalId">
         </div>
         <div class="grid-block medium-1 align-right" style="margin-top: 10px">姓名：</div>
         <div class="grid-block medium-1">
@@ -719,7 +744,7 @@ dependencies: controllers/homeController,services/commonService,services/default
 
 <div zf-modal="" id="errorModel">
   <img src="./assets/img/vc-warm-red.png" width="6%" style="display:block;float:left;">
-  <p style="font-size: 18px;margin: 4px 0 0 4px;padding-left: 36px">{{errorMsg}}</p>
+  <p style="font-size: 18px;margin: 4px 0 0 4px;padding-left: 36px">{{msg.errorMsg}}</p>
 </div>
 
 <div zf-modal="" id="tagModel">
@@ -733,9 +758,14 @@ dependencies: controllers/homeController,services/commonService,services/default
   <a class="button " style="width: 20%;margin-left: 40%;margin-top: 2rem;" ng-class="{true:'disabled',false:''}[tag.leaveDate==null||tag.leaveDate=='']"  ng-click="tagOff()">确定</a>
 </div>
 
+<div zf-modal="" id="tagHolidayModal" overlay-close="false">
+  <p style="font-size: 18px;margin: 4px 0 0 0px;">{{::tagHolidayMsg}}</p>
+  <a class="button" ng-click="agree()">确定</a>
+  <a class="button" ng-click="refuse(1)">取消</a>
+</div>
 
-
-<!--<div zf-modal="" id="backModel" overlay-close="false">-->
-<!--<p style="font-size: 18px;margin: 4px 0 0 0px;">已全部处理完成</p>-->
-<!--</div>-->
-
+<div zf-modal="" id="exceptionSubmitModal" overlay-close="false">
+  <p style="font-size: 18px;margin: 4px 0 0 0px;">确定提交？</p>
+  <a class="button" ng-click="submitResultAgree()">确定</a>
+  <a class="button" ng-click="refuse(2)">取消</a>
+</div>
