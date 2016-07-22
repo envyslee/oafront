@@ -104,10 +104,14 @@ define([], function () {
 
     $scope.queryInfo={
       year:2016,
-      month:0,
+      month:new Date().getMonth()+1,
       workPlace:workPlaceId,
       jobStatus:0,
       tagHoliday:'',
+      employeeId:'',
+      nationalId:'',
+      employeeName:'',
+      department:''
     }
 
     $scope.employeeQueryInfo={
@@ -174,7 +178,21 @@ define([], function () {
         if($scope.employeeData==null||$scope.employeeData==undefined){
           getEmployee();
         }
+      }else if(tab==6){
+        getLogInfo();
       }
+    }
+
+    var getLogInfo=function () {
+      var param={
+        userId:userId
+      }
+      commonService.PostRequest(url+"getLogInfo",param).then(function (data) {
+        $scope.logInfo=data;
+      },function (e) {
+        $scope.errorMsg=e.message;
+        FoundationApi.publish('errorModel','open');
+      });
     }
 
     $scope.employeeInit=function () {
@@ -184,6 +202,9 @@ define([], function () {
           break;
         case '3':
           getException();
+          break;
+        case '6':
+          getLogInfo();
           break;
       }
     }
@@ -693,15 +714,10 @@ define([], function () {
           var param={
             date:tagDay,
             workPlaceId:workPlaceId,
+            userId:userId
           }
         commonService.PostRequest(url+"tagHoliday",param).then(function (data) {
-            if ($scope.queryInfo.year==0){
-              return;
-            }
-            if ($scope.queryInfo.month==0){
-              return;
-            }
-            queryRecord();
+          $scope.logInfo=data;
         },function (e) {
           $scope.errorMsg=e.message;
           FoundationApi.publish('errorModel','open');

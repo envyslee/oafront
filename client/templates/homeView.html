@@ -34,7 +34,7 @@ dependencies: controllers/homeController,services/commonService,services/default
       </div>
     </div>
     <!--花名册tab-->
-    <div ng-show="currentTag==0" class="grid-block medium-10 vertical">
+    <div ng-show="currentTag==0" class="grid-block medium-10 vertical" style="height: 100%;">
       <div style="margin-top: 10px;margin-left: 20px;">
         <span style="color: #0c4d78;">首页 — </span>
         <span style="color: #0c4d78;">花名册</span>
@@ -113,7 +113,7 @@ dependencies: controllers/homeController,services/commonService,services/default
           </tr>
         </tbody>
       </table>
-    </div>
+    </div >
     <!--考勤数据导入tab-->
     <div ng-show="currentTag==1" class=" medium-10 align-center vertical" style=" height: auto;">
       <div style="margin-top: 10px;margin-left: 20px;">
@@ -196,6 +196,32 @@ dependencies: controllers/homeController,services/commonService,services/default
         </div>
         <div class="small-4 grid-block medium-1" style="margin-left: 40px;">
           <a class="button" ng-class="{true:'',false:'disabled'}[queryResult.length>0]" style="height: 2.4rem; width: 14rem;" ng-click="output()">导出</a>
+        </div>
+      </div>
+      <div class="grid-block">
+        <div class="grid-block medium-1 align-right" style="margin-top: 10px">
+          <span>工号：</span>
+        </div>
+        <div class="grid-block medium-1">
+          <input type="text" ng-model="queryInfo.employeeId">
+        </div>
+        <div class="grid-block medium-1 align-right" style="margin-top: 10px">
+          <span>身份证号：</span>
+        </div>
+        <div class="grid-block medium-1">
+          <input type="text" ng-model="queryInfo.nationalId">
+        </div>
+        <div class="grid-block medium-1 align-right" style="margin-top: 10px">
+          <span>姓名：</span>
+        </div>
+        <div class="grid-block medium-1">
+          <input type="text" ng-model="queryInfo.employeeName">
+        </div>
+        <div class="grid-block medium-1 align-right" style="margin-top: 10px">
+          <span>部门：</span>
+        </div>
+        <div class="grid-block medium-1">
+          <input type="text" ng-model="queryInfo.department">
         </div>
       </div>
       <div style="height:680px;overflow:auto;margin-top: 10px;" id="exportable">
@@ -631,11 +657,16 @@ dependencies: controllers/homeController,services/commonService,services/default
       <div style="text-align: center;">
         <h3>节假日设置</h3>
       </div>
-      <div style="margin-top: 10px;margin-left: -100px">
+      <div style="margin-left: 1rem">
         <span>标记为节假日：</span>
       </div>
-      <div class="grid-block medium-2" style="width: 200px;margin-left: 10%;">
+      <div style="width: 200px;margin-left: 1rem;margin-top: 1rem">
         <input type="date" ng-model="queryInfo.tagHoliday" ng-change="tagHolidayChange()">
+      </div>
+      <div style="margin-left: 1rem">
+        <p ng-repeat="l in logInfo">
+          {{$index+1}}.{{l.userName}}在{{l.operateDate}}日标记{{l.tagDate}}为节假日。
+        </p>
       </div>
     </div>
   </div>
