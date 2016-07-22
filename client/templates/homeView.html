@@ -691,8 +691,11 @@ dependencies: controllers/homeController,services/commonService,services/default
         <div style="width: 20%;margin-left: 1rem;margin-top: 2rem;">
           <span>标记为节假日：</span>
         </div>
+        <div>
+          <a class="button" ng-click="tagHolidayChange()" ng-class="{true:'disabled',false:''}[queryInfo.tagHoliday=='']">确定</a>
+        </div>
         <div style="width: 200px;margin-left: 1rem;margin-top: 1rem">
-          <input type="date" ng-model="queryInfo.tagHoliday" ng-change="tagHolidayChange()">
+          <input type="date" ng-model="queryInfo.tagHoliday">
         </div>
         <div style="margin-left: 1rem">
           <p ng-repeat="l in logInfo">

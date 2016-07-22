@@ -304,6 +304,11 @@ define([], function () {
 
     //标记为离职
     $scope.tagOff=function () {
+
+      var  confirm=window.confirm('确定标记该员工为离职？');
+      if(!confirm){
+        return;
+      }
       var param={
           employeeId:$scope.tag.employeeId,
           userId:userId,
@@ -313,6 +318,7 @@ define([], function () {
         for(var i=0;i<$scope.employeeData.length;i++){
           if($scope.employeeData[i].employeeId==$scope.tag.employeeId){
             $scope.employeeData[i].status='离职员工';
+            $scope.employeeData[i].leaveTime=param.leaveDate;
             break;
           }
         }
@@ -333,8 +339,6 @@ define([], function () {
 
 
     var getEmployee=function () {
-      FoundationApi.publish('tagHolidayModal','open');
-      return;
       commonService.Loading();
       var param={
         workPlaceId:workPlaceId,
@@ -760,7 +764,7 @@ define([], function () {
     $scope.tagHolidayChange=function () {
       tagDay=$scope.queryInfo.tagHoliday.toLocaleDateString();
       $scope.tagHolidayMsg='确定标记'+tagDay+'为节假日吗？标记后数据将不可恢复！';
-
+      FoundationApi.publish('tagHolidayModal','open');
     }
 
     $scope.agree=function () {
