@@ -131,7 +131,6 @@ define([], function () {
     $scope.employeeQueryInfo={
       employeeId:'',
       employeeName:'',
-      //nationalId:'',
       department:'',
       jobStatus:0,
       queryTime:0,
@@ -346,7 +345,6 @@ define([], function () {
         workPlaceId:workPlaceId,
         employeeId:$scope.employeeQueryInfo.employeeId,
         employeeName:$scope.employeeQueryInfo.employeeName,
-       // nationalId:$scope.employeeQueryInfo.nationalId,
         department:$scope.employeeQueryInfo.department
       }
       if($scope.employeeQueryInfo.queryTime!=0){
@@ -810,10 +808,12 @@ define([], function () {
         employeeName:$scope.details[0].name
       }
       commonService.PostRequest(url+"modifyException",param).then(function (data) {
+        FoundationApi.publish('exceptionSubmitModal','close');
         getEmployeeException(employee);
       },function (e) {
         $scope.msg.errorMsg=e.content;
-        FoundationApi.publish('exErrorModel','open');
+        FoundationApi.publish('exceptionSubmitModal','close');
+        FoundationApi.publish('errorModel','open');
       })
     }
 

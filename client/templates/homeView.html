@@ -26,10 +26,10 @@ dependencies: controllers/homeController,services/commonService,services/default
         <a ng-click="chooseTab(2)" ng-class="{true:'choose_tab',false:'unchoose_tab'}[currentTag==2]">考勤查询</a>
       </div>
       <div style="text-align: center;height: 3rem;line-height: 3rem">
-        <a ng-click="chooseTab(3)" ng-class="{true:'choose_tab',false:'unchoose_tab'}[currentTag==3]">异常处理</a>
+        <a ng-click="chooseTab(3)" ng-class="{true:'choose_tab',false:'unchoose_tab'}[currentTag==3||currentTag==5]">异常处理</a>
       </div>
       <div style="text-align: center;height: 3rem;line-height: 3rem">
-        <a ng-click="chooseTab(4)" ng-class="{true:'choose_tab',false:'unchoose_tab'}[currentTag==4||currentTag==5]">个人配置</a>
+        <a ng-click="chooseTab(4)" ng-class="{true:'choose_tab',false:'unchoose_tab'}[currentTag==4]">个人配置</a>
       </div>
       <div class="grid-block align-center" style="height: 4rem;line-height: 4rem">
         <a ng-click="chooseTab(6)" ng-class="{true:'choose_tab',false:'unchoose_tab'}[currentTag==6]">节假日设置</a>
@@ -409,7 +409,6 @@ dependencies: controllers/homeController,services/commonService,services/default
     </div>
     <!--异常处理1-->
     <div ng-show="currentTag==3" class="grid-block medium-10 vertical" style="height: 100%;">
-      <p ng-if="exceptionEmployee==undefined||exceptionEmployee.length==0" style="margin-left: 6rem">当前无异常需要处理</p>
       <div style="margin-top: 10px;margin-left: 20px;">
         <span style="color: #0c4d78;">首页 — </span>
         <span style="color: #0c4d78;">异常处理</span>
@@ -779,7 +778,7 @@ dependencies: controllers/homeController,services/commonService,services/default
   <a style="margin-top: 20px;margin-bottom: 5rem" class="button" ng-click="refuse(1)">取消</a>
 </div>
 
-<div zf-modal="" id="exceptionSubmitModal" overlay-close="false">
+<div zf-modal="" id="exceptionSubmitModal" overlay-close="false"  style="text-align: center;">
   <p style="font-size: 18px;margin: 4px 0 0 0px;">确定提交？</p>
   <a style="margin-top: 20px;" class="button" ng-click="submitResultAgree()">确定</a>
   <a style="margin-top: 20px;" class="button" ng-click="refuse(2)">取消</a>
