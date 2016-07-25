@@ -361,20 +361,7 @@ define([], function () {
       }
 
       commonService.PostRequest(url+"getEmployee",param).then(function (data) {
-        $scope.employeeCount.total=data.length;
-        var date=new Date();
-        var nowYear=date.getFullYear();
-        var nowMonth=date.getMonth();
-        var getMonthStartDate = new Date(nowYear, nowMonth, 1);
-        var getMonthEndDate = new Date(nowYear, nowMonth + 1, 0);
-
         for(var i=0;i<data.length;i++){
-          if(data[i].joinTime< getMonthEndDate.getTime()&&data[i].joinTime>getMonthStartDate.getTime()){
-            $scope.employeeCount.arrive++;
-          }
-          if(data[i].leaveTime<getMonthEndDate.getTime()&&data[i].leaveTime>getMonthStartDate.getTime()){
-            $scope.employeeCount.leave++;
-          }
           switch (data[i].workPlace){
             case 10:
               data[i].workPlace='苏州凤凰';
@@ -823,7 +810,7 @@ define([], function () {
       commonService.PostRequest(url+"modifyException",param).then(function (data) {
         getEmployeeException(employee);
       },function (e) {
-        $scope.exErrorMsg=e.content;
+        $scope.errorMsg=e.content;
         FoundationApi.publish('exErrorModel','open');
       })
     }

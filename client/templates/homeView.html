@@ -498,6 +498,7 @@ dependencies: controllers/homeController,services/commonService,services/default
           <td style="text-align: center;">{{d.arriveTime}}</td>
           <td style="text-align: center;width: 200px;">
             <select ng-model="d.amReason" style="overflow-y: hidden;font-size: 12px;height: 30px" ng-show="d.am==0">
+              <option value="0">请选择</option>
               <option value="1">出勤</option>
               <option value="17">旷工</option>
               <option value="18">迟到</option>
@@ -517,10 +518,12 @@ dependencies: controllers/homeController,services/commonService,services/default
               <option value="15">出差</option>
               <option value="16">新进离职不足月</option>
             </select>
+            <div ng-show="d.am!=0">无需处理</div>
           </td>
           <td style="text-align: center;">{{d.leaveTime}}</td>
           <td style="text-align: center;width: 200px;">
             <select ng-model="d.pmReason" style="overflow-y: hidden;font-size: 12px;height: 30px" ng-show="d.pm==0">
+              <option value="0">请选择</option>
               <option value="1">出勤</option>
               <option value="17">旷工</option>
               <option value="18">迟到</option>
@@ -540,6 +543,7 @@ dependencies: controllers/homeController,services/commonService,services/default
               <option value="15">出差</option>
               <option value="16">新进离职不足月</option>
             </select>
+            <div ng-show="d.pm!=0">无需处理</div>
           </td>
         </tr>
         </tbody>
@@ -547,6 +551,7 @@ dependencies: controllers/homeController,services/commonService,services/default
       <div class="grid-block "  style="margin-top: 3rem;margin-left: 250px;"  ng-show="details.length>0">
         <div class="grid-block align-left medium-1 medium-offset-1">
           <select ng-model="all.reason" style="overflow-y: hidden;font-size: 12px;height: 30px;">
+            <option value="0">请选择</option>
             <option value="1">出勤</option>
             <option value="17">旷工</option>
             <option value="18">迟到</option>
