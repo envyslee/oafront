@@ -72,13 +72,13 @@ define([], function () {
     var workPlaceId=$sessionStorage['workPlaceId'];
     if(workPlaceId==1){//上海、苏州恒宇
       $scope.currentPlace='上海';
-      $scope.xlsUrl="sh.xls";
+      $scope.xlsUrl="SH.xls";
     }else if(workPlaceId==10){//苏州凤凰
       $scope.currentPlace='苏州凤凰';
-      $scope.xlsUrl="sz.xls";
+      $scope.xlsUrl="SZ-FH.xls";
     }else if(workPlaceId==11){
       $scope.currentPlace='苏州恒宇';
-      $scope.xlsUrl="sh.xls";
+      $scope.xlsUrl="SZ-HY.xls";
     }
 
     //异常详情
@@ -107,8 +107,8 @@ define([], function () {
       name:$sessionStorage['userName'],
       workPlace:workPlaceId,
       userId:userId,
-      //callbackUrl:'http://122.192.49.98:8090'
-      callbackUrl:'http://localhost:8000',
+      callbackUrl:'http://122.192.49.98:8090'
+      //callbackUrl:'http://localhost:8000',
     }
 
     $scope.btn={
