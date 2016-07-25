@@ -102,3 +102,24 @@ table tr td {
 .unweekend{
   color: #ffffff;
 }
+
+.new_employee{
+  width: 20%;
+  float: left;
+  text-align: right;
+  margin-top: 5px;
+}
+.new_employee_text{
+  width: 50%;
+}
+
+.choose_tab{
+  font-weight: 900;
+}
+.unchoose_tab{
+  font-weight: 100;
+}
+
+.add_new_employee{
+  margin-left: 100  px;
+}

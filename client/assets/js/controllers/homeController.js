@@ -129,7 +129,7 @@ define([], function () {
     $scope.employeeQueryInfo={
       employeeId:'',
       employeeName:'',
-      nationalId:'',
+      //nationalId:'',
       department:'',
       jobStatus:0,
       queryTime:0,
@@ -344,7 +344,7 @@ define([], function () {
         workPlaceId:workPlaceId,
         employeeId:$scope.employeeQueryInfo.employeeId,
         employeeName:$scope.employeeQueryInfo.employeeName,
-        nationalId:$scope.employeeQueryInfo.nationalId,
+       // nationalId:$scope.employeeQueryInfo.nationalId,
         department:$scope.employeeQueryInfo.department
       }
       if($scope.employeeQueryInfo.queryTime!=0){
@@ -763,7 +763,7 @@ define([], function () {
     //标记某天为节假日
     $scope.tagHolidayChange=function () {
       tagDay=$scope.queryInfo.tagHoliday.toLocaleDateString();
-      $scope.tagHolidayMsg='确定标记'+tagDay+'为节假日吗？标记后数据将不可恢复！';
+      $scope.tagHolidayMsg='你确定要设置'+tagDay+'为节假日吗？';
       FoundationApi.publish('tagHolidayModal','open');
     }
 
@@ -882,7 +882,6 @@ define([], function () {
       $scope.all.choose=true;
     }
 
-
     var getEmployeeException=function (employee) {
       var param={
         employeeId:employee.employeeId
@@ -919,6 +918,5 @@ define([], function () {
   }
   homeController.$inject = ['$scope', '$state', '$sessionStorage','$stateParams','commonService','FoundationApi'];
   app.register.controller('homeController', homeController);
-
 });
 

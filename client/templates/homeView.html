@@ -17,22 +17,22 @@ dependencies: controllers/homeController,services/commonService,services/default
   <div class="grid-block">
     <div class="grid-block medium-2 vertical" style="height: 800px;border-right: 1px solid #CCCCCC">
       <div style="text-align: center;height: 3rem;line-height: 3rem">
-        <a ng-click="chooseTab(0)">花名册</a>
+        <a ng-click="chooseTab(0)" ng-class="{true:'choose_tab',false:'unchoose_tab'}[currentTag==0]">花名册</a>
       </div>
       <div style="text-align: center;height: 3rem;line-height: 3rem">
-        <a ng-click="chooseTab(1)">考勤导入</a>
+        <a ng-click="chooseTab(1)" ng-class="{true:'choose_tab',false:'unchoose_tab'}[currentTag==1]">考勤导入</a>
       </div>
       <div style="text-align: center;height: 3rem;line-height: 3rem">
-        <a ng-click="chooseTab(2)">考勤查询</a>
+        <a ng-click="chooseTab(2)" ng-class="{true:'choose_tab',false:'unchoose_tab'}[currentTag==2]">考勤查询</a>
       </div>
       <div style="text-align: center;height: 3rem;line-height: 3rem">
-        <a ng-click="chooseTab(3)">异常处理</a>
+        <a ng-click="chooseTab(3)" ng-class="{true:'choose_tab',false:'unchoose_tab'}[currentTag==3]">异常处理</a>
       </div>
       <div style="text-align: center;height: 3rem;line-height: 3rem">
-        <a ng-click="chooseTab(4)">个人配置</a>
+        <a ng-click="chooseTab(4)" ng-class="{true:'choose_tab',false:'unchoose_tab'}[currentTag==4||currentTag==5]">个人配置</a>
       </div>
       <div class="grid-block align-center" style="height: 4rem;line-height: 4rem">
-        <a ng-click="chooseTab(6)">节假日设置</a>
+        <a ng-click="chooseTab(6)" ng-class="{true:'choose_tab',false:'unchoose_tab'}[currentTag==6]">节假日设置</a>
       </div>
     </div>
     <!--花名册tab-->
@@ -41,83 +41,73 @@ dependencies: controllers/homeController,services/commonService,services/default
         <span style="color: #0c4d78;">首页 — </span>
         <span style="color: #0c4d78;">花名册</span>
       </div>
-      <div class="grid-block" style="margin-top: 10px;" >
-        <div class="grid-block medium-9 medium-offset-1 align-center">
-          <h3>花名册</h3>
+      <div style="text-align: center;">
+        <h3>花名册</h3>
+      </div>
+      <div class="grid-block">
+        <div class="grid-block" style="margin-left: 1rem;height: 20px;">当前在职：{{employeeCount.total}}人；&nbsp;&nbsp;本月入职：{{employeeCount.arrive}}人；&nbsp;&nbsp;本月离职：{{employeeCount.leave}}人；</div>
+        <div class="grid-block medium-1 align-right">
+          <a class="button" zf-open="userModal" style="height: 2.4rem;margin-left: 20px;">&nbsp;&nbsp;导&nbsp;&nbsp;入&nbsp;&nbsp;</a>
+        </div>
+        <div class="grid-block medium-1 align-right">
+          <a class="button" zf-open="singleUserModal" style="height: 2.4rem;">&nbsp;&nbsp;新&nbsp;&nbsp;增&nbsp;&nbsp;</a>
         </div>
       </div>
-      <div class="grid-block" style="margin-left: 1rem;height: 20px;">本职场总共在职人数：{{employeeCount.total}}&nbsp;&nbsp;本月入职人数：{{employeeCount.arrive}}&nbsp;&nbsp;本月离职人数：{{employeeCount.leave}}</div>
-      <p></p>
-      <div class="grid-block" style="margin-left:  -1%;">
-        <div class="grid-block medium-1 align-right" style="margin-top: 10px">
+      <div class="grid-block" style="margin-left: -2%;">
+        <div class="grid-block align-right" style="margin-top: 10px;width: 5%;">
           <span>工号：</span>
         </div>
-        <div class="grid-block medium-1">
+        <div class="grid-block " style="width: 6%;">
           <input type="text" ng-model="employeeQueryInfo.employeeId">
         </div>
-        <div class="grid-block medium-1 align-right" style="margin-top: 10px">
-          <span>身份证号：</span>
-        </div>
-        <div class="grid-block medium-1">
-          <input type="text" ng-model="employeeQueryInfo.nationalId">
-        </div>
-        <div class="grid-block medium-1 align-right" style="margin-top: 10px">
+        <div class="grid-block align-right" style="margin-top: 10px;width: 3%;">
           <span>姓名：</span>
         </div>
-        <div class="grid-block medium-1">
+        <div class="grid-block " style="width: 3%;">
           <input type="text" ng-model="employeeQueryInfo.employeeName">
         </div>
-        <div class="grid-block medium-1 align-right" style="margin-top: 10px">
+        <div class="grid-block align-right" style="margin-top: 10px;width: 3%;">
           <span>部门：</span>
         </div>
-        <div class="grid-block medium-1">
+        <div class="grid-block " style="width: 6.5%;">
           <input type="text" ng-model="employeeQueryInfo.department">
         </div>
-
-
-        <div class="grid-block medium-1 align-right">
-          <a class="button" ng-click="employeeQuery()" style="height: 2.4rem;width: 45%;">查      询</a>
-        </div>
-        <div class="grid-block medium-1 align-right">
-          <a class="button" zf-open="userModal" style="height: 2.4rem;margin-left: 20px;">导入花名册</a>
-        </div>
-        <div class="grid-block medium-1 align-right">
-          <a class="button" zf-open="singleUserModal" style="height: 2.4rem;">添加新员工</a>
-        </div>
-      </div>
-      <div class="grid-block" style="margin-left: -1%;">
-        <div class="grid-block medium-1 align-right" style="margin-top: 10px">
+        <div class="grid-block align-right" style="margin-top: 10px;width: 3%;">
           <span>状态：</span>
         </div>
-        <div class="grid-block medium-1">
+        <div class="grid-block " style="width: 5%;">
           <select ng-model="employeeQueryInfo.jobStatus" >
             <option value="0">全部</option>
             <option value="1">在职</option>
             <option value="-1">离职</option>
           </select>
         </div>
-        <div class="grid-block medium-1 align-right" style="margin-left: 1rem">
+        <div class="grid-block align-right" style="width: 8%;">
           <select ng-model="employeeQueryInfo.queryTime" style="width: 65%;">
             <option value="0">请选择</option>
             <option value="1">入职时间</option>
             <option value="2">离职时间</option>
           </select>
         </div>
-        <div class="grid-block medium-2" style="margin-left: .4rem">
+        <div class="grid-block " style="width: 9%;">
           <input type="date" ng-model="employeeQueryInfo.fromDate">
         </div>
-        <span  style="margin-top: .5rem">至</span>
-        <div class="grid-block medium-2">
+        <span  style="margin-top: 10px">&nbsp;至&nbsp;</span>
+        <div class="grid-block " style="width: 9%;">
           <input type="date" ng-model="employeeQueryInfo.endDate">
         </div>
+        <div class="grid-block align-right" style="margin-left: 3%">
+          <a class="button" ng-click="employeeQuery()" style="height: 2.4rem;text-align: center;">&nbsp;&nbsp;&nbsp;查&nbsp;&nbsp;&nbsp;&nbsp;询&nbsp;&nbsp;&nbsp;</a>
+        </div>
+
       </div>
       <table style="margin-left: 1rem;width: 96%;" role="grid">
         <thead style="background: #0066cc;">
         <tr ng-if="employeeData.length>0">
           <th style="color: #ffffff;text-align: center;">序号</th>
+          <th style="color: #ffffff;text-align: center;">姓名</th>
           <th style="color: #ffffff;text-align: center;">工号</th>
           <th style="color: #ffffff;text-align: center;" >身份证号</th>
-          <th style="color: #ffffff;text-align: center;">姓名</th>
           <th style="color: #ffffff;text-align: center;">考勤职场</th>
           <th style="color: #ffffff;text-align: center;">部门</th>
           <th style="color: #ffffff;text-align: center;">职位</th>
@@ -128,19 +118,19 @@ dependencies: controllers/homeController,services/commonService,services/default
         </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="e in employeeData">
-            <td style="text-align: center;">{{$index+1}}</td>
-            <td style="text-align: center;">{{e.employeeId}}</td>
-            <td style="text-align: center;">{{e.nationalId}}</td>
-            <td style="text-align: center;">{{e.employeeName}}</td>
-            <td style="text-align: center;">{{e.workPlace}}</td>
-            <td style="text-align: center;">{{e.department}}</td>
-            <td style="text-align: center;">{{e.position}}</td>
-            <td style="text-align: center;">{{e.joinTime}}</td>
-            <td style="text-align: center;">{{e.leaveTime}}</td>
-            <td style="text-align: center;">{{e.status}}</td>
-            <td style="text-align: center;"><button class="button" style="padding: .5rem;margin: 0" ng-class="{true:'',false:'disabled'}[e.status=='在职员工']" ng-click="openTagModel(e)">标记为离职</button></td>
-          </tr>
+        <tr ng-repeat="e in employeeData">
+          <td style="text-align: center;">{{$index+1}}</td>
+          <td style="text-align: center;">{{e.employeeName}}</td>
+          <td style="text-align: center;">{{e.employeeId}}</td>
+          <td style="text-align: center;">{{e.nationalId}}</td>
+          <td style="text-align: center;">{{e.workPlace}}</td>
+          <td style="text-align: center;">{{e.department}}</td>
+          <td style="text-align: center;">{{e.position}}</td>
+          <td style="text-align: center;">{{e.joinTime}}</td>
+          <td style="text-align: center;">{{e.leaveTime}}</td>
+          <td style="text-align: center;">{{e.status}}</td>
+          <td style="text-align: center;"><button class="button" style="padding: .4rem;margin: 0" ng-class="{true:'',false:'disabled'}[e.status=='在职员工']" ng-click="openTagModel(e)">标记为离职</button></td>
+        </tr>
         </tbody>
       </table>
     </div>
@@ -154,7 +144,7 @@ dependencies: controllers/homeController,services/commonService,services/default
         <h3>考勤导入</h3>
       </div>
       <div class="grid-block align-center" style="margin-top: 3rem;">
-        <form id="wForm" method="post" enctype="multipart/form-data" action="http://localhost:8080/wxoa/uploadWorkSrc">
+        <form id="wForm" method="post" enctype="multipart/form-data" action="/uploadWorkSrc">
           <input name="userId" ng-model="currentUser.userId" style="display: none">
           <input name="workPlaceId" ng-model="currentUser.workPlace" style="display: none">
           <input name="callbackUrl" ng-model="currentUser.callbackUrl" style="display: none">
@@ -165,8 +155,8 @@ dependencies: controllers/homeController,services/commonService,services/default
         <a class="button expand" style="width: 12%;height: 32px;" ng-class="{true:'',false:'disabled'}[btn.work]" ng-click="uploadWorkSrc()" >确定</a>
       </div>
       <div class="grid-block align-center" style="text-align: center;margin-top: 4rem;height: 15px;">
-        <span style="color: red">注：</span>
-        <span>导入数据必须按照标准模板文件格式导入    </span>
+        <span style="color: red;font-weight: 700">注：</span>
+        <span>导入数据必须按照标准模板文件格式导入。    </span>
         <a  style="margin-left: 50px;" ng-href="./assets/excel/{{xlsUrl}}">标准模板下载</a>
       </div>
     </div>
@@ -179,11 +169,9 @@ dependencies: controllers/homeController,services/commonService,services/default
       <div style="text-align: center;">
         <h3>考勤查询</h3>
       </div>
-      <div class="grid-block" style="margin-top: 10px;">
-        <div class="grid-block medium-1 align-right" style="margin-top: 10px">
-          <span>年份：</span>
-        </div>
-        <div class="grid-block medium-1">
+      <div class="grid-block" style="margin-top: 10px;width: 100%">
+        <div class="grid-block align-right" style="margin-top: 10px;width: 5%">年份：</div>
+        <div class="grid-block" style="width: 5%">
           <select  ng-model="queryInfo.year" style="width: 100%;">
             <option value="0">请选择</option>
             <option value="2016">2016</option>
@@ -191,10 +179,8 @@ dependencies: controllers/homeController,services/commonService,services/default
             <option value="2018">2018</option>
           </select>
         </div>
-        <div class="grid-block medium-1 align-right" style="margin-top: 10px">
-          <span>月份：</span>
-        </div>
-        <div class="grid-block medium-1">
+        <div class="grid-block align-right" style="margin-top: 10px;width: 5%">月份：</div>
+        <div class="grid-block" style="width: 5%">
           <select ng-model="queryInfo.month" style="width: 100%;">
             <option value="0">请选择</option>
             <option value="1">1</option>
@@ -211,40 +197,28 @@ dependencies: controllers/homeController,services/commonService,services/default
             <option value="12">12</option>
           </select>
         </div>
-        <div class="grid-block medium-1 align-right" style="margin-top: 10px">
-          <span>在职状态：</span>
-        </div>
-        <div class="grid-block medium-1">
+        <div class="grid-block align-right" style="margin-top: 10px;width: 5%">状态：</div>
+        <div class="grid-block " style="width: 5%">
           <select ng-model="queryInfo.jobStatus" style="width: 100%;">
             <option value="0">全部</option>
             <option value="1">在职</option>
             <option value="-1">离职</option>
           </select>
         </div>
-      </div>
-      <div class="grid-block">
-        <div class="grid-block medium-1 align-right" style="margin-top: 10px">
-          <span>工号：</span>
-        </div>
-        <div class="grid-block medium-1">
+        <div class="grid-block align-right" style="margin-top: 10px;width: 5%">工号：</div>
+        <div class="grid-block " style="width: 6.5%">
           <input type="text" ng-model="queryInfo.employeeId">
         </div>
-        <div class="grid-block medium-1 align-right" style="margin-top: 10px">
-          <span>身份证号：</span>
-        </div>
-        <div class="grid-block medium-1">
+        <div class="grid-block align-right" style="margin-top: 10px;width: 7%">身份证：</div>
+        <div class="grid-block " style="width: 11.5%">
           <input type="text" ng-model="queryInfo.nationalId">
         </div>
-        <div class="grid-block medium-1 align-right" style="margin-top: 10px">
-          <span>姓名：</span>
-        </div>
-        <div class="grid-block medium-1">
+        <div class="grid-block align-right" style="margin-top: 10px;width: 5%">姓名：</div>
+        <div class="grid-block " style="width: 5%">
           <input type="text" ng-model="queryInfo.employeeName">
         </div>
-        <div class="grid-block medium-1 align-right" style="margin-top: 10px">
-          <span>部门：</span>
-        </div>
-        <div class="grid-block medium-1">
+        <div class="grid-block align-right" style="margin-top: 10px;width: 5%">部门：</div>
+        <div class="grid-block " style="width: 8%">
           <input type="text" ng-model="queryInfo.department">
         </div>
         <div class="small-4 grid-block small-offset-2 medium-1" style="margin-left: 60px;">
@@ -259,9 +233,9 @@ dependencies: controllers/homeController,services/commonService,services/default
         <table ng-show="queryResult.length>0" style="margin-left: 1rem;" role="grid">
           <thead style="background: #0066cc;">
           <tr>
-            <th style="color: #ffffff;">部门</th>
-            <th style="color: #ffffff;">姓名</th>
-            <th style="color: #ffffff;">身份证号</th>
+            <th style="color: #ffffff;text-align: center;">部门</th>
+            <th style="color: #ffffff;text-align: center;">姓名</th>
+            <th style="color: #ffffff;text-align: center;">身份证</th>
             <th ng-class="{true:'weekend',false:'unweekend'}[days.d1==0]">1A</th>
             <th ng-class="{true:'weekend',false:'unweekend'}[days.d1==0]">1P</th>
             <th ng-class="{true:'weekend',false:'unweekend'}[days.d2==0]">2A</th>
@@ -324,30 +298,30 @@ dependencies: controllers/homeController,services/commonService,services/default
             <th ng-class="{true:'weekend',false:'unweekend'}[days.d30==0]">30P</th>
             <th ng-class="{true:'weekend',false:'unweekend'}[days.d31==0]" ng-hide="queryInfo.month==2||queryInfo.month==4||queryInfo.month==6||queryInfo.month==9||queryInfo.month==11">31A</th>
             <th ng-class="{true:'weekend',false:'unweekend'}[days.d31==0]" ng-hide="queryInfo.month==2||queryInfo.month==4||queryInfo.month==6||queryInfo.month==9||queryInfo.month==11">31P</th>
-            <th >待处理</th>
-            <th >迟到</th>
-            <th >早退</th>
-            <th >忘打</th>
-            <th >年假</th>
-            <th >事假</th>
-            <th >病假</th>
-            <th >婚假</th>
-            <th >产假</th>
-            <th >孕检假</th>
-            <th >护理假</th>
-            <th >丧假</th>
-            <th >探亲假</th>
-            <th >旷工</th>
-            <th >出差</th>
-            <th >不足月</th>
-            <th >出勤</th>
+            <th style="color: #ffffff;text-align: center;">待处理</th>
+            <th style="color: #ffffff;text-align: center;">迟到</th>
+            <th style="color: #ffffff;text-align: center;">早退</th>
+            <th style="color: #ffffff;text-align: center;">忘打</th>
+            <th style="color: #ffffff;text-align: center;">年假</th>
+            <th style="color: #ffffff;text-align: center;">事假</th>
+            <th style="color: #ffffff;text-align: center;">病假</th>
+            <th style="color: #ffffff;text-align: center;">婚假</th>
+            <th style="color: #ffffff;text-align: center;">产假</th>
+            <th style="color: #ffffff;text-align: center;">孕检假</th>
+            <th style="color: #ffffff;text-align: center;">护理假</th>
+            <th style="color: #ffffff;text-align: center;">丧假</th>
+            <th style="color: #ffffff;text-align: center;">探亲假</th>
+            <th style="color: #ffffff;text-align: center;">旷工</th>
+            <th style="color: #ffffff;text-align: center;">出差</th>
+            <th style="color: #ffffff;text-align: center;">不足月</th>
+            <th style="color: #ffffff;text-align: center;">出勤</th>
           </tr>
           </thead>
           <tbody>
           <tr ng-repeat="r in queryResult">
-            <td>{{r.department}}</td>
-            <td>{{r.employeeName}}</td>
-            <td>{{r.nationalId}}</td>
+            <td style="text-align: center;">{{r.department}}</td>
+            <td style="text-align: center;">{{r.employeeName}}</td>
+            <td style="text-align: center;">{{r.nationalId}}</td>
             <td>{{r.day1a}}</td>
             <td>{{r.day1p}}</td>
             <td>{{r.day2a}}</td>
@@ -411,23 +385,23 @@ dependencies: controllers/homeController,services/commonService,services/default
             <td ng-hide="queryInfo.month==2||queryInfo.month==4||queryInfo.month==6||queryInfo.month==9||queryInfo.month==11">{{r.day31a}}</td>
             <td ng-hide="queryInfo.month==2||queryInfo.month==4||queryInfo.month==6||queryInfo.month==9||queryInfo.month==11">{{r.day31p}}</td>
 
-            <td>{{r.exception}}</td>
-            <td>{{r.late}}</td>
-            <td>{{r.earlyLeave}}</td>
-            <td>{{r.forget}}</td>
-            <td>{{r.yearVacation}}</td>
-            <td>{{r.affair}}</td>
-            <td>{{r.disease}}</td>
-            <td>{{r.marry}}</td>
-            <td>{{r.maternity}}</td>
-            <td>{{r.pregnant}}</td>
-            <td>{{r.nursing}}</td>
-            <td>{{r.funeral}}</td>
-            <td>{{r.homeLeave}}</td>
-            <td>{{r.absenteeism}}</td>
-            <td>{{r.business}}</td>
-            <td>{{r.notMonth}}</td>
-            <td>{{r.attendance}}</td>
+            <td style="text-align: center;">{{r.exception}}</td>
+            <td style="text-align: center;">{{r.late}}</td>
+            <td style="text-align: center;">{{r.earlyLeave}}</td>
+            <td style="text-align: center;">{{r.forget}}</td>
+            <td style="text-align: center;">{{r.yearVacation}}</td>
+            <td style="text-align: center;">{{r.affair}}</td>
+            <td style="text-align: center;">{{r.disease}}</td>
+            <td style="text-align: center;">{{r.marry}}</td>
+            <td style="text-align: center;">{{r.maternity}}</td>
+            <td style="text-align: center;">{{r.pregnant}}</td>
+            <td style="text-align: center;">{{r.nursing}}</td>
+            <td style="text-align: center;">{{r.funeral}}</td>
+            <td style="text-align: center;">{{r.homeLeave}}</td>
+            <td style="text-align: center;">{{r.absenteeism}}</td>
+            <td style="text-align: center;">{{r.business}}</td>
+            <td style="text-align: center;">{{r.notMonth}}</td>
+            <td style="text-align: center;">{{r.attendance}}</td>
           </tr>
           </tbody>
         </table>
@@ -435,6 +409,7 @@ dependencies: controllers/homeController,services/commonService,services/default
     </div>
     <!--异常处理1-->
     <div ng-show="currentTag==3" class="grid-block medium-10 vertical" style="height: 100%;">
+      <p ng-if="exceptionEmployee==undefined||exceptionEmployee.length==0" style="margin-left: 6rem">当前无异常需要处理</p>
       <div style="margin-top: 10px;margin-left: 20px;">
         <span style="color: #0c4d78;">首页 — </span>
         <span style="color: #0c4d78;">异常处理</span>
@@ -442,10 +417,14 @@ dependencies: controllers/homeController,services/commonService,services/default
       <div style="text-align: center;">
         <h3>异常处理</h3>
       </div>
-      <div class="grid-block" style="margin-left: -5%;"  ng-if="exceptionEmployee.length>0">
+      <div class="grid-block" style="margin-left: -4%" ng-if="exceptionEmployee.length>0">
         <div class="grid-block medium-1 align-right" style="margin-top: 10px">工号：</div>
         <div class="grid-block medium-1">
           <input type="text" ng-model="exceptionQueryInfo.employeeId">
+        </div>
+        <div class="grid-block medium-1 align-right" style="margin-top: 10px">身份证：</div>
+        <div style="width: 180px;">
+          <input type="text" ng-model="exceptionQueryInfo.nationalId">
         </div>
         <div class="grid-block medium-1 align-right" style="margin-top: 10px">姓名：</div>
         <div class="grid-block medium-1">
@@ -455,16 +434,16 @@ dependencies: controllers/homeController,services/commonService,services/default
         <div class="grid-block medium-1">
           <input type="text" ng-model="exceptionQueryInfo.department">
         </div>
-        <div class="grid-block medium-1 align-right" style="margin-left: 5px;">
-          <a class="button" ng-click="exceptionQuery()">查询</a>
+        <div class="grid-block medium-1 align-right">
+          <a class="button" ng-click="exceptionQuery()">&nbsp;&nbsp;&nbsp;查&nbsp;&nbsp;&nbsp;&nbsp;询&nbsp;&nbsp;&nbsp;</a>
         </div>
       </div>
-      <table style="width: 86%;height: 3rem;margin-left: 15px;" role="grid" ng-if="exceptionEmployee.length>0">
+      <table style="width: 99%;height: 3rem;margin-left: 15px;" role="grid" ng-if="exceptionEmployee.length>0">
         <thead style="background: #0066cc;">
         <tr>
           <th style="color: #ffffff;text-align: center;">序号</th>
           <th style="color: #ffffff;text-align: center;">工号</th>
-          <th style="color: #ffffff;text-align: center;">身份证号</th>
+          <th style="color: #ffffff;text-align: center;">身份证</th>
           <th style="color: #ffffff;text-align: center;">姓名</th>
           <th style="color: #ffffff;text-align: center;">部门</th>
           <th style="color: #ffffff;text-align: center;">职位</th>
@@ -479,7 +458,9 @@ dependencies: controllers/homeController,services/commonService,services/default
           <td style="text-align: center;">{{ee.employeeName}}</td>
           <td style="text-align: center;">{{ee.department}}</td>
           <td style="text-align: center;">{{ee.position}}</td>
-          <td style="text-align: center;">  <a class="button" ng-click="exceptionDetail(ee)">处理</a></td>
+          <td style="text-align: center;">
+            <a class="button" style="padding:.4rem;margin: 0 auto" ng-click="exceptionDetail(ee)">&nbsp;&nbsp;处&nbsp;&nbsp;&nbsp;&nbsp;理&nbsp;&nbsp;</a>
+          </td>
         </tr>
         </tbody>
       </table>
@@ -605,16 +586,15 @@ dependencies: controllers/homeController,services/commonService,services/default
       <div style="text-align: center;">
         <h3>个人配置</h3>
       </div>
-      <div>
-        <div>
-          <p style="margin-left: 15px;">职场以及职场规则</p>
-        </div>
-        <table style="margin-left: 10%;" role="grid">
-          <thead>
+      <div style="height: 50px"><p>&nbsp;</p></div>
+      <div style="margin: 0 auto;">
+        <p style="margin-left: 10%">考勤时间说明</p>
+        <table style="margin-left: 10%;margin-top: -10px;" role="grid">
+          <thead style="background: #0066CC;">
           <tr>
-            <th style="width: 200px;text-align: center;">职场</th>
-            <th style="width: 200px;text-align: center;">工作时间</th>
-            <th style="width: 200px;text-align: center;">迟到时间</th>
+            <th style="width: 200px;text-align: center;color: #ffffff;">职场</th>
+            <th style="width: 200px;text-align: center;color: #ffffff;">工作时间</th>
+            <th style="width: 200px;text-align: center;color: #ffffff;">迟到时间</th>
           </tr>
           </thead>
           <tbody>
@@ -636,42 +616,40 @@ dependencies: controllers/homeController,services/commonService,services/default
           </tbody>
         </table>
       </div>
-      <div>
-        <div style="margin-top: 30px;margin-left: 15px;">
-          <p>异常规则及其符号</p>
-        </div>
-        <div>
+      <div style="margin: 10px auto;">
+        <p style="margin-left: 10%">异常符号说明</p>
+        <div style="margin-top: -10px;">
           <table style="margin-left: 10%;" role="grid">
             <tbody>
             <tr>
-              <td style="text-align: center;width: 200px;">出勤 :/</td>
-              <td style="text-align: center;width: 200px;">旷工 :○</td>
-              <td style="text-align: center;width: 200px;">迟到 :﹟</td>
+              <td style="text-align: center;width: 200px;">出勤&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/</td>
+              <td style="text-align: center;width: 200px;">旷工&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;○</td>
+              <td style="text-align: center;width: 200px;">迟到&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;﹟</td>
             </tr>
             <tr>
-              <td style="text-align: center;width: 200px;">早退 :×</td>
-              <td style="text-align: center;width: 200px;">忘打卡 :忘</td>
-              <td style="text-align: center;width: 200px;">事假 :⊙</td>
+              <td style="text-align: center;width: 200px;">早退&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;×</td>
+              <td style="text-align: center;width: 200px;">忘打卡&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;忘</td>
+              <td style="text-align: center;width: 200px;">事假&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⊙</td>
             </tr>
             <tr>
-              <td style="text-align: center;width: 200px;">病假 :⊕</td>
-              <td style="text-align: center;width: 200px;">产假 :◎</td>
-              <td style="text-align: center;width: 200px;">年休假 :年</td>
+              <td style="text-align: center;width: 200px;">病假&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⊕</td>
+              <td style="text-align: center;width: 200px;">产假&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;◎</td>
+              <td style="text-align: center;width: 200px;">年休假&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;年</td>
             </tr>
             <tr>
-              <td style="text-align: center;width: 200px;">婚假 :Δ</td>
-              <td style="text-align: center;width: 200px;">孕检假 :★</td>
-              <td style="text-align: center;width: 200px;">护理假 :※</td>
+              <td style="text-align: center;width: 200px;">婚假&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Δ</td>
+              <td style="text-align: center;width: 200px;">孕检假&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;★</td>
+              <td style="text-align: center;width: 200px;">护理假&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;※</td>
             </tr>
             <tr>
-              <td style="text-align: center;width: 200px;">丧假 :▲</td>
-              <td style="text-align: center;width: 200px;">工伤假 :☆</td>
-              <td style="text-align: center;width: 200px;">探亲假 :回</td>
+              <td style="text-align: center;width: 200px;">丧假&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;▲</td>
+              <td style="text-align: center;width: 200px;">工伤假&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;☆</td>
+              <td style="text-align: center;width: 200px;">探亲假&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;回</td>
             </tr>
             <tr>
-              <td style="text-align: center;width: 200px;">公出 :公</td>
-              <td style="text-align: center;width: 200px;">出差 :差</td>
-              <td style="text-align: center;width: 200px;">新进离职不足月 :－</td>
+              <td style="text-align: center;width: 200px;">公出&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;公</td>
+              <td style="text-align: center;width: 200px;">出差&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;差</td>
+              <td style="text-align: center;width: 200px;">新进离职不足月&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;－</td>
             </tr>
             </tbody>
           </table>
@@ -687,18 +665,22 @@ dependencies: controllers/homeController,services/commonService,services/default
       <div style="text-align: center;">
         <h3>节假日设置</h3>
       </div>
-      <div style="margin-left: 1rem;">
-        <div style="width: 20%;margin-left: 1rem;margin-top: 2rem;">
-          <span>标记为节假日：</span>
+      <div style="margin-left: 1rem;margin-top:3rem;text-align: center;">
+        <div class="grid-block align-center">
+          <div class="grid-block medium-1 align-right">
+            <p style="margin-top: 5px;">节假日设置：</p>
+          </div>
+          <div class="grid-block medium-2">
+            <input style="width: 150px;float: left;" type="date" ng-model="queryInfo.tagHoliday" ng-change="tagHolidayChange()">
+          </div>
+          <div class="grid-block medium-1 align-right">
+            <a class="button" style="width: 100px;margin-left: 2rem" ng-click="tagHolidayChange()" ng-class="{true:'disabled',false:''}[queryInfo.tagHoliday=='']">&nbsp;&nbsp;确&nbsp;&nbsp;&nbsp;定&nbsp;&nbsp;</a>
+          </div>
         </div>
-        <div>
-          <a class="button" ng-click="tagHolidayChange()" ng-class="{true:'disabled',false:''}[queryInfo.tagHoliday=='']">确定</a>
-        </div>
-        <div style="width: 200px;margin-left: 1rem;margin-top: 1rem">
-          <input type="date" ng-model="queryInfo.tagHoliday">
-        </div>
-        <div style="margin-left: 1rem">
-          <p ng-repeat="l in logInfo">
+        <div style="margin-left: 1rem;margin-top: 1rem;">
+          <span style="color: red;font-weight: 700">注：</span>
+          <span>请务必确认所选日期为节假日。</span>
+          <p style="margin-top: 3rem;" ng-repeat="l in logInfo">
             {{$index+1}}.{{l.userName}}在{{l.operateDate}}日标记{{l.tagDate}}为节假日。
           </p>
         </div>
@@ -709,16 +691,16 @@ dependencies: controllers/homeController,services/commonService,services/default
 
 <div zf-modal="" id="userModal">
   <a zf-close="" class="close-button">×</a>
-  <h3 style="text-align: center">导入花名册</h3>
-  <form style="height: 2rem;text-align: center;margin-left: 100px;margin-top: 2rem;" id="eForm" method="post" enctype="multipart/form-data" action="http://localhost:8080/wxoa/uploadEmployeeSrc">
+  <h3 style="text-align: center;margin-top: 1rem;">导入花名册</h3>
+  <form style="height: 2rem;text-align: center;margin-left: 100px;margin-top: 2rem;" id="eForm" method="post" enctype="multipart/form-data" action="/uploadEmployeeSrc">
     <input name="userId" ng-model="currentUser.userId" style="display: none">
     <input name="workPlaceId" ng-model="currentUser.workPlace" style="display: none">
     <input name="callbackUrl" ng-model="currentUser.callbackUrl" style="display: none">
     <input name="file" type="file" value="导入" input-on-change="employeeChange">
   </form>
-  <div class="grid-block align-center" style="text-align: center;margin-top: 4rem;height: 15px;">
-    <span style="color: red">注：</span>
-    <span>导入数据必须按照标准模板文件格式导入    </span>
+  <div class="grid-block align-center" style="text-align: center;margin-top: 3rem;height: 15px;">
+    <span style="color: red;font-weight: 700">注：</span>
+    <span>导入数据必须按照标准模板文件格式导入。    </span>
     <a  style="margin-left: 50px;" href="./assets/excel/employee.xls">标准模板下载</a>
   </div>
   <div class="grid-block align-center" style="margin-top:3rem">
@@ -728,16 +710,37 @@ dependencies: controllers/homeController,services/commonService,services/default
 
 <div zf-modal="" id="singleUserModal">
   <a zf-close="" class="close-button">×</a>
-  <h3 style="text-align: center;">添加新员工</h3>
-  <div class="grid-block vertical" style="margin-top: 2rem;">
+  <h3 style="text-align: center;margin: 10px auto">添加新员工</h3>
+  <div class="grid-block vertical" style="margin-top: 2rem;text-align: center;">
     <form id="addUserForm" name="addUserForm">
-      <input type="text"  placeholder="工号" ng-model="addUser.employeeId" required>
-      <input type="text"  placeholder="身份证号" ng-model="addUser.nationalId" required>
-      <input type="text"  placeholder="考勤编号" ng-model="addUser.machineId" required>
-      <input type="text"  placeholder="姓名" ng-model="addUser.employeeName" required>
-      <input type="text"  placeholder="部门" ng-model="addUser.department" required>
-      <input type="text"  placeholder="职位" ng-model="addUser.position" required>
-      <input id="joinTimePicker" type="text"  placeholder="入职时间" ng-model="addUser.joinTime" ng-focus="joinTimeFocus()" ng-blur="joinTimeBlur()" required>
+      <div class = "add_new_employee">
+        <p class="new_employee">工号：&nbsp;&nbsp;</p>
+        <input style="width: 50%;margin-left: 20px;" type="text" placeholder="工号" ng-model="addUser.employeeId" required>
+      </div>
+      <div class = "add_new_employee">
+        <p class="new_employee">身份证：&nbsp;&nbsp;</p>
+        <input style="width: 50%;margin-left: 20px;" type="text" placeholder="身份证" ng-model="addUser.nationalId" required>
+      </div>
+      <div class = "add_new_employee">
+        <p class="new_employee">考勤编号：&nbsp;&nbsp;</p>
+        <input style="width: 50%;margin-left: 20px;" type="text" placeholder="考勤编号" ng-model="addUser.machineId" required>
+      </div>
+      <div class = "add_new_employee">
+        <p class="new_employee">姓名：&nbsp;&nbsp;</p>
+        <input style="width: 50%;margin-left: 20px;" type="text" placeholder="姓名" ng-model="addUser.employeeName" required>
+      </div>
+      <div class = "add_new_employee">
+        <p class="new_employee">部门：&nbsp;&nbsp;</p>
+        <input style="width: 50%;margin-left: 20px;" type="text" placeholder="部门" ng-model="addUser.department" required>
+      </div>
+      <div class = "add_new_employee">
+        <p class="new_employee">职位：&nbsp;&nbsp;</p>
+        <input style="width: 50%;margin-left: 20px;" type="text" placeholder="职位" ng-model="addUser.position" required>
+      </div>
+      <div class = "add_new_employee">
+        <p class="new_employee">入职时间：&nbsp;&nbsp;</p>
+        <input style="width: 50%;margin-left: 20px;" id="joinTimePicker" type="text" placeholder="入职时间" ng-model="addUser.joinTime" ng-focus="joinTimeFocus()" ng-blur="joinTimeBlur()" required>
+      </div>
     </form>
   </div>
   <div class="grid-block align-center" style="margin-top: 2rem">
@@ -747,28 +750,32 @@ dependencies: controllers/homeController,services/commonService,services/default
 
 <div zf-modal="" id="errorModel">
   <img src="./assets/img/vc-warm-red.png" width="6%" style="display:block;float:left;">
-  <p style="font-size: 18px;margin: 4px 0 0 4px;padding-left: 36px">{{msg.errorMsg}}</p>
+  <p style="font-size: 18px;margin: 4px 0 0 4px;padding-left: 36px">{{errorMsg}}</p>
 </div>
 
 <div zf-modal="" id="tagModel">
   <a zf-close="" class="close-button">×</a>
   <h3 style="text-align: center;margin-top: 3rem;">设定离职时间</h3>
-  <div style="margin-top: 2rem;">
-    <p style="margin-top:7px;margin-left: 10px;float: left">请选择离职日期：</p>
-    <input type="date" ng-model="tag.leaveDate" style="width: 50%;margin-left: 25%;">
+  <div class="grid-block align-center" style="margin-top: 30px;">
+    <div class="grid-block medium-2 align-right" >
+      <p style="text-align: right;margin-top: 7px;">离职日期：</p>
+    </div>
+    <div class="grid-block medium-3">
+      <input type="date" ng-model="tag.leaveDate">
+    </div>
     <input type="hidden" ng-model="tag.employeeId">
   </div>
   <a class="button " style="width: 20%;margin-left: 40%;margin-top: 2rem;" ng-class="{true:'disabled',false:''}[tag.leaveDate==null||tag.leaveDate=='']"  ng-click="tagOff()">确定</a>
 </div>
 
-<div zf-modal="" id="tagHolidayModal" overlay-close="false">
-  <p style="font-size: 18px;margin: 4px 0 0 0px;">{{::tagHolidayMsg}}</p>
-  <a class="button" ng-click="agree()">确定</a>
-  <a class="button" ng-click="refuse(1)">取消</a>
+<div zf-modal="" id="tagHolidayModal" overlay-close="false" style="text-align: center;">
+  <p style="font-size: 18px;margin: 5rem 0 0 0px;">{{::tagHolidayMsg}}</p>
+  <a style="margin-top: 20px;margin-bottom: 5rem" class="button" ng-click="agree()">确定</a>
+  <a style="margin-top: 20px;margin-bottom: 5rem" class="button" ng-click="refuse(1)">取消</a>
 </div>
 
 <div zf-modal="" id="exceptionSubmitModal" overlay-close="false">
   <p style="font-size: 18px;margin: 4px 0 0 0px;">确定提交？</p>
-  <a class="button" ng-click="submitResultAgree()">确定</a>
-  <a class="button" ng-click="refuse(2)">取消</a>
+  <a style="margin-top: 20px;" class="button" ng-click="submitResultAgree()">确定</a>
+  <a style="margin-top: 20px;" class="button" ng-click="refuse(2)">取消</a>
 </div>
