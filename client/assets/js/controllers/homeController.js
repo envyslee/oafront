@@ -98,6 +98,8 @@ define([], function () {
       this.leaveTime=leave;
       this.am=am;
       this.pm=pm;
+      this.amReason=0;
+      this.pmReason=0;
     }
 
 
@@ -810,7 +812,7 @@ define([], function () {
       commonService.PostRequest(url+"modifyException",param).then(function (data) {
         getEmployeeException(employee);
       },function (e) {
-        $scope.errorMsg=e.content;
+        $scope.msg.errorMsg=e.content;
         FoundationApi.publish('exErrorModel','open');
       })
     }
@@ -887,7 +889,7 @@ define([], function () {
           $scope.details=[];
         }
       },function (e) {
-        $scope.errorMsg=e.message;
+        $scope.msg.errorMsg=e.message;
         FoundationApi.publish('errorModel','open');
       });
     }
