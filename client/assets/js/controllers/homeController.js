@@ -810,7 +810,7 @@ define([], function () {
       commonService.PostRequest(url+"modifyException",param).then(function (data) {
         getEmployeeException(employee);
       },function (e) {
-        $scope.exErrorMsg=e.content;
+        $scope.errorMsg=e.content;
         FoundationApi.publish('exErrorModel','open');
       })
     }
