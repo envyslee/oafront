@@ -26,10 +26,10 @@ dependencies: controllers/homeController,services/commonService,services/default
         <a ng-click="chooseTab(2)" ng-class="{true:'choose_tab',false:'unchoose_tab'}[currentTag==2]">考勤查询</a>
       </div>
       <div style="text-align: center;height: 3rem;line-height: 3rem">
-        <a ng-click="chooseTab(3)" ng-class="{true:'choose_tab',false:'unchoose_tab'}[currentTag==3]">异常处理</a>
+        <a ng-click="chooseTab(3)" ng-class="{true:'choose_tab',false:'unchoose_tab'}[currentTag==3]||currentTag==5">异常处理</a>
       </div>
       <div style="text-align: center;height: 3rem;line-height: 3rem">
-        <a ng-click="chooseTab(4)" ng-class="{true:'choose_tab',false:'unchoose_tab'}[currentTag==4||currentTag==5]">个人配置</a>
+        <a ng-click="chooseTab(4)" ng-class="{true:'choose_tab',false:'unchoose_tab'}[currentTag==4]">个人配置</a>
       </div>
       <div class="grid-block align-center" style="height: 4rem;line-height: 4rem">
         <a ng-click="chooseTab(6)" ng-class="{true:'choose_tab',false:'unchoose_tab'}[currentTag==6]">节假日设置</a>
@@ -434,7 +434,7 @@ dependencies: controllers/homeController,services/commonService,services/default
         <div class="grid-block medium-1">
           <input type="text" ng-model="exceptionQueryInfo.department">
         </div>
-        <div class="grid-block medium-1 align-right">
+        <div class="grid-block medium-1 align-right" style="margin-left: 60px;">
           <a class="button" ng-click="exceptionQuery()">&nbsp;&nbsp;&nbsp;查&nbsp;&nbsp;&nbsp;&nbsp;询&nbsp;&nbsp;&nbsp;</a>
         </div>
       </div>
@@ -497,7 +497,7 @@ dependencies: controllers/homeController,services/commonService,services/default
           <td style="text-align: center;">{{::d.date}}</td>
           <td style="text-align: center;">{{d.arriveTime}}</td>
           <td style="text-align: center;width: 200px;">
-            <select ng-model="d.amReason" style="overflow-y: hidden;font-size: 12px;height: 30px" ng-show="d.am==0">
+            <select ng-model="d.amReason" style="padding:.4rem;overflow-y: hidden;font-size: 12px;height: 26px" ng-show="d.am==0">
               <option value="0">请选择</option>
               <option value="1">出勤</option>
               <option value="17">旷工</option>
@@ -522,7 +522,7 @@ dependencies: controllers/homeController,services/commonService,services/default
           </td>
           <td style="text-align: center;">{{d.leaveTime}}</td>
           <td style="text-align: center;width: 200px;">
-            <select ng-model="d.pmReason" style="overflow-y: hidden;font-size: 12px;height: 30px" ng-show="d.pm==0">
+            <select ng-model="d.pmReason" style="padding:.4rem;overflow-y: hidden;font-size: 12px;height: 26px" ng-show="d.pm==0">
               <option value="0">请选择</option>
               <option value="1">出勤</option>
               <option value="17">旷工</option>
@@ -549,8 +549,8 @@ dependencies: controllers/homeController,services/commonService,services/default
         </tbody>
       </table>
       <div class="grid-block "  style="margin-top: 3rem;margin-left: 250px;"  ng-show="details.length>0">
-        <div class="grid-block align-left medium-1 medium-offset-1">
-          <select ng-model="all.reason" style="overflow-y: hidden;font-size: 12px;height: 30px;">
+        <div class="grid-block align-left medium-1 medium-offset-1" style="height: 44px;">
+          <select ng-model="all.reason" style="padding:.4rem;overflow-y: hidden;font-size: 12px;height: 26px;">
             <option value="0">请选择</option>
             <option value="1">出勤</option>
             <option value="17">旷工</option>
@@ -573,7 +573,7 @@ dependencies: controllers/homeController,services/commonService,services/default
           </select>
         </div>
         <div class="grid-block align-left medium-1" style="height: 44px;">
-          <a class="button expand" ng-click="singleReasonSubmit()">单一原因提交</a>
+          <a class="button expand" ng-click="singleReasonSubmit()">批量处理</a>
         </div>
         <div class="grid-block align-right medium-1 medium-offset-3" style="height: 44px;">
           <a class="button expand"  ng-click="exceptionSubmit()">提交</a>
@@ -675,7 +675,7 @@ dependencies: controllers/homeController,services/commonService,services/default
           <div class="grid-block medium-1 align-right">
             <p style="margin-top: 5px;">节假日设置：</p>
           </div>
-          <div class="grid-block medium-2">
+          <div class="grid-block medium-2 align-center">
             <input style="width: 150px;float: left;" type="date" ng-model="queryInfo.tagHoliday" ng-change="tagHolidayChange()">
           </div>
           <div class="grid-block medium-1 align-right">
