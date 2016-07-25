@@ -72,13 +72,13 @@ define([], function () {
     var workPlaceId=$sessionStorage['workPlaceId'];
     if(workPlaceId==1){//上海、苏州恒宇
       $scope.currentPlace='上海';
-      $scope.xlsUrl="sh.xls";
+      $scope.xlsUrl="SH.xls";
     }else if(workPlaceId==10){//苏州凤凰
       $scope.currentPlace='苏州凤凰';
-      $scope.xlsUrl="sz.xls";
+      $scope.xlsUrl="SZ-FH.xls";
     }else if(workPlaceId==11){
       $scope.currentPlace='苏州恒宇';
-      $scope.xlsUrl="sh.xls";
+      $scope.xlsUrl="SZ-HY.xls";
     }
 
     //异常详情
@@ -107,8 +107,8 @@ define([], function () {
       name:$sessionStorage['userName'],
       workPlace:workPlaceId,
       userId:userId,
-      //callbackUrl:'http://122.192.49.98:8090'
-      callbackUrl:'http://localhost:8000',
+      callbackUrl:'http://122.192.49.98:8090'
+      //callbackUrl:'http://localhost:8000',
     }
 
     $scope.btn={
@@ -131,7 +131,6 @@ define([], function () {
     $scope.employeeQueryInfo={
       employeeId:'',
       employeeName:'',
-      //nationalId:'',
       department:'',
       jobStatus:0,
       queryTime:0,
@@ -346,7 +345,6 @@ define([], function () {
         workPlaceId:workPlaceId,
         employeeId:$scope.employeeQueryInfo.employeeId,
         employeeName:$scope.employeeQueryInfo.employeeName,
-       // nationalId:$scope.employeeQueryInfo.nationalId,
         department:$scope.employeeQueryInfo.department
       }
       if($scope.employeeQueryInfo.queryTime!=0){
@@ -810,10 +808,12 @@ define([], function () {
         employeeName:$scope.details[0].name
       }
       commonService.PostRequest(url+"modifyException",param).then(function (data) {
+        FoundationApi.publish('exceptionSubmitModal','close');
         getEmployeeException(employee);
       },function (e) {
         $scope.msg.errorMsg=e.content;
-        FoundationApi.publish('exErrorModel','open');
+        FoundationApi.publish('exceptionSubmitModal','close');
+        FoundationApi.publish('errorModel','open');
       })
     }
 
