@@ -1,0 +1,24 @@
+
+    <div style="margin-top: 10px;margin-left: 20px;">
+        <span style="color: #0c4d78;">首页 — </span>
+        <span style="color: #0c4d78;">考勤导入</span>
+    </div>
+    <div style="text-align: center;">
+        <h3>考勤导入</h3>
+    </div>
+    <div class="grid-block align-center" style="margin-top: 3rem;">
+        <form id="wForm" method="post" enctype="multipart/form-data" action="/uploadWorkSrc">
+            <input name="userId" ng-model="currentUser.userId" style="display: none">
+            <input name="workPlaceId" ng-model="currentUser.workPlace" style="display: none">
+            <input name="callbackUrl" ng-model="currentUser.callbackUrl" style="display: none">
+            <input name="workFile" type="file" value="导入" input-on-change="workChange">
+        </form>
+    </div>
+    <div class="grid-block align-center" style="margin-top: 4rem;">
+        <a class="button expand" style="width: 12%;height: 32px;" ng-class="{true:'',false:'disabled'}[btn.work]" ng-click="uploadWorkSrc()" >确定</a>
+    </div>
+    <div class="grid-block align-center" style="text-align: center;margin-top: 4rem;height: 15px;">
+        <span style="color: red;font-weight: 700">注：</span>
+        <span>导入数据必须按照标准模板文件格式导入。    </span>
+        <a  style="margin-left: 50px;" ng-href="./assets/excel/{{xlsUrl}}">标准模板下载</a>
+    </div>

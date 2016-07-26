@@ -1,0 +1,245 @@
+
+    <div style="margin-top: 10px;margin-left: 20px;">
+        <span style="color: #0c4d78;">首页 — </span>
+        <span style="color: #0c4d78;">考勤查询</span>
+    </div>
+    <div style="text-align: center;">
+        <h3>考勤查询</h3>
+    </div>
+    <div class="grid-block" style="margin-top: 10px;width: 100%">
+        <div class="grid-block align-right" style="margin-top: 10px;width: 5%">年份：</div>
+        <div class="grid-block" style="width: 6.5%">
+            <select  ng-model="queryInfo.year" style="width: 100%;">
+                <option value="0">请选择</option>
+                <option value="2016">2016</option>
+                <option value="2017">2017</option>
+                <option value="2018">2018</option>
+            </select>
+        </div>
+        <div class="grid-block align-right" style="margin-top: 10px;width: 5%">月份：</div>
+        <div class="grid-block" style="width: 6.5%">
+            <select ng-model="queryInfo.month" style="width: 100%;">
+                <option value="0">请选择</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+            </select>
+        </div>
+        <div class="grid-block align-right" style="margin-top: 10px;width: 5%">状态：</div>
+        <div class="grid-block " style="width: 5.5%">
+            <select ng-model="queryInfo.jobStatus" style="width: 100%;">
+                <option value="0">全部</option>
+                <option value="1">在职</option>
+                <option value="-1">离职</option>
+            </select>
+        </div>
+        <div class="grid-block align-right" style="margin-top: 10px;width: 5%">工号：</div>
+        <div class="grid-block " style="width: 7.5%">
+            <input type="text" ng-model="queryInfo.employeeId">
+        </div>
+        <div class="grid-block align-right" style="margin-top: 10px;width: 6.5%">身份证：</div>
+        <div class="grid-block " style="width: 14%">
+            <input type="text" ng-model="queryInfo.nationalId">
+        </div>
+        <div class="grid-block align-right" style="margin-top: 10px;width: 5%">姓名：</div>
+        <div class="grid-block " style="width: 5%">
+            <input type="text" ng-model="queryInfo.employeeName">
+        </div>
+        <div class="grid-block align-right" style="margin-top: 10px;width: 5%">部门：</div>
+        <div class="grid-block " style="width: 8%">
+            <input type="text" ng-model="queryInfo.department">
+        </div>
+        <div class="grid-block align-right" style="width: 7%;margin-left: 15px;">
+            <a class="button"  style="height: 2.4rem; width: 14rem;" ng-click="query()">查询</a>
+        </div>
+        <div class="grid-block align-right" style="width: 7%;">
+            <a class="button" ng-class="{true:'',false:'disabled'}[queryResult.length>0]" style="height: 2.4rem; width: 14rem;" ng-click="output()">导出</a>
+        </div>
+    </div>
+    <div style="height:680px;overflow:auto;margin-top: 10px;" id="exportable">
+        <!--考勤符号 出勤:/  旷工:○  迟到:﹟  早退:×  忘打卡：忘   事假:⊙   病假:⊕  产假:◎  年休假：年  婚假:Δ   孕检假：★    护理假：※   丧假：▲   工伤假：☆   探亲假:回   公出:公   出差：差  新进离职不足月：－   -->
+        <table ng-show="queryResult.length>0" style="margin-left: 1rem;" role="grid">
+            <thead style="background: #0066cc;">
+            <tr>
+                <th style="color: #ffffff;text-align: center;">部门</th>
+                <th style="color: #ffffff;text-align: center;">姓名</th>
+                <th style="color: #ffffff;text-align: center;">身份证</th>
+                <th ng-class="{true:'weekend',false:'unweekend'}[days.d1==0]">1A</th>
+                <th ng-class="{true:'weekend',false:'unweekend'}[days.d1==0]">1P</th>
+                <th ng-class="{true:'weekend',false:'unweekend'}[days.d2==0]">2A</th>
+                <th ng-class="{true:'weekend',false:'unweekend'}[days.d2==0]">2P</th>
+                <th ng-class="{true:'weekend',false:'unweekend'}[days.d3==0]">3A</th>
+                <th ng-class="{true:'weekend',false:'unweekend'}[days.d3==0]">3P</th>
+                <th ng-class="{true:'weekend',false:'unweekend'}[days.d4==0]">4A</th>
+                <th ng-class="{true:'weekend',false:'unweekend'}[days.d4==0]">4P</th>
+                <th ng-class="{true:'weekend',false:'unweekend'}[days.d5==0]">5A</th>
+                <th ng-class="{true:'weekend',false:'unweekend'}[days.d5==0]">5P</th>
+                <th ng-class="{true:'weekend',false:'unweekend'}[days.d6==0]">6A</th>
+                <th ng-class="{true:'weekend',false:'unweekend'}[days.d6==0]">6P</th>
+                <th ng-class="{true:'weekend',false:'unweekend'}[days.d7==0]">7A</th>
+                <th ng-class="{true:'weekend',false:'unweekend'}[days.d7==0]">7P</th>
+                <th ng-class="{true:'weekend',false:'unweekend'}[days.d8==0]">8A</th>
+                <th ng-class="{true:'weekend',false:'unweekend'}[days.d8==0]">8P</th>
+                <th ng-class="{true:'weekend',false:'unweekend'}[days.d9==0]">9A</th>
+                <th ng-class="{true:'weekend',false:'unweekend'}[days.d9==0]">9P</th>
+                <th ng-class="{true:'weekend',false:'unweekend'}[days.d10==0]">10A</th>
+                <th ng-class="{true:'weekend',false:'unweekend'}[days.d10==0]">10P</th>
+                <th ng-class="{true:'weekend',false:'unweekend'}[days.d11==0]">11A</th>
+                <th ng-class="{true:'weekend',false:'unweekend'}[days.d11==0]">11P</th>
+                <th ng-class="{true:'weekend',false:'unweekend'}[days.d12==0]">12A</th>
+                <th ng-class="{true:'weekend',false:'unweekend'}[days.d12==0]">12P</th>
+                <th ng-class="{true:'weekend',false:'unweekend'}[days.d13==0]">13A</th>
+                <th ng-class="{true:'weekend',false:'unweekend'}[days.d13==0]">13P</th>
+                <th ng-class="{true:'weekend',false:'unweekend'}[days.d14==0]">14A</th>
+                <th ng-class="{true:'weekend',false:'unweekend'}[days.d14==0]">14P</th>
+                <th ng-class="{true:'weekend',false:'unweekend'}[days.d15==0]">15A</th>
+                <th ng-class="{true:'weekend',false:'unweekend'}[days.d15==0]">15P</th>
+                <th ng-class="{true:'weekend',false:'unweekend'}[days.d16==0]">16A</th>
+                <th ng-class="{true:'weekend',false:'unweekend'}[days.d16==0]">16P</th>
+                <th ng-class="{true:'weekend',false:'unweekend'}[days.d17==0]">17A</th>
+                <th ng-class="{true:'weekend',false:'unweekend'}[days.d17==0]">17P</th>
+                <th ng-class="{true:'weekend',false:'unweekend'}[days.d18==0]">18A</th>
+                <th ng-class="{true:'weekend',false:'unweekend'}[days.d18==0]">18P</th>
+                <th ng-class="{true:'weekend',false:'unweekend'}[days.d19==0]">19A</th>
+                <th ng-class="{true:'weekend',false:'unweekend'}[days.d19==0]">19P</th>
+                <th ng-class="{true:'weekend',false:'unweekend'}[days.d20==0]">20A</th>
+                <th ng-class="{true:'weekend',false:'unweekend'}[days.d20==0]">20P</th>
+                <th ng-class="{true:'weekend',false:'unweekend'}[days.d21==0]">21A</th>
+                <th ng-class="{true:'weekend',false:'unweekend'}[days.d21==0]">21P</th>
+                <th ng-class="{true:'weekend',false:'unweekend'}[days.d22==0]">22A</th>
+                <th ng-class="{true:'weekend',false:'unweekend'}[days.d22==0]">22P</th>
+                <th ng-class="{true:'weekend',false:'unweekend'}[days.d23==0]">23A</th>
+                <th ng-class="{true:'weekend',false:'unweekend'}[days.d23==0]">23P</th>
+                <th ng-class="{true:'weekend',false:'unweekend'}[days.d24==0]">24A</th>
+                <th ng-class="{true:'weekend',false:'unweekend'}[days.d24==0]">24P</th>
+                <th ng-class="{true:'weekend',false:'unweekend'}[days.d25==0]">25A</th>
+                <th ng-class="{true:'weekend',false:'unweekend'}[days.d25==0]">25P</th>
+                <th ng-class="{true:'weekend',false:'unweekend'}[days.d26==0]">26A</th>
+                <th ng-class="{true:'weekend',false:'unweekend'}[days.d26==0]">26P</th>
+                <th ng-class="{true:'weekend',false:'unweekend'}[days.d27==0]">27A</th>
+                <th ng-class="{true:'weekend',false:'unweekend'}[days.d27==0]">27P</th>
+                <th ng-class="{true:'weekend',false:'unweekend'}[days.d28==0]">28A</th>
+                <th ng-class="{true:'weekend',false:'unweekend'}[days.d28==0]">28P</th>
+                <th ng-class="{true:'weekend',false:'unweekend'}[days.d29==0]">29A</th>
+                <th ng-class="{true:'weekend',false:'unweekend'}[days.d29==0]">29P</th>
+                <th ng-class="{true:'weekend',false:'unweekend'}[days.d30==0]">30A</th>
+                <th ng-class="{true:'weekend',false:'unweekend'}[days.d30==0]">30P</th>
+                <th ng-class="{true:'weekend',false:'unweekend'}[days.d31==0]" ng-hide="queryInfo.month==2||queryInfo.month==4||queryInfo.month==6||queryInfo.month==9||queryInfo.month==11">31A</th>
+                <th ng-class="{true:'weekend',false:'unweekend'}[days.d31==0]" ng-hide="queryInfo.month==2||queryInfo.month==4||queryInfo.month==6||queryInfo.month==9||queryInfo.month==11">31P</th>
+                <th style="color: #ffffff;text-align: center;">待处理</th>
+                <th style="color: #ffffff;text-align: center;">迟到</th>
+                <th style="color: #ffffff;text-align: center;">早退</th>
+                <th style="color: #ffffff;text-align: center;">忘打</th>
+                <th style="color: #ffffff;text-align: center;">年假</th>
+                <th style="color: #ffffff;text-align: center;">事假</th>
+                <th style="color: #ffffff;text-align: center;">病假</th>
+                <th style="color: #ffffff;text-align: center;">婚假</th>
+                <th style="color: #ffffff;text-align: center;">产假</th>
+                <th style="color: #ffffff;text-align: center;">孕检假</th>
+                <th style="color: #ffffff;text-align: center;">护理假</th>
+                <th style="color: #ffffff;text-align: center;">丧假</th>
+                <th style="color: #ffffff;text-align: center;">探亲假</th>
+                <th style="color: #ffffff;text-align: center;">旷工</th>
+                <th style="color: #ffffff;text-align: center;">出差</th>
+                <th style="color: #ffffff;text-align: center;">不足月</th>
+                <th style="color: #ffffff;text-align: center;">出勤</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="r in queryResult">
+                <td style="text-align: center;">{{r.department}}</td>
+                <td style="text-align: center;">{{r.employeeName}}</td>
+                <td style="text-align: center;">{{r.nationalId}}</td>
+                <td>{{r.day1a}}</td>
+                <td>{{r.day1p}}</td>
+                <td>{{r.day2a}}</td>
+                <td>{{r.day2p}}</td>
+                <td>{{r.day3a}}</td>
+                <td>{{r.day3p}}</td>
+                <td>{{r.day4a}}</td>
+                <td>{{r.day4p}}</td>
+                <td>{{r.day5a}}</td>
+                <td>{{r.day5p}}</td>
+                <td>{{r.day6a}}</td>
+                <td>{{r.day6p}}</td>
+                <td>{{r.day7a}}</td>
+                <td>{{r.day7p}}</td>
+                <td>{{r.day8a}}</td>
+                <td>{{r.day8p}}</td>
+                <td>{{r.day9a}}</td>
+                <td>{{r.day9p}}</td>
+                <td>{{r.day10a}}</td>
+                <td>{{r.day10p}}</td>
+                <td>{{r.day11a}}</td>
+                <td>{{r.day11p}}</td>
+                <td>{{r.day12a}}</td>
+                <td>{{r.day12p}}</td>
+                <td>{{r.day13a}}</td>
+                <td>{{r.day13p}}</td>
+                <td>{{r.day14a}}</td>
+                <td>{{r.day14p}}</td>
+                <td>{{r.day15a}}</td>
+                <td>{{r.day15p}}</td>
+                <td>{{r.day16a}}</td>
+                <td>{{r.day16p}}</td>
+                <td>{{r.day17a}}</td>
+                <td>{{r.day17p}}</td>
+                <td>{{r.day18a}}</td>
+                <td>{{r.day18p}}</td>
+                <td>{{r.day19a}}</td>
+                <td>{{r.day19p}}</td>
+                <td>{{r.day20a}}</td>
+                <td>{{r.day20p}}</td>
+                <td>{{r.day21a}}</td>
+                <td>{{r.day21p}}</td>
+                <td>{{r.day22a}}</td>
+                <td>{{r.day22p}}</td>
+                <td>{{r.day23a}}</td>
+                <td>{{r.day23p}}</td>
+                <td>{{r.day24a}}</td>
+                <td>{{r.day24p}}</td>
+                <td>{{r.day25a}}</td>
+                <td>{{r.day25p}}</td>
+                <td>{{r.day26a}}</td>
+                <td>{{r.day26p}}</td>
+                <td>{{r.day27a}}</td>
+                <td>{{r.day27p}}</td>
+                <td>{{r.day28a}}</td>
+                <td>{{r.day28p}}</td>
+                <td>{{r.day29a}}</td>
+                <td>{{r.day29p}}</td>
+                <td>{{r.day30a}}</td>
+                <td>{{r.day30p}}</td>
+                <td ng-hide="queryInfo.month==2||queryInfo.month==4||queryInfo.month==6||queryInfo.month==9||queryInfo.month==11">{{r.day31a}}</td>
+                <td ng-hide="queryInfo.month==2||queryInfo.month==4||queryInfo.month==6||queryInfo.month==9||queryInfo.month==11">{{r.day31p}}</td>
+
+                <td style="text-align: center;">{{r.exception}}</td>
+                <td style="text-align: center;">{{r.late}}</td>
+                <td style="text-align: center;">{{r.earlyLeave}}</td>
+                <td style="text-align: center;">{{r.forget}}</td>
+                <td style="text-align: center;">{{r.yearVacation}}</td>
+                <td style="text-align: center;">{{r.affair}}</td>
+                <td style="text-align: center;">{{r.disease}}</td>
+                <td style="text-align: center;">{{r.marry}}</td>
+                <td style="text-align: center;">{{r.maternity}}</td>
+                <td style="text-align: center;">{{r.pregnant}}</td>
+                <td style="text-align: center;">{{r.nursing}}</td>
+                <td style="text-align: center;">{{r.funeral}}</td>
+                <td style="text-align: center;">{{r.homeLeave}}</td>
+                <td style="text-align: center;">{{r.absenteeism}}</td>
+                <td style="text-align: center;">{{r.business}}</td>
+                <td style="text-align: center;">{{r.notMonth}}</td>
+                <td style="text-align: center;">{{r.attendance}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>

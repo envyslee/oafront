@@ -1,0 +1,28 @@
+
+    <div style="margin-top: 10px;margin-left: 20px;">
+        <span style="color: #0c4d78;">首页 — </span>
+        <span style="color: #0c4d78;">节假日设置</span>
+    </div>
+    <div style="text-align: center;">
+        <h3>节假日设置</h3>
+    </div>
+    <div style="margin-left: 1rem;margin-top:3rem;text-align: center;">
+        <div class="grid-block align-center">
+            <div class="grid-block medium-1 align-right">
+                <p style="margin-top: 5px;">节假日设置：</p>
+            </div>
+            <div class="grid-block medium-2 align-center">
+                <input style="width: 150px;float: left;" type="date" ng-model="queryInfo.tagHoliday" ng-change="tagHolidayChange()">
+            </div>
+            <div class="grid-block medium-1 align-right">
+                <a class="button" style="width: 100px;margin-left: 2rem" ng-click="tagHolidayChange()" ng-class="{true:'disabled',false:''}[queryInfo.tagHoliday=='']">&nbsp;&nbsp;确&nbsp;&nbsp;&nbsp;定&nbsp;&nbsp;</a>
+            </div>
+        </div>
+        <div style="margin-left: 1rem;margin-top: 1rem;">
+            <span style="color: red;font-weight: 700">注：</span>
+            <span>请务必确认所选日期为节假日。</span>
+            <p style="margin-top: 3rem;" ng-repeat="l in logInfo">
+                {{$index+1}}.{{l.userName}}在{{l.operateDate}}日标记{{l.tagDate}}为节假日。
+            </p>
+        </div>
+    </div>

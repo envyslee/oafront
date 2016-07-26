@@ -1,0 +1,57 @@
+
+    <div style="margin-top: 10px;margin-left: 20px;">
+        <span style="color: #0c4d78;">首页 — </span>
+        <span style="color: #0c4d78;">异常处理</span>
+    </div>
+    <div style="text-align: center;">
+        <h3>异常处理</h3>
+    </div>
+    <div class="grid-block" style="margin-left: -4%" ng-if="exceptionEmployee.length>0">
+        <div class="grid-block medium-1 align-right" style="margin-top: 10px">工号：</div>
+        <div class="grid-block medium-1">
+            <input type="text" ng-model="exceptionQueryInfo.employeeId">
+        </div>
+        <div class="grid-block medium-1 align-right" style="margin-top: 10px">身份证：</div>
+        <div style="width: 180px;">
+            <input type="text" ng-model="exceptionQueryInfo.nationalId">
+        </div>
+        <div class="grid-block medium-1 align-right" style="margin-top: 10px">姓名：</div>
+        <div class="grid-block medium-1">
+            <input type="text" ng-model="exceptionQueryInfo.employeeName">
+        </div>
+        <div class="grid-block medium-1 align-right" style="margin-top: 10px">部门：</div>
+        <div class="grid-block medium-1">
+            <input type="text" ng-model="exceptionQueryInfo.department">
+        </div>
+        <div class="grid-block medium-1 align-right" style="margin-left: 60px;">
+            <a class="button" ng-click="exceptionQuery()">&nbsp;&nbsp;&nbsp;查&nbsp;&nbsp;&nbsp;&nbsp;询&nbsp;&nbsp;&nbsp;</a>
+        </div>
+    </div>
+    <div style="margin-left: 10px">
+        <table style="width: 99%;height: 3rem;margin-left: 15px;" role="grid" ng-if="exceptionEmployee.length>0">
+            <thead style="background: #0066cc;">
+            <tr>
+                <th style="color: #ffffff;text-align: center;">序号</th>
+                <th style="color: #ffffff;text-align: center;">工号</th>
+                <th style="color: #ffffff;text-align: center;">身份证</th>
+                <th style="color: #ffffff;text-align: center;">姓名</th>
+                <th style="color: #ffffff;text-align: center;">部门</th>
+                <th style="color: #ffffff;text-align: center;">职位</th>
+                <th style="color: #ffffff;text-align: center;">操作</th>
+            </tr>
+            </thead>
+            <tbody style="width: 86%;height: 2rem">
+            <tr ng-repeat="ee in exceptionEmployee">
+                <td style="text-align: center;">{{$index+1}}</td>
+                <td style="text-align: center;">{{ee.employeeId}}</td>
+                <td style="text-align: center;">{{ee.nationalId}}</td>
+                <td style="text-align: center;">{{ee.employeeName}}</td>
+                <td style="text-align: center;">{{ee.department}}</td>
+                <td style="text-align: center;">{{ee.position}}</td>
+                <td style="text-align: center;">
+                    <a class="button" style="padding:.4rem;margin: 0 auto" ng-click="exceptionDetail(ee)">&nbsp;&nbsp;处&nbsp;&nbsp;&nbsp;&nbsp;理&nbsp;&nbsp;</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>

@@ -1,0 +1,96 @@
+
+    <div style="margin-top: 10px;margin-left: 20px;">
+        <span style="color: #0c4d78;">首页 — </span>
+        <span style="color: #0c4d78;">花名册</span>
+    </div>
+    <div style="text-align: center;">
+        <h3>花名册</h3>
+    </div>
+    <div class="grid-block">
+        <div class="grid-block" style="margin-left: 1rem;height: 20px;">当前在职：{{employeeCount.total}}人；&nbsp;&nbsp;本月入职：{{employeeCount.arrive}}人；&nbsp;&nbsp;本月离职：{{employeeCount.leave}}人；</div>
+        <div class="grid-block medium-1 align-right">
+            <a class="button" zf-open="userModal" style="height: 2.4rem;margin-left: 20px;">&nbsp;&nbsp;导&nbsp;&nbsp;入&nbsp;&nbsp;</a>
+        </div>
+        <div class="grid-block medium-1 align-right">
+            <a class="button" zf-open="singleUserModal" style="height: 2.4rem;">&nbsp;&nbsp;新&nbsp;&nbsp;增&nbsp;&nbsp;</a>
+        </div>
+    </div>
+    <div class="grid-block" style="margin-left: -2%;">
+        <div class="grid-block align-right" style="margin-top: 10px;width: 5%;">
+            <span>工号：</span>
+        </div>
+        <div class="grid-block " style="width: 6%;">
+            <input type="text" ng-model="employeeQueryInfo.employeeId">
+        </div>
+        <div class="grid-block align-right" style="margin-top: 10px;width: 3%;">
+            <span>姓名：</span>
+        </div>
+        <div class="grid-block " style="width: 3%;">
+            <input type="text" ng-model="employeeQueryInfo.employeeName">
+        </div>
+        <div class="grid-block align-right" style="margin-top: 10px;width: 3%;">
+            <span>部门：</span>
+        </div>
+        <div class="grid-block " style="width: 6.5%;">
+            <input type="text" ng-model="employeeQueryInfo.department">
+        </div>
+        <div class="grid-block align-right" style="margin-top: 10px;width: 3%;">
+            <span>状态：</span>
+        </div>
+        <div class="grid-block " style="width: 5%;">
+            <select ng-model="employeeQueryInfo.jobStatus" >
+                <option value="0">全部</option>
+                <option value="1">在职</option>
+                <option value="-1">离职</option>
+            </select>
+        </div>
+        <div class="grid-block align-right" style="width: 8%;">
+            <select ng-model="employeeQueryInfo.queryTime" style="width: 65%;">
+                <option value="0">请选择</option>
+                <option value="1">入职时间</option>
+                <option value="2">离职时间</option>
+            </select>
+        </div>
+        <div class="grid-block " style="width: 9%;">
+            <input type="date" ng-model="employeeQueryInfo.fromDate">
+        </div>
+        <span  style="margin-top: 10px">&nbsp;至&nbsp;</span>
+        <div class="grid-block " style="width: 9%;">
+            <input type="date" ng-model="employeeQueryInfo.endDate">
+        </div>
+        <div class="grid-block align-right" style="margin-left: 3%">
+            <a class="button" ng-click="employeeQuery()" style="height: 2.4rem;text-align: center;">&nbsp;&nbsp;&nbsp;查&nbsp;&nbsp;&nbsp;&nbsp;询&nbsp;&nbsp;&nbsp;</a>
+        </div>
+    </div>
+    <table style="margin-left: 1rem;width: 96%;" role="grid">
+        <thead style="background: #0066cc;">
+        <tr ng-if="employeeData.length>0">
+            <th style="color: #ffffff;text-align: center;">序号</th>
+            <th style="color: #ffffff;text-align: center;">姓名</th>
+            <th style="color: #ffffff;text-align: center;">工号</th>
+            <th style="color: #ffffff;text-align: center;" >身份证号</th>
+            <th style="color: #ffffff;text-align: center;">考勤职场</th>
+            <th style="color: #ffffff;text-align: center;">部门</th>
+            <th style="color: #ffffff;text-align: center;">职位</th>
+            <th style="color: #ffffff;text-align: center;">入职时间</th>
+            <th style="color: #ffffff;text-align: center;">离职时间</th>
+            <th style="color: #ffffff;text-align: center;">在职状态</th>
+            <th style="color: #ffffff;text-align: center;">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="e in employeeData">
+            <td style="text-align: center;">{{$index+1}}</td>
+            <td style="text-align: center;">{{e.employeeName}}</td>
+            <td style="text-align: center;">{{e.employeeId}}</td>
+            <td style="text-align: center;">{{e.nationalId}}</td>
+            <td style="text-align: center;">{{e.workPlace}}</td>
+            <td style="text-align: center;">{{e.department}}</td>
+            <td style="text-align: center;">{{e.position}}</td>
+            <td style="text-align: center;">{{e.joinTime}}</td>
+            <td style="text-align: center;">{{e.leaveTime}}</td>
+            <td style="text-align: center;">{{e.status}}</td>
+            <td style="text-align: center;"><button class="button" style="padding: .4rem;margin: 0" ng-class="{true:'',false:'disabled'}[e.status=='在职员工']" ng-click="openTagModel(e)">标记为离职</button></td>
+        </tr>
+        </tbody>
+    </table>
