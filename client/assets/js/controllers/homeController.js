@@ -714,6 +714,9 @@ define([], function () {
             $scope.days.d19=value;
             break;
           case 20:
+            $scope.days.d20=value;
+            break;
+          case 21:
             $scope.days.d21=value;
             break;
           case 22:
