@@ -123,3 +123,8 @@ table tr td {
 .add_new_employee{
   margin-left: 100px;
 }
+
+.th_style {
+  color: #ffffff;
+  text-align: center;
+}
