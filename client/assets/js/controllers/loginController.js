@@ -20,6 +20,7 @@ define([], function () {
         });
       }
 
+
   }
   loginController.$inject = ['$scope', '$state', '$stateParams', '$sessionStorage','commonService'];
   app.register.controller('loginController', loginController);

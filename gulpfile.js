@@ -32,8 +32,6 @@ var paths = {
     'bower_components/foundation-apps/scss'
   ],
   css: [
-    //'client/assets/css/*.css',
-    //'client/assets/css/foundation.min.css',
     'client/assets/css/oa.css',
     'bower_components/foundation-apps/dist/css/foundation-apps.min.css'
   ],

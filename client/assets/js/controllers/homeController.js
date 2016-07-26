@@ -193,7 +193,7 @@ define([], function () {
           getException();
       }else if(tab==0){
         if($scope.employeeData==null||$scope.employeeData==undefined){
-          getEmployee();
+          getEmployeeCount();
         }
       }else if(tab==6){
         getLogInfo();
@@ -216,7 +216,6 @@ define([], function () {
     $scope.employeeInit=function () {
       switch ($scope.currentTag){
         case '0':
-          getEmployee();
           getEmployeeCount();
           break;
         case '3':
@@ -323,6 +322,7 @@ define([], function () {
             break;
           }
         }
+        getEmployeeCount();
         FoundationApi.publish('tagModel','close');
       },function (e) {
         if(e.content!=null){
@@ -408,7 +408,9 @@ define([], function () {
         $scope.employeeCount.total=data.total;
         $scope.employeeCount.leave=data.leave;
         $scope.employeeCount.join=data.join;
+        getEmployee();
       },function (e) {
+        commonService.LoadingEnd();
         if(e.message!=null&&e.message!=undefined){
           $scope.msg.errorMsg=e.message;
         }
