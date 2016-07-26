@@ -6,7 +6,7 @@ dependencies: controllers/homeController,services/commonService,services/default
 ---
 <div class="ui-container" ng-init="employeeInit()">
   <div class="grid-block">
-    <img src="../assets/img/u10.png"style="width: 200%">
+    <img src="../assets/img/u10.png" style="width: 200%">
   </div>
   <div style="text-align: right;margin-top: 1rem;margin-right: 1rem;">
     <span>当前用户：</span>
@@ -16,22 +16,22 @@ dependencies: controllers/homeController,services/commonService,services/default
   </div>
   <div class="grid-block">
     <div class="grid-block medium-2 vertical" style="height: 280px;border-right: 1px solid #CCCCCC">
-      <div style="text-align: center;height: 3rem;line-height: 3rem">
+      <div class="menu">
         <a ng-click="chooseTab(0)" ng-class="{true:'choose_tab',false:'unchoose_tab'}[currentTag==0]">花名册</a>
       </div>
-      <div style="text-align: center;height: 3rem;line-height: 3rem">
+      <div class="menu">
         <a ng-click="chooseTab(1)" ng-class="{true:'choose_tab',false:'unchoose_tab'}[currentTag==1]">考勤导入</a>
       </div>
-      <div style="text-align: center;height: 3rem;line-height: 3rem">
+      <div class="menu">
         <a ng-click="chooseTab(2)" ng-class="{true:'choose_tab',false:'unchoose_tab'}[currentTag==2]">考勤查询</a>
       </div>
-      <div style="text-align: center;height: 3rem;line-height: 3rem">
+      <div class="menu">
         <a ng-click="chooseTab(3)" ng-class="{true:'choose_tab',false:'unchoose_tab'}[currentTag==3||currentTag==5]">异常处理</a>
       </div>
-      <div style="text-align: center;height: 3rem;line-height: 3rem">
+      <div class="menu">
         <a ng-click="chooseTab(4)" ng-class="{true:'choose_tab',false:'unchoose_tab'}[currentTag==4]">个人配置</a>
       </div>
-      <div class="grid-block align-center" style="height: 3rem;line-height: 3rem">
+      <div class="menu">
         <a ng-click="chooseTab(6)" ng-class="{true:'choose_tab',false:'unchoose_tab'}[currentTag==6]">节假日设置</a>
       </div>
     </div>

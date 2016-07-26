@@ -14,12 +14,19 @@ define([], function () {
           $sessionStorage['userName']=data.userName;
           $sessionStorage['workPlaceId']=data.workPlace;
           $sessionStorage['userId']=data.id;
+          if(data.loginName != window.localStorage.getItem("username")){
+            window.localStorage.setItem("username",data.loginName);
+          }
           $state.go('home',{tab:"0",error:""});
         },function (e) {
           alert(e.message);
         });
       }
-
+      $scope.loginInit=function () {
+        var storage = window.localStorage;
+        var username = storage["username"];
+        $scope.userInfo.account=username;
+      }
 
   }
   loginController.$inject = ['$scope', '$state', '$stateParams', '$sessionStorage','commonService'];

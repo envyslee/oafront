@@ -128,3 +128,14 @@ table tr td {
   color: #ffffff;
   text-align: center;
 }
+
+.menu{
+  text-align: center;
+  height: 3rem;
+  line-height: 3rem
+}
+
+
+.confirm_button{
+  letter-spacing: 3px;
+}
