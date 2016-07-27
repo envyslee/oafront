@@ -428,6 +428,7 @@ define([], function () {
     }
 
     var queryRecord=function () {
+      commonService.Loading();
       commonService.PostRequest(url+"getRecord",$scope.queryInfo).then(function (data) {
         if(data.length>0){
           var date=new Date($scope.queryInfo.year, $scope.queryInfo.month,0);
@@ -538,12 +539,15 @@ define([], function () {
             data[i].attendance=count.attendance;
           }
           $scope.queryResult=data;
+          commonService.LoadingEnd();
         }else {
+          commonService.LoadingEnd();
           $scope.queryResult=null;
           $scope.msg.errorMsg='找到0条记录';
           FoundationApi.publish('errorModel','open');
         }
       },function (e) {
+        commonService.LoadingEnd();
         $scope.queryResult=null;
         $scope.msg.errorMsg=e.message;
         FoundationApi.publish('errorModel','open');
