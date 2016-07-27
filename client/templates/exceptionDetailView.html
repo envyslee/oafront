@@ -6,7 +6,8 @@
     <div style="text-align: center;">
         <h3>异常处理</h3>
     </div>
-    <table style="margin-left: 1rem;margin-top: 30px;width: 96%;border-collapse: separate;border-spacing: -3px; "
+    <div class="grid-block" style="height: 680px;">
+      <table style="margin-left: 1rem;margin-top: 30px;width: 96%;border-collapse: separate;border-spacing: -3px; "
            role="grid" ng-if="details.length>0">
         <thead style="background: #0066cc;">
         <tr>
@@ -79,34 +80,35 @@
         </tr>
         </tbody>
     </table>
-    <div class="grid-block "  style="margin-top: 3rem;"  ng-show="details.length>0">
-        <div class="grid-block align-left medium-2 medium-offset-1" style="height: 44px;">
-            <select ng-model="all.reason" style="padding:.4rem;overflow-y: hidden;font-size: 12px;height: 30px;">
-                <option value="0">请选择</option>
-                <option value="1">出勤</option>
-                <option value="17">旷工</option>
-                <option value="18">迟到</option>
-                <option value="2">早退</option>
-                <option value="3">忘打卡</option>
-                <option value="4">事假</option>
-                <option value="5">病假</option>
-                <option value="6">产假</option>
-                <option value="7">年休假</option>
-                <option value="8">婚假</option>
-                <option value="9">孕检假</option>
-                <option value="10">护理假</option>
-                <option value="11">丧假</option>
-                <option value="12">工伤假</option>
-                <option value="13">探亲假</option>
-                <option value="14">公出</option>
-                <option value="15">出差</option>
-                <option value="16">新进离职不足月</option>
-            </select>
-        </div>
-        <div class="grid-block align-left medium-2" style="height: 44px;">
-            <a class="button expand" ng-click="singleReasonSubmit()">批量处理</a>
-        </div>
-        <div class="grid-block align-right medium-2 medium-offset-3" style="height: 44px;">
-            <a class="button expand"  ng-click="exceptionSubmit()">处理</a>
-        </div>
+    </div>
+    <div class="grid-block "  style="margin-top: 1rem;"  ng-show="details.length>0">
+      <div class="grid-block align-left medium-2 medium-offset-1" style="height: 44px;">
+        <select ng-model="all.reason" style="padding:.4rem;overflow-y: hidden;font-size: 12px;height: 30px;">
+          <option value="0">请选择</option>
+          <option value="1">出勤</option>
+          <option value="17">旷工</option>
+          <option value="18">迟到</option>
+          <option value="2">早退</option>
+          <option value="3">忘打卡</option>
+          <option value="4">事假</option>
+          <option value="5">病假</option>
+          <option value="6">产假</option>
+          <option value="7">年休假</option>
+          <option value="8">婚假</option>
+          <option value="9">孕检假</option>
+          <option value="10">护理假</option>
+          <option value="11">丧假</option>
+          <option value="12">工伤假</option>
+          <option value="13">探亲假</option>
+          <option value="14">公出</option>
+          <option value="15">出差</option>
+          <option value="16">新进离职不足月</option>
+        </select>
+      </div>
+      <div class="grid-block align-left medium-2" style="height: 44px;">
+        <a class="button expand" ng-click="singleReasonSubmit()">批量处理</a>
+      </div>
+      <div class="grid-block align-right medium-2 medium-offset-3" style="height: 44px;">
+        <a class="button expand"  ng-click="exceptionSubmit()">处理</a>
+      </div>
     </div>

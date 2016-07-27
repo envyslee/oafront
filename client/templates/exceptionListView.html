@@ -6,7 +6,7 @@
     <div style="text-align: center;">
         <h3>异常处理</h3>
     </div>
-    <div class="grid-block" style="margin-left: -4%" ng-if="exceptionEmployee.length>0">
+    <div class="grid-block" style="margin-left: -2%" ng-if="exceptionEmployee.length>0">
         <div class="grid-block medium-1 align-right" style="margin-top: 10px">工号：</div>
         <div class="grid-block medium-1">
             <input type="text" ng-model="exceptionQueryInfo.employeeId">
@@ -27,7 +27,7 @@
             <a class="button" ng-click="exceptionQuery()">&nbsp;&nbsp;&nbsp;查&nbsp;&nbsp;&nbsp;&nbsp;询&nbsp;&nbsp;&nbsp;</a>
         </div>
     </div>
-    <div style="margin-left: 10px">
+    <div class="grid-block" style="margin-left: 10px;height: 680px;">
         <table style="width: 99%;height: 3rem;margin-left: 15px;" role="grid" ng-if="exceptionEmployee.length>0">
             <thead style="background: #0066cc;">
             <tr>

@@ -44,19 +44,19 @@
                 <option value="-1">离职</option>
             </select>
         </div>
-        <div class="grid-block align-right" style="width: 8%;">
+        <div class="grid-block align-right" style="width: 9%;">
             <select ng-model="employeeQueryInfo.queryTime" style="width: 65%;">
                 <option value="0">请选择</option>
                 <option value="1">入职时间</option>
                 <option value="2">离职时间</option>
             </select>
         </div>
-        <div  style="width: 9%;">
+        <div  style="width: 11%;">
             <!--<input type="date" ng-model="employeeQueryInfo.fromDate">-->
           <mb-datepicker style="margin-bottom: 4px" arrows="arrows" date="employeeQueryInfo.fromDate" date-format="YYYY-MM-DD"></mb-datepicker>
         </div>
         <span  style="margin-top: 10px">&nbsp;至&nbsp;</span>
-        <div style="width: 9%;">
+        <div style="width: 11%;">
             <!--<input type="date" ng-model="employeeQueryInfo.endDate">-->
           <mb-datepicker arrows="arrows"  date="employeeQueryInfo.endDate" date-format="YYYY-MM-DD"></mb-datepicker>
         </div>
@@ -64,7 +64,8 @@
             <a class="button" ng-click="employeeQuery()" style="height: 2.4rem;text-align: center;">&nbsp;&nbsp;&nbsp;查&nbsp;&nbsp;&nbsp;&nbsp;询&nbsp;&nbsp;&nbsp;</a>
         </div>
     </div>
-    <table style="margin-left: 1rem;width: 96%;" role="grid">
+    <div class="grid-block" style="height: 680px;">
+      <table style="margin-left: 1rem;width: 96%;" role="grid">
         <thead style="background: #0066cc;">
         <tr ng-if="employeeData.length>0">
             <th class="th_style">序号</th>
@@ -96,3 +97,4 @@
         </tr>
         </tbody>
     </table>
+    </div>

@@ -48,8 +48,9 @@ define([], function () {
         if(data.length>0){
           var array=[];
           for(var i=0;i<data.length;i++){
-            var a=data[i].arriveTime==null?'未打卡':new Date(data[i].arriveTime).toLocaleTimeString();
-            var l=data[i].leaveTime==null?'未打卡':new Date(data[i].leaveTime).toLocaleTimeString();
+            new Date(data[i].arriveTime).getHours()+":"+new Date(data[i].arriveTime).getMinutes()+":"+new Date(data[i].arriveTime).getSeconds();
+            var a=data[i].arriveTime==null?'未打卡':new Date(data[i].arriveTime).getHours()+":"+new Date(data[i].arriveTime).getMinutes()+":"+new Date(data[i].arriveTime).getSeconds();
+            var l=data[i].leaveTime==null?'未打卡':new Date(data[i].leaveTime).getHours()+":"+new Date(data[i].leaveTime).getMinutes()+":"+new Date(data[i].leaveTime).getSeconds();
             array[i]=new map(data[i].id,name,new Date(data[i].today).toLocaleDateString(),a,l,data[i].amStatus,data[i].pmStatus);
           }
           $scope.details=array;
