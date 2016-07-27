@@ -81,16 +81,21 @@ dependencies: controllers/homeController,services/commonService,services/default
         <input style="width: 50%;margin-left: 20px;" type="text" placeholder="工号" ng-model="addUser.employeeId" required>
       </div>
       <div class = "add_new_employee">
+        <p class="new_employee">姓名：&nbsp;&nbsp;</p>
+        <input style="width: 50%;margin-left: 20px;" type="text" placeholder="姓名" ng-model="addUser.employeeName" required>
+      </div>
+      <div class = "add_new_employee">
+        <p class="new_employee">入职时间：&nbsp;&nbsp;</p>
+        <!--<input style="width: 50%;margin-left: 20px;" id="joinTimePicker" type="text" placeholder="入职时间" ng-model="addUser.joinTime" ng-focus="joinTimeFocus()" ng-blur="joinTimeBlur()" required>-->
+        <mb-datepicker style="width: 50%;margin-left: -142px;margin-bottom: 4px;display: inline-block;" arrows="arrows" date="addUser.joinTime" date-format="YYYY-MM-DD" placeholder="入职时间" ></mb-datepicker>
+      </div>
+      <div class = "add_new_employee">
         <p class="new_employee">身份证：&nbsp;&nbsp;</p>
         <input style="width: 50%;margin-left: 20px;" type="text" placeholder="身份证" ng-model="addUser.nationalId" required>
       </div>
       <div class = "add_new_employee">
         <p class="new_employee">考勤编号：&nbsp;&nbsp;</p>
         <input style="width: 50%;margin-left: 20px;" type="text" placeholder="考勤编号" ng-model="addUser.machineId" required>
-      </div>
-      <div class = "add_new_employee">
-        <p class="new_employee">姓名：&nbsp;&nbsp;</p>
-        <input style="width: 50%;margin-left: 20px;" type="text" placeholder="姓名" ng-model="addUser.employeeName" required>
       </div>
       <div class = "add_new_employee">
         <p class="new_employee">部门：&nbsp;&nbsp;</p>
@@ -100,13 +105,10 @@ dependencies: controllers/homeController,services/commonService,services/default
         <p class="new_employee">职位：&nbsp;&nbsp;</p>
         <input style="width: 50%;margin-left: 20px;" type="text" placeholder="职位" ng-model="addUser.position" required>
       </div>
-      <div class = "add_new_employee">
-        <p class="new_employee">入职时间：&nbsp;&nbsp;</p>
-        <input style="width: 50%;margin-left: 20px;" id="joinTimePicker" type="text" placeholder="入职时间" ng-model="addUser.joinTime" ng-focus="joinTimeFocus()" ng-blur="joinTimeBlur()" required>
-      </div>
+
     </form>
   </div>
-  <div class="grid-block align-center" style="margin-top: 2rem">
+  <div class="grid-block align-center" style="margin-top: 2.5rem;margin-bottom: 20px">
     <a class="button expand" style="width: 30%;" ng-class="{true:'disabled',false:''}[addUserForm.$invalid]"  ng-click="addEmployee()">确定</a>
   </div>
 </div>
