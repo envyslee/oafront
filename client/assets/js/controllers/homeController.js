@@ -87,7 +87,7 @@ define([], function () {
       $scope.xlsUrl="SZ-FH.xls";
     }else if(workPlaceId==11){
       $scope.currentPlace='苏州恒宇';
-      $scope.xlsUrl="SZ-HY.xls";
+      $scope.xlsUrl="SZ-HY.zip";
     }
 
     //异常详情
