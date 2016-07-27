@@ -24,8 +24,7 @@ define([], function () {
       }
       $scope.loginInit=function () {
         var storage = window.localStorage;
-        var username = storage["username"];
-        $scope.userInfo.account=username;
+        $scope.userInfo.account=storage["username"];
       }
 
   }

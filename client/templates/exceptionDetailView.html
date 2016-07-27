@@ -30,7 +30,7 @@
             <td style="text-align: center;">{{::d.date}}</td>
             <td style="text-align: center;">{{d.arriveTime}}</td>
             <td style="text-align: center;width: 200px;">
-                <select ng-model="d.amReason" style="padding:.4rem;margin: 2px auto;font-size: 12px;height: 26px" ng-show="d.am==0">
+                <select ng-model="d.amReason" style="padding:.4rem;margin: 2px auto;font-size: 12px;height: 26px" >
                     <option value="0">请选择</option>
                     <option value="1">出勤</option>
                     <option value="17">旷工</option>
@@ -51,11 +51,10 @@
                     <option value="15">出差</option>
                     <option value="16">新进离职不足月</option>
                 </select>
-                <div ng-show="d.am!=0">无需处理</div>
             </td>
             <td style="text-align: center;">{{d.leaveTime}}</td>
             <td style="text-align: center;width: 200px; margin-top: 10px;">
-                <select ng-model="d.pmReason" style="padding:.4rem;margin: 2px auto;font-size: 12px;height: 26px" ng-show="d.pm==0">
+                <select ng-model="d.pmReason" style="padding:.4rem;margin: 2px auto;font-size: 12px;height: 26px" >
                     <option value="0">请选择</option>
                     <option value="1">出勤</option>
                     <option value="17">旷工</option>
@@ -76,13 +75,12 @@
                     <option value="15">出差</option>
                     <option value="16">新进离职不足月</option>
                 </select>
-                <div ng-show="d.pm!=0">无需处理</div>
             </td>
         </tr>
         </tbody>
     </table>
-    <div class="grid-block "  style="margin-top: 3rem;margin-left: 250px;"  ng-show="details.length>0">
-        <div class="grid-block align-left medium-1 medium-offset-1" style="height: 44px;">
+    <div class="grid-block "  style="margin-top: 3rem;"  ng-show="details.length>0">
+        <div class="grid-block align-left medium-2 medium-offset-1" style="height: 44px;">
             <select ng-model="all.reason" style="padding:.4rem;overflow-y: hidden;font-size: 12px;height: 30px;">
                 <option value="0">请选择</option>
                 <option value="1">出勤</option>
@@ -105,10 +103,10 @@
                 <option value="16">新进离职不足月</option>
             </select>
         </div>
-        <div class="grid-block align-left medium-1" style="height: 44px;">
+        <div class="grid-block align-left medium-2" style="height: 44px;">
             <a class="button expand" ng-click="singleReasonSubmit()">批量处理</a>
         </div>
-        <div class="grid-block align-right medium-1 medium-offset-3" style="height: 44px;">
+        <div class="grid-block align-right medium-2 medium-offset-3" style="height: 44px;">
             <a class="button expand"  ng-click="exceptionSubmit()">处理</a>
         </div>
     </div>
