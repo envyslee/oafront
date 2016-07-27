@@ -32,8 +32,4 @@
   }
 
 
-  function run() {
-    FastClick.attach(document.body);
-  }
-
 })();
