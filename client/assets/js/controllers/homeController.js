@@ -9,7 +9,16 @@ define([], function () {
     if (userId==undefined||userId==null) {
       $state.go('login');
     }
-
+    $scope.arrows = {
+      year: {
+        left: 'assets/img/left.png',
+        right: 'assets/img/right.png'
+      },
+      month: {
+        left: 'assets/img/left.png',
+        right: 'assets/img/right.png'
+      }
+    }
 
     var url=app.service.baseapi;
     //标记为节假日
@@ -355,8 +364,8 @@ define([], function () {
           return;
         }else{
           param.queryTime=$scope.employeeQueryInfo.queryTime;
-          param.fromDate=$scope.employeeQueryInfo.fromDate.toLocaleDateString();
-          param.endDate=$scope.employeeQueryInfo.endDate.toLocaleDateString();
+          param.fromDate=$scope.employeeQueryInfo.fromDate;
+          param.endDate=$scope.employeeQueryInfo.endDate;
         }
       }
 
@@ -754,7 +763,7 @@ define([], function () {
 
     //标记某天为节假日
     $scope.tagHolidayChange=function () {
-      tagDay=$scope.queryInfo.tagHoliday.toLocaleDateString();
+      tagDay=$scope.queryInfo.tagHoliday;
       $scope.tagHolidayMsg='你确定要设置'+tagDay+'为节假日吗？';
       FoundationApi.publish('tagHolidayModal','open');
     }

@@ -51,12 +51,14 @@
                 <option value="2">离职时间</option>
             </select>
         </div>
-        <div class="grid-block " style="width: 9%;">
-            <input type="date" ng-model="employeeQueryInfo.fromDate">
+        <div  style="width: 9%;">
+            <!--<input type="date" ng-model="employeeQueryInfo.fromDate">-->
+          <mb-datepicker style="margin-bottom: 4px" arrows="arrows" date="employeeQueryInfo.fromDate" date-format="YYYY-MM-DD"></mb-datepicker>
         </div>
         <span  style="margin-top: 10px">&nbsp;至&nbsp;</span>
-        <div class="grid-block " style="width: 9%;">
-            <input type="date" ng-model="employeeQueryInfo.endDate">
+        <div style="width: 9%;">
+            <!--<input type="date" ng-model="employeeQueryInfo.endDate">-->
+          <mb-datepicker arrows="arrows"  date="employeeQueryInfo.endDate" date-format="YYYY-MM-DD"></mb-datepicker>
         </div>
         <div class="grid-block align-right" style="margin-left: 3%">
             <a class="button" ng-click="employeeQuery()" style="height: 2.4rem;text-align: center;">&nbsp;&nbsp;&nbsp;查&nbsp;&nbsp;&nbsp;&nbsp;询&nbsp;&nbsp;&nbsp;</a>

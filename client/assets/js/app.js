@@ -10,7 +10,8 @@ var app = null;
     'foundation',
     'foundation.dynamicRouting',
     'foundation.dynamicRouting.animations',
-    'ngStorage'
+    'ngStorage',
+    'materialDatePicker',
   ]);
 
   app.service = {

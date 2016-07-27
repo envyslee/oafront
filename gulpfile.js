@@ -33,7 +33,8 @@ var paths = {
   ],
   css: [
     'client/assets/css/oa.css',
-    'bower_components/foundation-apps/dist/css/foundation-apps.min.css'
+    'bower_components/foundation-apps/dist/css/foundation-apps.min.css',
+    'bower_components/material-date-picker/app/styles/mbdatepicker.css',
   ],
   font: [
     'client/assets/css/font/*.*'
@@ -48,6 +49,9 @@ var paths = {
     '!bower_components/foundation-apps/js/angular/app.js',
     'client/assets/js/adaptation.js',
     'client/assets/js/ngStorage.min.js',
+    'bower_components/moment/min/moment.min.js',
+    'bower_components/material-date-picker/build/mbdatepicker.js',
+
   ],
   //requirejs
   requireJs: [
@@ -152,7 +156,7 @@ gulp.task('font', function () {
 //Copy Images
 gulp.task('img', function () {
   return gulp.src('client/assets/img/**/*')
-    .pipe(cache(imagemin({optimizationLevel: 3, progressive: true, interlaced: true})))
+    //.pipe(cache(imagemin({optimizationLevel: 3, progressive: true, interlaced: true})))
     .pipe(gulp.dest('./build/assets/img/'));
 });
 

@@ -12,7 +12,8 @@
                 <p style="margin-top: 5px;">节假日设置：</p>
             </div>
             <div class="grid-block medium-2 align-center">
-                <input style="width: 150px;float: left;" type="date" ng-model="queryInfo.tagHoliday" ng-change="tagHolidayChange()">
+                <!--<input style="width: 150px;float: left;" type="date" ng-model="queryInfo.tagHoliday">-->
+              <mb-datepicker style="margin-bottom: 4px" arrows="arrows" date="queryInfo.tagHoliday" date-format="YYYY-MM-DD"></mb-datepicker>
             </div>
             <div class="grid-block medium-1 align-right">
                 <a class="button" style="width: 100px;margin-left: 2rem" ng-click="tagHolidayChange()" ng-class="{true:'disabled',false:''}[queryInfo.tagHoliday=='']">&nbsp;&nbsp;确&nbsp;&nbsp;&nbsp;定&nbsp;&nbsp;</a>
