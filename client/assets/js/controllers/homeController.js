@@ -321,7 +321,7 @@ define([], function () {
       var param={
           employeeId:$scope.tag.employeeId,
           userId:userId,
-          leaveDate:$scope.tag.leaveDate.toLocaleDateString()
+          leaveDate:$scope.tag.leaveDate
       }
       commonService.PostRequest(url+"tagOffEmployee",param).then(function () {
         for(var i=0;i<$scope.employeeData.length;i++){

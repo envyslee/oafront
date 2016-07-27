@@ -125,8 +125,9 @@ dependencies: controllers/homeController,services/commonService,services/default
     <div class="grid-block medium-2 align-right" >
       <p style="text-align: right;margin-top: 7px;">离职日期：</p>
     </div>
-    <div class="grid-block medium-3">
-      <input type="date" ng-model="tag.leaveDate">
+    <div class="grid-block medium-3" >
+      <!--<input type="date" ng-model="tag.leaveDate">-->
+      <mb-datepicker style="position: absolute" arrows="arrows" date="tag.leaveDate" date-format="YYYY-MM-DD" ></mb-datepicker>
     </div>
     <input type="hidden" ng-model="tag.employeeId">
   </div>
